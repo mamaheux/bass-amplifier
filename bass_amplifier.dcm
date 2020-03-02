@@ -36,4 +36,10 @@ K switch lever
 F ~
 $ENDCMP
 #
+$CMP TD9944
+D N-MOSFET transistor, drain/gate/source
+K transistor NMOS N-MOS N-MOSFET
+F ~
+$ENDCMP
+#
 #End Doc Library

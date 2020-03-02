@@ -38,8 +38,8 @@ F7 "EQ_high_mid_pot" O L 6350 2300 50
 F8 "EQ_high_pot" O L 6350 2200 50 
 F9 "comp_ratio_pot" O L 6350 2100 50 
 F10 "comp_threshold_pot" O L 6350 2000 50 
-F11 "overdrive_gain_pot" O L 6350 1900 50 
-F12 "overdrive_tone_pot" O L 6350 1800 50 
+F11 "overdrive_gain_pot" O R 8400 2150 50 
+F12 "overdrive_tone_pot" O R 8400 2250 50 
 F13 "octaver_down_pot" O R 8400 1750 50 
 F14 "octaver_up_pot" O R 8400 1850 50 
 F15 "delay_vol_pot" O R 8400 1950 50 
@@ -84,10 +84,6 @@ Wire Wire Line
 	10450 2350 10550 2350
 Wire Wire Line
 	5800 1700 6100 1700
-Wire Wire Line
-	5800 1800 6350 1800
-Wire Wire Line
-	5800 1900 6350 1900
 Wire Wire Line
 	5800 2000 6350 2000
 Wire Wire Line
@@ -192,37 +188,16 @@ Connection ~ 11050 2450
 $Comp
 L power:GNDD #PWR?
 U 1 1 5E781FEB
-P 8850 2300
+P 9200 2500
 AR Path="/5E5D9B7F/5E5DB240/5E781FEB" Ref="#PWR?"  Part="1" 
 AR Path="/5E5D9B7F/5E781FEB" Ref="#PWR?"  Part="1" 
-F 0 "#PWR?" H 8850 2050 50  0001 C CNN
-F 1 "GNDD" H 8854 2145 50  0000 C CNN
-F 2 "" H 8850 2300 50  0001 C CNN
-F 3 "" H 8850 2300 50  0001 C CNN
-	1    8850 2300
+F 0 "#PWR?" H 9200 2250 50  0001 C CNN
+F 1 "GNDD" H 9204 2345 50  0000 C CNN
+F 2 "" H 9200 2500 50  0001 C CNN
+F 3 "" H 9200 2500 50  0001 C CNN
+	1    9200 2500
 	1    0    0    -1  
 $EndComp
-Wire Wire Line
-	9300 2150 9100 2150
-Wire Wire Line
-	8850 2150 8850 2300
-Wire Wire Line
-	9300 2250 9100 2250
-Wire Wire Line
-	9100 2250 9100 2150
-Connection ~ 9100 2150
-Wire Wire Line
-	9100 2150 8850 2150
-Wire Wire Line
-	9300 2350 9100 2350
-Wire Wire Line
-	9100 2350 9100 2250
-Connection ~ 9100 2250
-Wire Wire Line
-	9300 2450 9100 2450
-Wire Wire Line
-	9100 2450 9100 2350
-Connection ~ 9100 2350
 Text Label 3500 1800 2    50   ~ 0
 mute_sw
 Text Label 3500 1900 2    50   ~ 0
@@ -263,4 +238,17 @@ Wire Wire Line
 	2650 2400 3600 2400
 Wire Wire Line
 	3600 2500 2650 2500
+Wire Wire Line
+	8400 2150 9300 2150
+Wire Wire Line
+	8400 2250 9300 2250
+Wire Wire Line
+	9200 2500 9200 2450
+Wire Wire Line
+	9200 2450 9300 2450
+Wire Wire Line
+	9300 2350 9200 2350
+Wire Wire Line
+	9200 2350 9200 2450
+Connection ~ 9200 2450
 $EndSCHEMATC
