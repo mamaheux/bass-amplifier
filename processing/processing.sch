@@ -3,7 +3,7 @@ EELAYER 30 0
 EELAYER END
 $Descr A4 11693 8268
 encoding utf-8
-Sheet 1 5
+Sheet 1 3
 Title ""
 Date ""
 Rev ""
@@ -14,12 +14,266 @@ Comment3 ""
 Comment4 ""
 $EndDescr
 $Sheet
-S 1000 850  850  600 
+S 5100 1250 850  600 
 U 5E5D245F
 F0 "analog" 50
 F1 "analog.sch" 50
-F2 "DSP_output" I R 1850 1150 50 
-F3 "power_amp_signal" O R 1850 1250 50 
-F4 "DSP_input" O R 1850 1050 50 
+F2 "power_amp_signal" O R 5950 1650 50 
+F3 "DSP_output" I R 5950 1500 50 
+F4 "DSP_input_A" O R 5950 1300 50 
+F5 "DSP_input_B" O R 5950 1400 50 
 $EndSheet
+Text GLabel 1700 850  2    50   Input ~ 0
+A+15V
+Text GLabel 1700 1050 2    50   Input ~ 0
+A-15V
+Wire Wire Line
+	1700 850  1450 850 
+Wire Wire Line
+	1150 1050 1450 1050
+Wire Wire Line
+	1150 950  1450 950 
+Wire Wire Line
+	1450 950  1450 850 
+Connection ~ 1450 850 
+Wire Wire Line
+	1450 850  1150 850 
+Wire Wire Line
+	1150 1150 1450 1150
+Wire Wire Line
+	1450 1150 1450 1050
+Connection ~ 1450 1050
+Wire Wire Line
+	1450 1050 1700 1050
+Wire Wire Line
+	1150 1250 1700 1250
+Text GLabel 1700 1250 2    50   Input ~ 0
+A+3.3V
+$Comp
+L Connector:Conn_01x08_Male J?
+U 1 1 5E5FF575
+P 950 1150
+F 0 "J?" H 1058 1631 50  0000 C CNN
+F 1 "Conn_01x08_Male" H 1058 1540 50  0000 C CNN
+F 2 "" H 950 1150 50  0001 C CNN
+F 3 "~" H 950 1150 50  0001 C CNN
+	1    950  1150
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:GNDA #PWR?
+U 1 1 5E6012A8
+P 1450 1650
+AR Path="/5E5D245F/5E6012A8" Ref="#PWR?"  Part="1" 
+AR Path="/5E6012A8" Ref="#PWR?"  Part="1" 
+F 0 "#PWR?" H 1450 1400 50  0001 C CNN
+F 1 "GNDA" H 1455 1477 50  0000 C CNN
+F 2 "" H 1450 1650 50  0001 C CNN
+F 3 "" H 1450 1650 50  0001 C CNN
+	1    1450 1650
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	1450 1350 1450 1450
+Wire Wire Line
+	1150 1350 1450 1350
+Wire Wire Line
+	1450 1450 1150 1450
+Connection ~ 1450 1450
+Wire Wire Line
+	1450 1450 1450 1550
+Connection ~ 1450 1550
+Wire Wire Line
+	1450 1550 1450 1650
+Wire Wire Line
+	1150 1550 1450 1550
+Text GLabel 1100 2250 0    50   Input ~ 0
+A+15V
+$Comp
+L Device:CP C?
+U 1 1 5E602169
+P 1300 2500
+F 0 "C?" H 1418 2546 50  0000 L CNN
+F 1 "1000µF/25V" H 1418 2455 50  0000 L CNN
+F 2 "" H 1338 2350 50  0001 C CNN
+F 3 "~" H 1300 2500 50  0001 C CNN
+	1    1300 2500
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:C C?
+U 1 1 5E6025CE
+P 2100 2500
+F 0 "C?" H 2215 2546 50  0000 L CNN
+F 1 "2.2µF/25V/UL ESR" H 2215 2455 50  0000 L CNN
+F 2 "" H 2138 2350 50  0001 C CNN
+F 3 "~" H 2100 2500 50  0001 C CNN
+	1    2100 2500
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:GNDA #PWR?
+U 1 1 5E602E32
+P 1300 2750
+AR Path="/5E5D245F/5E602E32" Ref="#PWR?"  Part="1" 
+AR Path="/5E602E32" Ref="#PWR?"  Part="1" 
+F 0 "#PWR?" H 1300 2500 50  0001 C CNN
+F 1 "GNDA" H 1305 2577 50  0000 C CNN
+F 2 "" H 1300 2750 50  0001 C CNN
+F 3 "" H 1300 2750 50  0001 C CNN
+	1    1300 2750
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	1100 2250 1300 2250
+Wire Wire Line
+	2100 2250 2100 2350
+Wire Wire Line
+	1300 2350 1300 2250
+Connection ~ 1300 2250
+Wire Wire Line
+	1300 2250 2100 2250
+$Comp
+L power:GNDA #PWR?
+U 1 1 5E60389D
+P 2100 2750
+AR Path="/5E5D245F/5E60389D" Ref="#PWR?"  Part="1" 
+AR Path="/5E60389D" Ref="#PWR?"  Part="1" 
+F 0 "#PWR?" H 2100 2500 50  0001 C CNN
+F 1 "GNDA" H 2105 2577 50  0000 C CNN
+F 2 "" H 2100 2750 50  0001 C CNN
+F 3 "" H 2100 2750 50  0001 C CNN
+	1    2100 2750
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	2100 2750 2100 2650
+Wire Wire Line
+	1300 2750 1300 2650
+$Comp
+L Device:CP C?
+U 1 1 5E606373
+P 1300 3550
+F 0 "C?" H 1182 3504 50  0000 R CNN
+F 1 "1000µF/25V" H 1182 3595 50  0000 R CNN
+F 2 "" H 1338 3400 50  0001 C CNN
+F 3 "~" H 1300 3550 50  0001 C CNN
+	1    1300 3550
+	-1   0    0    1   
+$EndComp
+$Comp
+L Device:C C?
+U 1 1 5E606379
+P 2100 3550
+F 0 "C?" H 1985 3504 50  0000 R CNN
+F 1 "2.2µF/25V/UL ESR" H 1985 3595 50  0000 R CNN
+F 2 "" H 2138 3400 50  0001 C CNN
+F 3 "~" H 2100 3550 50  0001 C CNN
+	1    2100 3550
+	-1   0    0    1   
+$EndComp
+$Comp
+L power:GNDA #PWR?
+U 1 1 5E60637F
+P 1300 3800
+AR Path="/5E5D245F/5E60637F" Ref="#PWR?"  Part="1" 
+AR Path="/5E60637F" Ref="#PWR?"  Part="1" 
+F 0 "#PWR?" H 1300 3550 50  0001 C CNN
+F 1 "GNDA" H 1305 3627 50  0000 C CNN
+F 2 "" H 1300 3800 50  0001 C CNN
+F 3 "" H 1300 3800 50  0001 C CNN
+	1    1300 3800
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	1100 3300 1300 3300
+Wire Wire Line
+	2100 3300 2100 3400
+Wire Wire Line
+	1300 3400 1300 3300
+Connection ~ 1300 3300
+Wire Wire Line
+	1300 3300 2100 3300
+$Comp
+L power:GNDA #PWR?
+U 1 1 5E60638A
+P 2100 3800
+AR Path="/5E5D245F/5E60638A" Ref="#PWR?"  Part="1" 
+AR Path="/5E60638A" Ref="#PWR?"  Part="1" 
+F 0 "#PWR?" H 2100 3550 50  0001 C CNN
+F 1 "GNDA" H 2105 3627 50  0000 C CNN
+F 2 "" H 2100 3800 50  0001 C CNN
+F 3 "" H 2100 3800 50  0001 C CNN
+	1    2100 3800
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	2100 3800 2100 3700
+Wire Wire Line
+	1300 3800 1300 3700
+Text GLabel 1100 3300 0    50   Input ~ 0
+A-15V
+$Comp
+L Device:CP C?
+U 1 1 5E610F54
+P 1300 4500
+F 0 "C?" H 1418 4546 50  0000 L CNN
+F 1 "1000µF/25V" H 1418 4455 50  0000 L CNN
+F 2 "" H 1338 4350 50  0001 C CNN
+F 3 "~" H 1300 4500 50  0001 C CNN
+	1    1300 4500
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:C C?
+U 1 1 5E610F5A
+P 2100 4500
+F 0 "C?" H 2215 4546 50  0000 L CNN
+F 1 "2.2µF/25V/UL ESR" H 2215 4455 50  0000 L CNN
+F 2 "" H 2138 4350 50  0001 C CNN
+F 3 "~" H 2100 4500 50  0001 C CNN
+	1    2100 4500
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:GNDA #PWR?
+U 1 1 5E610F60
+P 1300 4750
+AR Path="/5E5D245F/5E610F60" Ref="#PWR?"  Part="1" 
+AR Path="/5E610F60" Ref="#PWR?"  Part="1" 
+F 0 "#PWR?" H 1300 4500 50  0001 C CNN
+F 1 "GNDA" H 1305 4577 50  0000 C CNN
+F 2 "" H 1300 4750 50  0001 C CNN
+F 3 "" H 1300 4750 50  0001 C CNN
+	1    1300 4750
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	1100 4250 1300 4250
+Wire Wire Line
+	2100 4250 2100 4350
+Wire Wire Line
+	1300 4350 1300 4250
+Connection ~ 1300 4250
+Wire Wire Line
+	1300 4250 2100 4250
+$Comp
+L power:GNDA #PWR?
+U 1 1 5E610F6B
+P 2100 4750
+AR Path="/5E5D245F/5E610F6B" Ref="#PWR?"  Part="1" 
+AR Path="/5E610F6B" Ref="#PWR?"  Part="1" 
+F 0 "#PWR?" H 2100 4500 50  0001 C CNN
+F 1 "GNDA" H 2105 4577 50  0000 C CNN
+F 2 "" H 2100 4750 50  0001 C CNN
+F 3 "" H 2100 4750 50  0001 C CNN
+	1    2100 4750
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	2100 4750 2100 4650
+Wire Wire Line
+	1300 4750 1300 4650
+Text GLabel 1100 4250 0    50   Input ~ 0
+A+3.3V
 $EndSCHEMATC
