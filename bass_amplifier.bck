@@ -24,15 +24,21 @@ K LED diode
 F ~
 $ENDCMP
 #
-$CMP R_POT
+$CMP R_POT_SW
 D Potentiometer
 K resistor variable
 F ~
 $ENDCMP
 #
-$CMP R_POT_SW
-D Potentiometer
-K resistor variable
+$CMP SW_SPST_X2_LED
+D Single Pole Single Throw (SPST) switch
+K switch lever
+F ~
+$ENDCMP
+#
+$CMP SW_SPST_X3
+D Single Pole Single Throw (SPST) switch
+K switch lever
 F ~
 $ENDCMP
 #

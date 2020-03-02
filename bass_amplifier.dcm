@@ -30,4 +30,10 @@ K resistor variable
 F ~
 $ENDCMP
 #
+$CMP SW_SPST_X3
+D Single Pole Single Throw (SPST) switch
+K switch lever
+F ~
+$ENDCMP
+#
 #End Doc Library
