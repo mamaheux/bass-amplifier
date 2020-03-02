@@ -1,0 +1,219 @@
+EESchema Schematic File Version 4
+EELAYER 30 0
+EELAYER END
+$Descr A4 11693 8268
+encoding utf-8
+Sheet 1 4
+Title ""
+Date ""
+Rev ""
+Comp ""
+Comment1 ""
+Comment2 ""
+Comment3 ""
+Comment4 ""
+$EndDescr
+$Sheet
+S 2450 1000 1000 600 
+U 5E5D9B7F
+F0 "MCU" 50
+F1 "MCU.sch" 50
+F2 "DSP_TX" I R 3450 1100 50 
+F3 "DSP_RX" O R 3450 1200 50 
+F4 "fan_pwm" O L 2450 1100 50 
+$EndSheet
+$Comp
+L power:GNDD #PWR?
+U 1 1 5E631997
+P 1600 1500
+AR Path="/5E5D9B7F/5E5DB240/5E631997" Ref="#PWR?"  Part="1" 
+AR Path="/5E5D9B7F/5E631997" Ref="#PWR?"  Part="1" 
+AR Path="/5E631997" Ref="#PWR?"  Part="1" 
+F 0 "#PWR?" H 1600 1250 50  0001 C CNN
+F 1 "GNDD" H 1604 1345 50  0000 C CNN
+F 2 "" H 1600 1500 50  0001 C CNN
+F 3 "" H 1600 1500 50  0001 C CNN
+	1    1600 1500
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	1350 1400 1600 1400
+Wire Wire Line
+	1600 1400 1600 1500
+Wire Wire Line
+	1350 1300 1600 1300
+Wire Wire Line
+	1600 1300 1600 1400
+Connection ~ 1600 1400
+Text GLabel 1700 900  2    50   Input ~ 0
+D+5V
+Text GLabel 1700 1000 2    50   Input ~ 0
+D+12V
+Wire Wire Line
+	1350 1000 1700 1000
+Wire Wire Line
+	1350 900  1700 900 
+$Comp
+L Connector:Conn_01x06_Male J?
+U 1 1 5E6BB4AC
+P 1150 1100
+F 0 "J?" H 1258 1481 50  0000 C CNN
+F 1 "Conn_01x06_Male" H 1258 1390 50  0000 C CNN
+F 2 "" H 1150 1100 50  0001 C CNN
+F 3 "~" H 1150 1100 50  0001 C CNN
+	1    1150 1100
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	1350 1100 2450 1100
+Wire Wire Line
+	1600 1300 1600 1200
+Wire Wire Line
+	1600 1200 1350 1200
+Connection ~ 1600 1300
+Text GLabel 2250 2050 0    50   Input ~ 0
+D+5V
+Text GLabel 2250 3150 0    50   Input ~ 0
+D+12V
+$Comp
+L power:GNDD #PWR?
+U 1 1 5E6C142A
+P 2450 2550
+AR Path="/5E5D9B7F/5E5DB240/5E6C142A" Ref="#PWR?"  Part="1" 
+AR Path="/5E5D9B7F/5E6C142A" Ref="#PWR?"  Part="1" 
+AR Path="/5E6C142A" Ref="#PWR?"  Part="1" 
+F 0 "#PWR?" H 2450 2300 50  0001 C CNN
+F 1 "GNDD" H 2454 2395 50  0000 C CNN
+F 2 "" H 2450 2550 50  0001 C CNN
+F 3 "" H 2450 2550 50  0001 C CNN
+	1    2450 2550
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:CP C?
+U 1 1 5E6C2472
+P 2450 2300
+F 0 "C?" H 2568 2346 50  0000 L CNN
+F 1 "1000µF/25V" H 2568 2255 50  0000 L CNN
+F 2 "" H 2488 2150 50  0001 C CNN
+F 3 "~" H 2450 2300 50  0001 C CNN
+	1    2450 2300
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:C C?
+U 1 1 5E6C320C
+P 3200 2300
+F 0 "C?" H 3315 2346 50  0000 L CNN
+F 1 "2.2µF/25V/UL low ESR" H 3315 2255 50  0000 L CNN
+F 2 "" H 3238 2150 50  0001 C CNN
+F 3 "~" H 3200 2300 50  0001 C CNN
+	1    3200 2300
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	2250 2050 2450 2050
+Wire Wire Line
+	2450 2050 2450 2150
+Connection ~ 2450 2050
+$Comp
+L power:GNDD #PWR?
+U 1 1 5E6C489C
+P 3200 2550
+AR Path="/5E5D9B7F/5E5DB240/5E6C489C" Ref="#PWR?"  Part="1" 
+AR Path="/5E5D9B7F/5E6C489C" Ref="#PWR?"  Part="1" 
+AR Path="/5E6C489C" Ref="#PWR?"  Part="1" 
+F 0 "#PWR?" H 3200 2300 50  0001 C CNN
+F 1 "GNDD" H 3204 2395 50  0000 C CNN
+F 2 "" H 3200 2550 50  0001 C CNN
+F 3 "" H 3200 2550 50  0001 C CNN
+	1    3200 2550
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	3200 2450 3200 2550
+Wire Wire Line
+	2450 2550 2450 2450
+Wire Wire Line
+	3200 2050 3200 2150
+Wire Wire Line
+	2450 2050 3200 2050
+$Comp
+L power:GNDD #PWR?
+U 1 1 5E6C7EDB
+P 2450 3650
+AR Path="/5E5D9B7F/5E5DB240/5E6C7EDB" Ref="#PWR?"  Part="1" 
+AR Path="/5E5D9B7F/5E6C7EDB" Ref="#PWR?"  Part="1" 
+AR Path="/5E6C7EDB" Ref="#PWR?"  Part="1" 
+F 0 "#PWR?" H 2450 3400 50  0001 C CNN
+F 1 "GNDD" H 2454 3495 50  0000 C CNN
+F 2 "" H 2450 3650 50  0001 C CNN
+F 3 "" H 2450 3650 50  0001 C CNN
+	1    2450 3650
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:CP C?
+U 1 1 5E6C7EE1
+P 2450 3400
+F 0 "C?" H 2568 3446 50  0000 L CNN
+F 1 "1000µF/25V" H 2568 3355 50  0000 L CNN
+F 2 "" H 2488 3250 50  0001 C CNN
+F 3 "~" H 2450 3400 50  0001 C CNN
+	1    2450 3400
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:C C?
+U 1 1 5E6C7EE7
+P 3200 3400
+F 0 "C?" H 3315 3446 50  0000 L CNN
+F 1 "2.2µF/25V/UL low ESR" H 3315 3355 50  0000 L CNN
+F 2 "" H 3238 3250 50  0001 C CNN
+F 3 "~" H 3200 3400 50  0001 C CNN
+	1    3200 3400
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	2450 3150 2450 3250
+$Comp
+L power:GNDD #PWR?
+U 1 1 5E6C7EEE
+P 3200 3650
+AR Path="/5E5D9B7F/5E5DB240/5E6C7EEE" Ref="#PWR?"  Part="1" 
+AR Path="/5E5D9B7F/5E6C7EEE" Ref="#PWR?"  Part="1" 
+AR Path="/5E6C7EEE" Ref="#PWR?"  Part="1" 
+F 0 "#PWR?" H 3200 3400 50  0001 C CNN
+F 1 "GNDD" H 3204 3495 50  0000 C CNN
+F 2 "" H 3200 3650 50  0001 C CNN
+F 3 "" H 3200 3650 50  0001 C CNN
+	1    3200 3650
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	3200 3550 3200 3650
+Wire Wire Line
+	2450 3650 2450 3550
+Wire Wire Line
+	3200 3150 3200 3250
+Wire Wire Line
+	3200 3150 2450 3150
+Wire Wire Line
+	2450 3150 2250 3150
+Connection ~ 2450 3150
+$Comp
+L Connector:Conn_01x02_Male J?
+U 1 1 5E6CA33C
+P 4000 1200
+F 0 "J?" H 3972 1082 50  0000 R CNN
+F 1 "Conn_01x02_Male" H 3972 1173 50  0000 R CNN
+F 2 "" H 4000 1200 50  0001 C CNN
+F 3 "~" H 4000 1200 50  0001 C CNN
+	1    4000 1200
+	-1   0    0    1   
+$EndComp
+Wire Wire Line
+	3450 1100 3800 1100
+Wire Wire Line
+	3450 1200 3800 1200
+$EndSCHEMATC

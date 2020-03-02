@@ -22,10 +22,4 @@ F2 "DSP_output" I R 1850 1150 50
 F3 "power_amp_signal" O R 1850 1250 50 
 F4 "DSP_input" O R 1850 1050 50 
 $EndSheet
-$Sheet
-S 2800 1500 1000 600 
-U 5E5D9B7F
-F0 "MCU" 50
-F1 "MCU.sch" 50
-$EndSheet
 $EndSCHEMATC
