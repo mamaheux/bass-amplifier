@@ -2261,4 +2261,6 @@ Wire Wire Line
 Connection ~ 14100 3150
 Wire Wire Line
 	14100 3150 14300 3150
+Text Notes 5050 2150 0    50   ~ 0
+-15 dB pad
 $EndSCHEMATC

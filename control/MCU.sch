@@ -19,49 +19,22 @@ U 1 1 5E5D9C58
 P 3000 1400
 F 0 "U1" H 3700 1565 50  0000 C CNN
 F 1 "Teensy_LC" H 3700 1474 50  0000 C CNN
-F 2 "" H 3000 1400 50  0001 C CNN
+F 2 "bass_amplifier:Teensy_LC" H 3000 1400 50  0001 C CNN
 F 3 "" H 3000 1400 50  0001 C CNN
 	1    3000 1400
 	1    0    0    -1  
 $EndComp
-$Sheet
-S 5350 1500 2050 1750
-U 5E5DB240
-F0 "MCU_control_elements" 50
-F1 "MCU_control_elements.sch" 50
-F2 "MCU_3.3V" I L 5350 1700 50 
-F3 "contour_pot" O L 5350 2700 50 
-F4 "presence_pot" O L 5350 2600 50 
-F5 "EQ_low_pot" O L 5350 2500 50 
-F6 "EQ_low_mid_pot" O L 5350 2400 50 
-F7 "EQ_high_mid_pot" O L 5350 2300 50 
-F8 "EQ_high_pot" O L 5350 2200 50 
-F9 "comp_ratio_pot" O L 5350 2100 50 
-F10 "comp_threshold_pot" O L 5350 2000 50 
-F11 "overdrive_gain_pot" O R 7400 2150 50 
-F12 "overdrive_tone_pot" O R 7400 2250 50 
-F13 "octaver_down_pot" O R 7400 1750 50 
-F14 "octaver_up_pot" O R 7400 1850 50 
-F15 "delay_vol_pot" O R 7400 1950 50 
-F16 "reverb_vol_pot" O R 7400 2050 50 
-F17 "mute_sw" O R 7400 2700 50 
-F18 "delay_tap_button" O R 7400 2800 50 
-$EndSheet
 $Comp
 L bass_amplifier:MCP3208 U2
 U 1 1 5E747D2B
 P 8700 1600
 F 0 "U2" H 8875 1675 50  0000 C CNN
 F 1 "MCP3208" H 8875 1584 50  0000 C CNN
-F 2 "" H 8700 1600 50  0001 C CNN
+F 2 "Package_SO:SOIC-16_3.9x9.9mm_P1.27mm" H 8700 1600 50  0001 C CNN
 F 3 "" H 8700 1600 50  0001 C CNN
 	1    8700 1600
 	1    0    0    -1  
 $EndComp
-Text Label 7500 2700 0    50   ~ 0
-mute_sw
-Text Label 7500 2800 0    50   ~ 0
-delay_tap_button
 Wire Wire Line
 	2600 2800 2450 2800
 Wire Wire Line
@@ -121,10 +94,6 @@ Wire Wire Line
 Wire Wire Line
 	7400 2050 8300 2050
 Wire Wire Line
-	7500 2700 7400 2700
-Wire Wire Line
-	7400 2800 7500 2800
-Wire Wire Line
 	4800 1500 4950 1500
 Wire Wire Line
 	4950 1500 4950 1200
@@ -135,8 +104,8 @@ L power:GNDD #PWR?
 U 1 1 5E77C2E4
 P 2000 1500
 AR Path="/5E5D9B7F/5E5DB240/5E77C2E4" Ref="#PWR?"  Part="1" 
-AR Path="/5E5D9B7F/5E77C2E4" Ref="#PWR?"  Part="1" 
-F 0 "#PWR?" H 2000 1250 50  0001 C CNN
+AR Path="/5E5D9B7F/5E77C2E4" Ref="#PWR06"  Part="1" 
+F 0 "#PWR06" H 2000 1250 50  0001 C CNN
 F 1 "GNDD" H 2004 1345 50  0000 C CNN
 F 2 "" H 2000 1500 50  0001 C CNN
 F 3 "" H 2000 1500 50  0001 C CNN
@@ -168,8 +137,8 @@ L power:GNDD #PWR?
 U 1 1 5E780006
 P 10050 2600
 AR Path="/5E5D9B7F/5E5DB240/5E780006" Ref="#PWR?"  Part="1" 
-AR Path="/5E5D9B7F/5E780006" Ref="#PWR?"  Part="1" 
-F 0 "#PWR?" H 10050 2350 50  0001 C CNN
+AR Path="/5E5D9B7F/5E780006" Ref="#PWR09"  Part="1" 
+F 0 "#PWR09" H 10050 2350 50  0001 C CNN
 F 1 "GNDD" H 10054 2445 50  0000 C CNN
 F 2 "" H 10050 2600 50  0001 C CNN
 F 3 "" H 10050 2600 50  0001 C CNN
@@ -190,18 +159,14 @@ L power:GNDD #PWR?
 U 1 1 5E781FEB
 P 8200 2500
 AR Path="/5E5D9B7F/5E5DB240/5E781FEB" Ref="#PWR?"  Part="1" 
-AR Path="/5E5D9B7F/5E781FEB" Ref="#PWR?"  Part="1" 
-F 0 "#PWR?" H 8200 2250 50  0001 C CNN
+AR Path="/5E5D9B7F/5E781FEB" Ref="#PWR07"  Part="1" 
+F 0 "#PWR07" H 8200 2250 50  0001 C CNN
 F 1 "GNDD" H 8204 2345 50  0000 C CNN
 F 2 "" H 8200 2500 50  0001 C CNN
 F 3 "" H 8200 2500 50  0001 C CNN
 	1    8200 2500
 	1    0    0    -1  
 $EndComp
-Text Label 2500 1800 2    50   ~ 0
-mute_sw
-Text Label 2500 1900 2    50   ~ 0
-delay_tap_button
 Wire Wire Line
 	2600 1800 2500 1800
 Wire Wire Line
@@ -219,10 +184,10 @@ S 900  1900 750  750
 U 5E78D2F2
 F0 "MCU_LED" 50
 F1 "MCU_LED.sch" 50
-F2 "mute_LED" I R 1650 2000 50 
+F2 "mute_LED" I R 1650 2300 50 
 F3 "comp_LED" I R 1650 2100 50 
-F4 "overdrive_LED" I R 1650 2200 50 
-F5 "octaver_LED" I R 1650 2300 50 
+F4 "overdrive_LED" I R 1650 2000 50 
+F5 "octaver_LED" I R 1650 2200 50 
 F6 "delay_LED" I R 1650 2400 50 
 F7 "reverb_LED" I R 1650 2500 50 
 $EndSheet
@@ -246,48 +211,37 @@ Wire Wire Line
 	8200 2500 8200 2450
 Wire Wire Line
 	8200 2450 8300 2450
-Wire Wire Line
-	8300 2350 8200 2350
-Wire Wire Line
-	8200 2350 8200 2450
-Connection ~ 8200 2450
-Wire Wire Line
-	3800 3850 3800 4000
-Wire Wire Line
-	3250 4000 3250 3850
-Text HLabel 4800 1800 2    50   Output ~ 0
+Text HLabel 2500 1900 0    50   Output ~ 0
 fan_pwm
 $Comp
-L Device:Thermistor_NTC TH?
+L Device:Thermistor_NTC TH1
 U 1 1 5E66787A
 P 10850 1950
-F 0 "TH?" H 10947 1996 50  0000 L CNN
+F 0 "TH1" H 10947 1996 50  0000 L CNN
 F 1 "10k" H 10947 1905 50  0000 L CNN
-F 2 "" H 10850 2000 50  0001 C CNN
+F 2 "Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical" H 10850 2000 50  0001 C CNN
 F 3 "~" H 10850 2000 50  0001 C CNN
 	1    10850 1950
 	1    0    0    -1  
 $EndComp
 $Comp
-L Device:R R?
+L Device:R R1
 U 1 1 5E66E59C
 P 10850 2350
-F 0 "R?" H 10920 2396 50  0000 L CNN
+F 0 "R1" H 10920 2396 50  0000 L CNN
 F 1 "10k" H 10920 2305 50  0000 L CNN
-F 2 "" V 10780 2350 50  0001 C CNN
+F 2 "Resistor_SMD:R_0805_2012Metric" V 10780 2350 50  0001 C CNN
 F 3 "~" H 10850 2350 50  0001 C CNN
 	1    10850 2350
 	1    0    0    -1  
 $EndComp
-Wire Wire Line
-	3250 4000 3800 4000
 $Comp
 L power:GNDD #PWR?
 U 1 1 5E671F46
 P 10850 2600
 AR Path="/5E5D9B7F/5E5DB240/5E671F46" Ref="#PWR?"  Part="1" 
-AR Path="/5E5D9B7F/5E671F46" Ref="#PWR?"  Part="1" 
-F 0 "#PWR?" H 10850 2350 50  0001 C CNN
+AR Path="/5E5D9B7F/5E671F46" Ref="#PWR010"  Part="1" 
+F 0 "#PWR010" H 10850 2350 50  0001 C CNN
 F 1 "GNDD" H 10854 2445 50  0000 C CNN
 F 2 "" H 10850 2600 50  0001 C CNN
 F 3 "" H 10850 2600 50  0001 C CNN
@@ -306,15 +260,15 @@ Wire Wire Line
 	10850 2150 10850 2200
 Text Label 10900 2150 0    50   ~ 0
 V_temp
-Text Label 4800 1900 0    50   ~ 0
+Text Label 8300 2350 2    50   ~ 0
 V_temp
 $Comp
 L power:GNDD #PWR?
 U 1 1 5E693600
 P 10000 1700
 AR Path="/5E5D9B7F/5E5DB240/5E693600" Ref="#PWR?"  Part="1" 
-AR Path="/5E5D9B7F/5E693600" Ref="#PWR?"  Part="1" 
-F 0 "#PWR?" H 10000 1450 50  0001 C CNN
+AR Path="/5E5D9B7F/5E693600" Ref="#PWR08"  Part="1" 
+F 0 "#PWR08" H 10000 1450 50  0001 C CNN
 F 1 "GNDD" H 10004 1545 50  0000 C CNN
 F 2 "" H 10000 1700 50  0001 C CNN
 F 3 "" H 10000 1700 50  0001 C CNN
@@ -331,16 +285,58 @@ Connection ~ 10000 1250
 Wire Wire Line
 	10000 1250 10850 1250
 $Comp
-L Device:C C?
+L Device:C C5
 U 1 1 5E692B8B
 P 10000 1500
-F 0 "C?" H 10115 1546 50  0000 L CNN
+F 0 "C5" H 10115 1546 50  0000 L CNN
 F 1 "1µF/10V/UL ESR" H 10115 1455 50  0000 L CNN
-F 2 "" H 10038 1350 50  0001 C CNN
+F 2 "Capacitor_SMD:C_0805_2012Metric" H 10038 1350 50  0001 C CNN
 F 3 "~" H 10000 1500 50  0001 C CNN
 	1    10000 1500
 	1    0    0    -1  
 $EndComp
 Wire Wire Line
 	10850 1250 10850 1800
+NoConn ~ 2950 3850
+NoConn ~ 3050 3850
+NoConn ~ 3150 3850
+NoConn ~ 3600 3850
+NoConn ~ 3700 3850
+NoConn ~ 4150 3850
+NoConn ~ 4800 1600
+Text Label 3250 3950 0    50   ~ 0
+3V3
+Text Label 4900 1700 0    50   ~ 0
+3V3
+Wire Wire Line
+	3250 3950 3250 3850
+NoConn ~ 3800 3850
+$Sheet
+S 5350 1500 2050 1750
+U 5E5DB240
+F0 "MCU_control_elements" 50
+F1 "MCU_control_elements.sch" 50
+F2 "MCU_3.3V" I L 5350 1700 50 
+F3 "contour_pot" O L 5350 2100 50 
+F4 "presence_pot" O L 5350 2000 50 
+F5 "EQ_low_pot" O L 5350 2300 50 
+F6 "EQ_low_mid_pot" O L 5350 2200 50 
+F7 "EQ_high_mid_pot" O L 5350 2500 50 
+F8 "EQ_high_pot" O L 5350 2400 50 
+F9 "comp_ratio_pot" O L 5350 2700 50 
+F10 "comp_threshold_pot" O L 5350 2600 50 
+F11 "overdrive_gain_pot" O R 7400 2150 50 
+F12 "overdrive_tone_pot" O R 7400 2250 50 
+F13 "octaver_down_pot" O R 7400 1950 50 
+F14 "octaver_up_pot" O R 7400 2050 50 
+F15 "delay_vol_pot" O R 7400 1750 50 
+F16 "reverb_vol_pot" O R 7400 1850 50 
+F17 "mute_sw" O L 5350 1900 50 
+F18 "delay_tap_button" O L 5350 1800 50 
+$EndSheet
+NoConn ~ 2500 1800
+Wire Wire Line
+	5350 1900 4800 1900
+Wire Wire Line
+	4800 1800 5350 1800
 $EndSCHEMATC

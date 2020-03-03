@@ -1,0 +1,3 @@
+(fp_lib_table
+  (lib (name bass_amplifier)(type KiCad)(uri /home/marc-antoine/Bureau/bass-amplifier/bass_amplifier.pretty)(options "")(descr ""))
+)
