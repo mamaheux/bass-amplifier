@@ -24,12 +24,6 @@ K LED diode
 F ~
 $ENDCMP
 #
-$CMP Q_NMOS_DGS
-D N-MOSFET transistor, drain/gate/source
-K transistor NMOS N-MOS N-MOSFET
-F ~
-$ENDCMP
-#
 $CMP R_POT_SW
 D Potentiometer
 K resistor variable
