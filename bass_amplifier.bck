@@ -36,6 +36,12 @@ K switch lever
 F ~
 $ENDCMP
 #
+$CMP SW_SPST_X4
+D Single Pole Single Throw (SPST) switch
+K switch lever
+F ~
+$ENDCMP
+#
 $CMP TD9944
 D N-MOSFET transistor, drain/gate/source
 K transistor NMOS N-MOS N-MOSFET
