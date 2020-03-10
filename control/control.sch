@@ -201,19 +201,37 @@ Wire Wire Line
 Wire Wire Line
 	2450 3150 2250 3150
 Connection ~ 2450 3150
-$Comp
-L Connector:Conn_01x02_Male J2
-U 1 1 5E6CA33C
-P 4000 1200
-F 0 "J2" H 3972 1082 50  0000 R CNN
-F 1 "Conn_01x02_Male" H 3972 1173 50  0000 R CNN
-F 2 "Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical" H 4000 1200 50  0001 C CNN
-F 3 "~" H 4000 1200 50  0001 C CNN
-	1    4000 1200
-	-1   0    0    1   
-$EndComp
 Wire Wire Line
 	3450 1100 3800 1100
 Wire Wire Line
 	3450 1200 3800 1200
+$Comp
+L Connector:Conn_01x03_Male J2
+U 1 1 5E68EF6B
+P 4000 1200
+F 0 "J2" H 3972 1132 50  0000 R CNN
+F 1 "Conn_01x03_Male" H 3972 1223 50  0000 R CNN
+F 2 "Connector_PinHeader_2.54mm:PinHeader_1x03_P2.54mm_Vertical" H 4000 1200 50  0001 C CNN
+F 3 "~" H 4000 1200 50  0001 C CNN
+	1    4000 1200
+	-1   0    0    1   
+$EndComp
+$Comp
+L power:GNDD #PWR?
+U 1 1 5E690053
+P 3700 1350
+AR Path="/5E5D9B7F/5E5DB240/5E690053" Ref="#PWR?"  Part="1" 
+AR Path="/5E5D9B7F/5E690053" Ref="#PWR?"  Part="1" 
+AR Path="/5E690053" Ref="#PWR0107"  Part="1" 
+F 0 "#PWR0107" H 3700 1100 50  0001 C CNN
+F 1 "GNDD" H 3704 1195 50  0000 C CNN
+F 2 "" H 3700 1350 50  0001 C CNN
+F 3 "" H 3700 1350 50  0001 C CNN
+	1    3700 1350
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	3800 1300 3700 1300
+Wire Wire Line
+	3700 1300 3700 1350
 $EndSCHEMATC
