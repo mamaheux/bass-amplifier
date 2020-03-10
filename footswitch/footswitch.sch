@@ -432,9 +432,9 @@ F8 "delay_tap_button" O R 6050 1650 50
 F9 "reverb_sw" O R 6050 2050 50 
 F10 "opt_1_sw" O R 6050 1950 50 
 F11 "opt_2_sw" O R 6050 1850 50 
-F12 "opt_3_sw" O R 6050 2150 50 
+F12 "opt_3_sw" O R 6050 2350 50 
 F13 "opt_4_sw" O R 6050 2250 50 
-F14 "opt_5_sw" O R 6050 2350 50 
+F14 "opt_5_sw" O R 6050 2150 50 
 $EndSheet
 Wire Wire Line
 	6050 1250 7100 1250
