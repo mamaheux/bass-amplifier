@@ -1,0 +1,1031 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<export version="D">
+  <design>
+    <source>/home/marc-antoine/Bureau/bass-amplifier/psu/psu.sch</source>
+    <date>mar 10 mar 2020 20:25:18 EDT</date>
+    <tool>Eeschema 5.1.5-52549c5~84~ubuntu18.04.1</tool>
+    <sheet number="1" name="/" tstamps="/">
+      <title_block>
+        <title/>
+        <company/>
+        <rev/>
+        <date/>
+        <source>psu.sch</source>
+        <comment number="1" value=""/>
+        <comment number="2" value=""/>
+        <comment number="3" value=""/>
+        <comment number="4" value=""/>
+      </title_block>
+    </sheet>
+    <sheet number="2" name="/A+15V_A-15V.sch/" tstamps="/5E65B39F/">
+      <title_block>
+        <title/>
+        <company/>
+        <rev/>
+        <date/>
+        <source>A+15V_A-15V.sch</source>
+        <comment number="1" value=""/>
+        <comment number="2" value=""/>
+        <comment number="3" value=""/>
+        <comment number="4" value=""/>
+      </title_block>
+    </sheet>
+    <sheet number="3" name="/D+12V/" tstamps="/5E66D107/">
+      <title_block>
+        <title/>
+        <company/>
+        <rev/>
+        <date/>
+        <source>D+12V.sch</source>
+        <comment number="1" value=""/>
+        <comment number="2" value=""/>
+        <comment number="3" value=""/>
+        <comment number="4" value=""/>
+      </title_block>
+    </sheet>
+    <sheet number="4" name="/D+5V/" tstamps="/5E66E479/">
+      <title_block>
+        <title/>
+        <company/>
+        <rev/>
+        <date/>
+        <source>D+5V.sch</source>
+        <comment number="1" value=""/>
+        <comment number="2" value=""/>
+        <comment number="3" value=""/>
+        <comment number="4" value=""/>
+      </title_block>
+    </sheet>
+    <sheet number="5" name="/A+9V/" tstamps="/5E699B57/">
+      <title_block>
+        <title/>
+        <company/>
+        <rev/>
+        <date/>
+        <source>A+9V.sch</source>
+        <comment number="1" value=""/>
+        <comment number="2" value=""/>
+        <comment number="3" value=""/>
+        <comment number="4" value=""/>
+      </title_block>
+    </sheet>
+    <sheet number="6" name="/A+3/" tstamps="/5E6A8F7D/">
+      <title_block>
+        <title/>
+        <company/>
+        <rev/>
+        <date/>
+        <source>A+3.sch</source>
+        <comment number="1" value=""/>
+        <comment number="2" value=""/>
+        <comment number="3" value=""/>
+        <comment number="4" value=""/>
+      </title_block>
+    </sheet>
+    <sheet number="7" name="/fan/" tstamps="/5E6D102E/">
+      <title_block>
+        <title/>
+        <company/>
+        <rev/>
+        <date/>
+        <source>fan.sch</source>
+        <comment number="1" value=""/>
+        <comment number="2" value=""/>
+        <comment number="3" value=""/>
+        <comment number="4" value=""/>
+      </title_block>
+    </sheet>
+  </design>
+  <components>
+    <comp ref="J1">
+      <value>Conn_01x03_Female</value>
+      <datasheet>~</datasheet>
+      <libsource lib="Connector" part="Conn_01x03_Female" description="Generic connector, single row, 01x03, script generated (kicad-library-utils/schlib/autogen/connector/)"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5E645A64</tstamp>
+    </comp>
+    <comp ref="D1">
+      <value>BR81</value>
+      <footprint>Diode_SMD:Diode_Bridge_Diotec_ABS</footprint>
+      <datasheet>https://diotec.com/tl_files/diotec/files/pdf/datasheets/abs2.pdf</datasheet>
+      <libsource lib="Diode_Bridge" part="ABS2" description="Miniature Glass Passivated Single-Phase Surface Mount Bridge Rectifiers, 140V Vrms, 0.8A If, ABS SMD package"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5E6479D2</tstamp>
+    </comp>
+    <comp ref="C1">
+      <value>10000µF/35V</value>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="CP" description="Polarized capacitor"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5E6499F4</tstamp>
+    </comp>
+    <comp ref="C3">
+      <value>1µF/35V</value>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5E64A2B1</tstamp>
+    </comp>
+    <comp ref="C2">
+      <value>10000µF/35V</value>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="CP" description="Polarized capacitor"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5E64A84D</tstamp>
+    </comp>
+    <comp ref="F1">
+      <value>1.5A</value>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="Fuse" description="Fuse"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5E64D2E7</tstamp>
+    </comp>
+    <comp ref="F2">
+      <value>1.5A</value>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="Fuse" description="Fuse"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5E64DAFD</tstamp>
+    </comp>
+    <comp ref="C4">
+      <value>1µF/35V</value>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5E65FA89</tstamp>
+    </comp>
+    <comp ref="J2">
+      <value>control board</value>
+      <datasheet>~</datasheet>
+      <libsource lib="Connector" part="Conn_01x06_Male" description="Generic connector, single row, 01x06, script generated (kicad-library-utils/schlib/autogen/connector/)"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5E6C35AB</tstamp>
+    </comp>
+    <comp ref="J3">
+      <value>processing</value>
+      <datasheet>~</datasheet>
+      <libsource lib="Connector" part="Conn_01x08_Male" description="Generic connector, single row, 01x08, script generated (kicad-library-utils/schlib/autogen/connector/)"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5E6E477B</tstamp>
+    </comp>
+    <comp ref="J4">
+      <value>processing</value>
+      <datasheet>~</datasheet>
+      <libsource lib="Connector" part="Conn_01x06_Male" description="Generic connector, single row, 01x06, script generated (kicad-library-utils/schlib/autogen/connector/)"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5E6F4126</tstamp>
+    </comp>
+    <comp ref="J5">
+      <value>pedals</value>
+      <datasheet>~</datasheet>
+      <libsource lib="Connector" part="Conn_01x02_Male" description="Generic connector, single row, 01x02, script generated (kicad-library-utils/schlib/autogen/connector/)"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5E715B50</tstamp>
+    </comp>
+    <comp ref="D4">
+      <value>LED</value>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="LED" description="Light emitting diode"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5E7865B0</tstamp>
+    </comp>
+    <comp ref="R1">
+      <value>0</value>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <sheetpath names="/A+15V_A-15V.sch/" tstamps="/5E65B39F/"/>
+      <tstamp>5E65C20E</tstamp>
+    </comp>
+    <comp ref="U1">
+      <value>MC7815</value>
+      <libsource lib="bass_amplifier" part="MC7815" description=""/>
+      <sheetpath names="/A+15V_A-15V.sch/" tstamps="/5E65B39F/"/>
+      <tstamp>5E65D91D</tstamp>
+    </comp>
+    <comp ref="C5">
+      <value>1µF/35V</value>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <sheetpath names="/A+15V_A-15V.sch/" tstamps="/5E65B39F/"/>
+      <tstamp>5E660B08</tstamp>
+    </comp>
+    <comp ref="C7">
+      <value>2.2µF/25V/UL ESR</value>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <sheetpath names="/A+15V_A-15V.sch/" tstamps="/5E65B39F/"/>
+      <tstamp>5E660CD7</tstamp>
+    </comp>
+    <comp ref="U2">
+      <value>MC7915</value>
+      <libsource lib="bass_amplifier" part="MC7915" description=""/>
+      <sheetpath names="/A+15V_A-15V.sch/" tstamps="/5E65B39F/"/>
+      <tstamp>5E661F6C</tstamp>
+    </comp>
+    <comp ref="C6">
+      <value>1µF/35V</value>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <sheetpath names="/A+15V_A-15V.sch/" tstamps="/5E65B39F/"/>
+      <tstamp>5E662D4D</tstamp>
+    </comp>
+    <comp ref="C8">
+      <value>2.2µF/25V/UL ESR</value>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <sheetpath names="/A+15V_A-15V.sch/" tstamps="/5E65B39F/"/>
+      <tstamp>5E66353A</tstamp>
+    </comp>
+    <comp ref="U3">
+      <value>MIC4684</value>
+      <libsource lib="bass_amplifier" part="MIC4684" description=""/>
+      <sheetpath names="/D+12V/" tstamps="/5E66D107/"/>
+      <tstamp>5E71F09E</tstamp>
+    </comp>
+    <comp ref="C9">
+      <value>33µF/35V/260mOhm</value>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="CP" description="Polarized capacitor"/>
+      <sheetpath names="/D+12V/" tstamps="/5E66D107/"/>
+      <tstamp>5E71F09F</tstamp>
+    </comp>
+    <comp ref="C10">
+      <value>1µF/35V</value>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <sheetpath names="/D+12V/" tstamps="/5E66D107/"/>
+      <tstamp>5E66F9B8</tstamp>
+    </comp>
+    <comp ref="R2">
+      <value>0</value>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <sheetpath names="/D+12V/" tstamps="/5E66D107/"/>
+      <tstamp>5E672234</tstamp>
+    </comp>
+    <comp ref="D2">
+      <value>SS34/40V/4A</value>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="D_Schottky" description="Schottky diode"/>
+      <sheetpath names="/D+12V/" tstamps="/5E66D107/"/>
+      <tstamp>5E71F0A7</tstamp>
+    </comp>
+    <comp ref="C11">
+      <value>0.33µF</value>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <sheetpath names="/D+12V/" tstamps="/5E66D107/"/>
+      <tstamp>5E71F0A8</tstamp>
+    </comp>
+    <comp ref="L1">
+      <value>68µH/Sumida CDRH104R-680MC</value>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="L" description="Inductor"/>
+      <sheetpath names="/D+12V/" tstamps="/5E66D107/"/>
+      <tstamp>5E71F0A9</tstamp>
+    </comp>
+    <comp ref="R3">
+      <value>3.01k</value>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <sheetpath names="/D+12V/" tstamps="/5E66D107/"/>
+      <tstamp>5E67A0DA</tstamp>
+    </comp>
+    <comp ref="R4">
+      <value>348</value>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <sheetpath names="/D+12V/" tstamps="/5E66D107/"/>
+      <tstamp>5E71F0AC</tstamp>
+    </comp>
+    <comp ref="C13">
+      <value>330µF/6.3V/160mOhm</value>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="CP" description="Polarized capacitor"/>
+      <sheetpath names="/D+12V/" tstamps="/5E66D107/"/>
+      <tstamp>5E71F0AE</tstamp>
+    </comp>
+    <comp ref="C14">
+      <value>2.2µF/25V/UL ESR</value>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <sheetpath names="/D+12V/" tstamps="/5E66D107/"/>
+      <tstamp>5E681368</tstamp>
+    </comp>
+    <comp ref="C12">
+      <value>0.1µF</value>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <sheetpath names="/D+12V/" tstamps="/5E66D107/"/>
+      <tstamp>5E71F0B2</tstamp>
+    </comp>
+    <comp ref="U4">
+      <value>MIC4684</value>
+      <libsource lib="bass_amplifier" part="MIC4684" description=""/>
+      <sheetpath names="/D+5V/" tstamps="/5E66E479/"/>
+      <tstamp>5E66E6B8</tstamp>
+    </comp>
+    <comp ref="C15">
+      <value>33µF/35V/260mOhm</value>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="CP" description="Polarized capacitor"/>
+      <sheetpath names="/D+5V/" tstamps="/5E66E479/"/>
+      <tstamp>5E66F33D</tstamp>
+    </comp>
+    <comp ref="C16">
+      <value>1µF/35V</value>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <sheetpath names="/D+5V/" tstamps="/5E66E479/"/>
+      <tstamp>5E71F0A0</tstamp>
+    </comp>
+    <comp ref="R5">
+      <value>0</value>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <sheetpath names="/D+5V/" tstamps="/5E66E479/"/>
+      <tstamp>5E71F0A2</tstamp>
+    </comp>
+    <comp ref="D3">
+      <value>SS34/40V/4A</value>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="D_Schottky" description="Schottky diode"/>
+      <sheetpath names="/D+5V/" tstamps="/5E66E479/"/>
+      <tstamp>5E675316</tstamp>
+    </comp>
+    <comp ref="C17">
+      <value>0.33µF</value>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <sheetpath names="/D+5V/" tstamps="/5E66E479/"/>
+      <tstamp>5E675E02</tstamp>
+    </comp>
+    <comp ref="L2">
+      <value>68µH/Sumida CDRH104R-680MC</value>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="L" description="Inductor"/>
+      <sheetpath names="/D+5V/" tstamps="/5E66E479/"/>
+      <tstamp>5E676336</tstamp>
+    </comp>
+    <comp ref="R6">
+      <value>3.01k</value>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <sheetpath names="/D+5V/" tstamps="/5E66E479/"/>
+      <tstamp>5E71F0AB</tstamp>
+    </comp>
+    <comp ref="R7">
+      <value>976</value>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <sheetpath names="/D+5V/" tstamps="/5E66E479/"/>
+      <tstamp>5E67A9E2</tstamp>
+    </comp>
+    <comp ref="C19">
+      <value>330µF/6.3V/160mOhm</value>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="CP" description="Polarized capacitor"/>
+      <sheetpath names="/D+5V/" tstamps="/5E66E479/"/>
+      <tstamp>5E67D247</tstamp>
+    </comp>
+    <comp ref="C20">
+      <value>2.2µF/25V/UL ESR</value>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <sheetpath names="/D+5V/" tstamps="/5E66E479/"/>
+      <tstamp>5E71F0B0</tstamp>
+    </comp>
+    <comp ref="C18">
+      <value>0.1µF</value>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <sheetpath names="/D+5V/" tstamps="/5E66E479/"/>
+      <tstamp>5E686AA7</tstamp>
+    </comp>
+    <comp ref="R8">
+      <value>0</value>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <sheetpath names="/A+9V/" tstamps="/5E699B57/"/>
+      <tstamp>5E69BC1F</tstamp>
+    </comp>
+    <comp ref="C23">
+      <value>2.2µF/25V/UL ESR</value>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <sheetpath names="/A+9V/" tstamps="/5E699B57/"/>
+      <tstamp>5E69DBFC</tstamp>
+    </comp>
+    <comp ref="U5">
+      <value>MC7809</value>
+      <libsource lib="bass_amplifier" part="MC7809" description=""/>
+      <sheetpath names="/A+9V/" tstamps="/5E699B57/"/>
+      <tstamp>5E69E335</tstamp>
+    </comp>
+    <comp ref="C22">
+      <value>2.2µF/25V/UL ESR</value>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <sheetpath names="/A+9V/" tstamps="/5E699B57/"/>
+      <tstamp>5E6B2D70</tstamp>
+    </comp>
+    <comp ref="F3">
+      <value>0.5A</value>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="Fuse" description="Fuse"/>
+      <sheetpath names="/A+9V/" tstamps="/5E699B57/"/>
+      <tstamp>5E6B9C87</tstamp>
+    </comp>
+    <comp ref="C21">
+      <value>470µF/16V</value>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="CP" description="Polarized capacitor"/>
+      <sheetpath names="/A+9V/" tstamps="/5E699B57/"/>
+      <tstamp>5E6B4621</tstamp>
+    </comp>
+    <comp ref="C25">
+      <value>1µF/35V/UL ESR</value>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <sheetpath names="/A+3/" tstamps="/5E6A8F7D/"/>
+      <tstamp>5E6A9A3B</tstamp>
+    </comp>
+    <comp ref="C26">
+      <value>47µF/6.3V</value>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <sheetpath names="/A+3/" tstamps="/5E6A8F7D/"/>
+      <tstamp>5E6A9A42</tstamp>
+    </comp>
+    <comp ref="U6">
+      <value>MIC37152</value>
+      <libsource lib="bass_amplifier" part="MIC37152" description=""/>
+      <sheetpath names="/A+3/" tstamps="/5E6A8F7D/"/>
+      <tstamp>5E6AA29C</tstamp>
+    </comp>
+    <comp ref="R9">
+      <value>0</value>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <sheetpath names="/A+3/" tstamps="/5E6A8F7D/"/>
+      <tstamp>5E6AD0BD</tstamp>
+    </comp>
+    <comp ref="R10">
+      <value>16.5k</value>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <sheetpath names="/A+3/" tstamps="/5E6A8F7D/"/>
+      <tstamp>5E6AFE1F</tstamp>
+    </comp>
+    <comp ref="R11">
+      <value>10k</value>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <sheetpath names="/A+3/" tstamps="/5E6A8F7D/"/>
+      <tstamp>5E6B02CC</tstamp>
+    </comp>
+    <comp ref="C24">
+      <value>470µF/16V</value>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="CP" description="Polarized capacitor"/>
+      <sheetpath names="/A+3/" tstamps="/5E6A8F7D/"/>
+      <tstamp>5E6BEBE0</tstamp>
+    </comp>
+    <comp ref="Q1">
+      <value>Q_NMOS_DGS</value>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="Q_NMOS_DGS" description="N-MOSFET transistor, drain/gate/source"/>
+      <sheetpath names="/fan/" tstamps="/5E6D102E/"/>
+      <tstamp>5E6D1DC5</tstamp>
+    </comp>
+    <comp ref="C27">
+      <value>CP</value>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="CP" description="Polarized capacitor"/>
+      <sheetpath names="/fan/" tstamps="/5E6D102E/"/>
+      <tstamp>5E6D333E</tstamp>
+    </comp>
+    <comp ref="J6">
+      <value>FAN</value>
+      <datasheet>~</datasheet>
+      <libsource lib="Connector" part="Conn_01x02_Male" description="Generic connector, single row, 01x02, script generated (kicad-library-utils/schlib/autogen/connector/)"/>
+      <sheetpath names="/fan/" tstamps="/5E6D102E/"/>
+      <tstamp>5E6D3B26</tstamp>
+    </comp>
+  </components>
+  <libparts>
+    <libpart lib="Connector" part="Conn_01x02_Male">
+      <description>Generic connector, single row, 01x02, script generated (kicad-library-utils/schlib/autogen/connector/)</description>
+      <docs>~</docs>
+      <footprints>
+        <fp>Connector*:*_1x??_*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">J</field>
+        <field name="Value">Conn_01x02_Male</field>
+      </fields>
+      <pins>
+        <pin num="1" name="Pin_1" type="passive"/>
+        <pin num="2" name="Pin_2" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="Connector" part="Conn_01x03_Female">
+      <description>Generic connector, single row, 01x03, script generated (kicad-library-utils/schlib/autogen/connector/)</description>
+      <docs>~</docs>
+      <footprints>
+        <fp>Connector*:*_1x??_*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">J</field>
+        <field name="Value">Conn_01x03_Female</field>
+      </fields>
+      <pins>
+        <pin num="1" name="Pin_1" type="passive"/>
+        <pin num="2" name="Pin_2" type="passive"/>
+        <pin num="3" name="Pin_3" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="Connector" part="Conn_01x06_Male">
+      <description>Generic connector, single row, 01x06, script generated (kicad-library-utils/schlib/autogen/connector/)</description>
+      <docs>~</docs>
+      <footprints>
+        <fp>Connector*:*_1x??_*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">J</field>
+        <field name="Value">Conn_01x06_Male</field>
+      </fields>
+      <pins>
+        <pin num="1" name="Pin_1" type="passive"/>
+        <pin num="2" name="Pin_2" type="passive"/>
+        <pin num="3" name="Pin_3" type="passive"/>
+        <pin num="4" name="Pin_4" type="passive"/>
+        <pin num="5" name="Pin_5" type="passive"/>
+        <pin num="6" name="Pin_6" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="Connector" part="Conn_01x08_Male">
+      <description>Generic connector, single row, 01x08, script generated (kicad-library-utils/schlib/autogen/connector/)</description>
+      <docs>~</docs>
+      <footprints>
+        <fp>Connector*:*_1x??_*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">J</field>
+        <field name="Value">Conn_01x08_Male</field>
+      </fields>
+      <pins>
+        <pin num="1" name="Pin_1" type="passive"/>
+        <pin num="2" name="Pin_2" type="passive"/>
+        <pin num="3" name="Pin_3" type="passive"/>
+        <pin num="4" name="Pin_4" type="passive"/>
+        <pin num="5" name="Pin_5" type="passive"/>
+        <pin num="6" name="Pin_6" type="passive"/>
+        <pin num="7" name="Pin_7" type="passive"/>
+        <pin num="8" name="Pin_8" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="Device" part="C">
+      <description>Unpolarized capacitor</description>
+      <docs>~</docs>
+      <footprints>
+        <fp>C_*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">C</field>
+        <field name="Value">C</field>
+      </fields>
+      <pins>
+        <pin num="1" name="~" type="passive"/>
+        <pin num="2" name="~" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="Device" part="CP">
+      <description>Polarized capacitor</description>
+      <docs>~</docs>
+      <footprints>
+        <fp>CP_*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">C</field>
+        <field name="Value">CP</field>
+      </fields>
+      <pins>
+        <pin num="1" name="~" type="passive"/>
+        <pin num="2" name="~" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="Device" part="D_Schottky">
+      <description>Schottky diode</description>
+      <docs>~</docs>
+      <footprints>
+        <fp>TO-???*</fp>
+        <fp>*_Diode_*</fp>
+        <fp>*SingleDiode*</fp>
+        <fp>D_*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">D</field>
+        <field name="Value">D_Schottky</field>
+      </fields>
+      <pins>
+        <pin num="1" name="K" type="passive"/>
+        <pin num="2" name="A" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="Device" part="Fuse">
+      <description>Fuse</description>
+      <docs>~</docs>
+      <footprints>
+        <fp>*Fuse*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">F</field>
+        <field name="Value">Fuse</field>
+      </fields>
+      <pins>
+        <pin num="1" name="~" type="passive"/>
+        <pin num="2" name="~" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="Device" part="L">
+      <description>Inductor</description>
+      <docs>~</docs>
+      <footprints>
+        <fp>Choke_*</fp>
+        <fp>*Coil*</fp>
+        <fp>Inductor_*</fp>
+        <fp>L_*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">L</field>
+        <field name="Value">L</field>
+      </fields>
+      <pins>
+        <pin num="1" name="1" type="passive"/>
+        <pin num="2" name="2" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="Device" part="LED">
+      <description>Light emitting diode</description>
+      <docs>~</docs>
+      <footprints>
+        <fp>LED*</fp>
+        <fp>LED_SMD:*</fp>
+        <fp>LED_THT:*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">D</field>
+        <field name="Value">LED</field>
+      </fields>
+      <pins>
+        <pin num="1" name="K" type="passive"/>
+        <pin num="2" name="A" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="Device" part="Q_NMOS_DGS">
+      <description>N-MOSFET transistor, drain/gate/source</description>
+      <docs>~</docs>
+      <fields>
+        <field name="Reference">Q</field>
+        <field name="Value">Q_NMOS_DGS</field>
+      </fields>
+      <pins>
+        <pin num="1" name="D" type="passive"/>
+        <pin num="2" name="G" type="input"/>
+        <pin num="3" name="S" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="Device" part="R">
+      <description>Resistor</description>
+      <docs>~</docs>
+      <footprints>
+        <fp>R_*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">R</field>
+        <field name="Value">R</field>
+      </fields>
+      <pins>
+        <pin num="1" name="~" type="passive"/>
+        <pin num="2" name="~" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="Diode_Bridge" part="ABS2">
+      <aliases>
+        <alias>ABS4</alias>
+        <alias>ABS6</alias>
+        <alias>ABS8</alias>
+        <alias>ABS10</alias>
+      </aliases>
+      <description>Miniature Glass Passivated Single-Phase Surface Mount Bridge Rectifiers, 140V Vrms, 0.8A If, ABS SMD package</description>
+      <docs>https://diotec.com/tl_files/diotec/files/pdf/datasheets/abs2.pdf</docs>
+      <footprints>
+        <fp>Diode*Bridge*Diotec*ABS*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">D</field>
+        <field name="Value">ABS2</field>
+        <field name="Footprint">Diode_SMD:Diode_Bridge_Diotec_ABS</field>
+      </fields>
+      <pins>
+        <pin num="1" name="+" type="passive"/>
+        <pin num="2" name="-" type="passive"/>
+        <pin num="3" name="~~" type="passive"/>
+        <pin num="4" name="~~" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="bass_amplifier" part="MC7809">
+      <fields>
+        <field name="Reference">U</field>
+        <field name="Value">MC7809</field>
+      </fields>
+      <pins>
+        <pin num="1" name="IN" type="input"/>
+        <pin num="2" name="GND/PAD" type="input"/>
+        <pin num="3" name="OUT" type="input"/>
+      </pins>
+    </libpart>
+    <libpart lib="bass_amplifier" part="MC7815">
+      <fields>
+        <field name="Reference">U</field>
+        <field name="Value">MC7815</field>
+      </fields>
+      <pins>
+        <pin num="1" name="IN" type="input"/>
+        <pin num="2" name="GND/PAD" type="input"/>
+        <pin num="3" name="OUT" type="input"/>
+      </pins>
+    </libpart>
+    <libpart lib="bass_amplifier" part="MC7915">
+      <fields>
+        <field name="Reference">U</field>
+        <field name="Value">MC7915</field>
+      </fields>
+      <pins>
+        <pin num="1" name="GND" type="input"/>
+        <pin num="2" name="IN/PAD" type="input"/>
+        <pin num="3" name="OUT" type="input"/>
+      </pins>
+    </libpart>
+    <libpart lib="bass_amplifier" part="MIC37152">
+      <fields>
+        <field name="Reference">U</field>
+        <field name="Value">MIC37152</field>
+      </fields>
+      <pins>
+        <pin num="1" name="EN" type="input"/>
+        <pin num="2" name="VIN" type="input"/>
+        <pin num="3" name="VOUT" type="output"/>
+        <pin num="4" name="ADJ" type="input"/>
+        <pin num="5" name="GND" type="input"/>
+        <pin num="6" name="GND" type="input"/>
+        <pin num="7" name="GND" type="input"/>
+        <pin num="8" name="GND" type="input"/>
+      </pins>
+    </libpart>
+    <libpart lib="bass_amplifier" part="MIC4684">
+      <fields>
+        <field name="Reference">U</field>
+        <field name="Value">MIC4684</field>
+      </fields>
+      <pins>
+        <pin num="1" name="SW" type="output"/>
+        <pin num="2" name="GND" type="input"/>
+        <pin num="3" name="VIN" type="input"/>
+        <pin num="4" name="BS" type="input"/>
+        <pin num="5" name="FB" type="input"/>
+        <pin num="6" name="GND" type="input"/>
+        <pin num="7" name="GND" type="input"/>
+        <pin num="8" name="EN" type="input"/>
+      </pins>
+    </libpart>
+  </libparts>
+  <libraries>
+    <library logical="Connector">
+      <uri>/usr/share/kicad/library/Connector.lib</uri>
+    </library>
+    <library logical="Device">
+      <uri>/usr/share/kicad/library/Device.lib</uri>
+    </library>
+    <library logical="Diode_Bridge">
+      <uri>/usr/share/kicad/library/Diode_Bridge.lib</uri>
+    </library>
+    <library logical="bass_amplifier">
+      <uri>/home/marc-antoine/Bureau/bass-amplifier/bass_amplifier.lib</uri>
+    </library>
+  </libraries>
+  <nets>
+    <net code="1" name="/A+15V">
+      <node ref="J3" pin="1"/>
+      <node ref="U1" pin="3"/>
+      <node ref="C7" pin="1"/>
+      <node ref="J3" pin="2"/>
+    </net>
+    <net code="2" name="/A-15V">
+      <node ref="J3" pin="3"/>
+      <node ref="J3" pin="4"/>
+    </net>
+    <net code="3" name="GNDA">
+      <node ref="U1" pin="2"/>
+      <node ref="R8" pin="1"/>
+      <node ref="C7" pin="2"/>
+      <node ref="U6" pin="7"/>
+      <node ref="U6" pin="8"/>
+      <node ref="C5" pin="2"/>
+      <node ref="C8" pin="1"/>
+      <node ref="C6" pin="1"/>
+      <node ref="U2" pin="1"/>
+      <node ref="R9" pin="1"/>
+      <node ref="U6" pin="5"/>
+      <node ref="R1" pin="1"/>
+      <node ref="C22" pin="2"/>
+      <node ref="R11" pin="2"/>
+      <node ref="U5" pin="2"/>
+      <node ref="C23" pin="2"/>
+      <node ref="C21" pin="2"/>
+      <node ref="C26" pin="2"/>
+      <node ref="U6" pin="6"/>
+      <node ref="C24" pin="2"/>
+      <node ref="C25" pin="2"/>
+      <node ref="J3" pin="7"/>
+      <node ref="J5" pin="2"/>
+      <node ref="J3" pin="8"/>
+      <node ref="J3" pin="6"/>
+    </net>
+    <net code="4" name="/A+3.3V">
+      <node ref="C26" pin="1"/>
+      <node ref="R10" pin="1"/>
+      <node ref="U6" pin="3"/>
+      <node ref="J3" pin="5"/>
+    </net>
+    <net code="5" name="/fan/fan_pwm">
+      <node ref="J2" pin="3"/>
+      <node ref="Q1" pin="2"/>
+    </net>
+    <net code="6" name="/A+9V">
+      <node ref="F3" pin="1"/>
+      <node ref="J5" pin="1"/>
+    </net>
+    <net code="7" name="/D+12V">
+      <node ref="C13" pin="1"/>
+      <node ref="C14" pin="1"/>
+      <node ref="U5" pin="1"/>
+      <node ref="C12" pin="1"/>
+      <node ref="D4" pin="2"/>
+      <node ref="R3" pin="1"/>
+      <node ref="C22" pin="1"/>
+      <node ref="L1" pin="2"/>
+      <node ref="C27" pin="1"/>
+      <node ref="J2" pin="2"/>
+      <node ref="J6" pin="1"/>
+      <node ref="C21" pin="1"/>
+    </net>
+    <net code="8" name="Net-(F2-Pad2)">
+      <node ref="J1" pin="1"/>
+      <node ref="F2" pin="2"/>
+    </net>
+    <net code="9" name="/D+5V">
+      <node ref="C19" pin="1"/>
+      <node ref="C18" pin="1"/>
+      <node ref="R6" pin="1"/>
+      <node ref="C20" pin="1"/>
+      <node ref="L2" pin="2"/>
+      <node ref="U6" pin="2"/>
+      <node ref="J2" pin="1"/>
+      <node ref="U6" pin="1"/>
+      <node ref="J4" pin="1"/>
+      <node ref="J4" pin="2"/>
+      <node ref="J4" pin="3"/>
+      <node ref="C24" pin="1"/>
+      <node ref="C25" pin="1"/>
+    </net>
+    <net code="10" name="GNDD">
+      <node ref="C9" pin="2"/>
+      <node ref="R7" pin="2"/>
+      <node ref="R8" pin="2"/>
+      <node ref="U4" pin="6"/>
+      <node ref="C20" pin="2"/>
+      <node ref="C19" pin="2"/>
+      <node ref="C15" pin="2"/>
+      <node ref="R5" pin="1"/>
+      <node ref="C16" pin="2"/>
+      <node ref="U4" pin="7"/>
+      <node ref="U4" pin="2"/>
+      <node ref="D3" pin="2"/>
+      <node ref="C13" pin="2"/>
+      <node ref="C14" pin="2"/>
+      <node ref="J2" pin="5"/>
+      <node ref="J2" pin="6"/>
+      <node ref="D4" pin="1"/>
+      <node ref="J4" pin="5"/>
+      <node ref="R4" pin="2"/>
+      <node ref="J4" pin="4"/>
+      <node ref="J4" pin="6"/>
+      <node ref="Q1" pin="3"/>
+      <node ref="R9" pin="2"/>
+      <node ref="R2" pin="1"/>
+      <node ref="D2" pin="2"/>
+      <node ref="U3" pin="2"/>
+      <node ref="U3" pin="6"/>
+      <node ref="U3" pin="7"/>
+      <node ref="J2" pin="4"/>
+      <node ref="C10" pin="2"/>
+      <node ref="C27" pin="2"/>
+    </net>
+    <net code="11" name="/+20V">
+      <node ref="U4" pin="8"/>
+      <node ref="U4" pin="3"/>
+      <node ref="C3" pin="1"/>
+      <node ref="C1" pin="1"/>
+      <node ref="D1" pin="1"/>
+      <node ref="U1" pin="1"/>
+      <node ref="C5" pin="1"/>
+      <node ref="C15" pin="1"/>
+      <node ref="C10" pin="1"/>
+      <node ref="C9" pin="1"/>
+      <node ref="U3" pin="8"/>
+      <node ref="U3" pin="3"/>
+      <node ref="C16" pin="1"/>
+    </net>
+    <net code="12" name="/-20V">
+      <node ref="C2" pin="2"/>
+      <node ref="D1" pin="2"/>
+      <node ref="C6" pin="2"/>
+      <node ref="C4" pin="2"/>
+      <node ref="U2" pin="3"/>
+    </net>
+    <net code="13" name="Net-(F1-Pad2)">
+      <node ref="J1" pin="3"/>
+      <node ref="F1" pin="2"/>
+    </net>
+    <net code="14" name="Net-(D1-Pad3)">
+      <node ref="F2" pin="1"/>
+      <node ref="D1" pin="3"/>
+    </net>
+    <net code="15" name="Net-(D1-Pad4)">
+      <node ref="D1" pin="4"/>
+      <node ref="F1" pin="1"/>
+    </net>
+    <net code="16" name="GND">
+      <node ref="R2" pin="2"/>
+      <node ref="R5" pin="2"/>
+      <node ref="C2" pin="1"/>
+      <node ref="C3" pin="2"/>
+      <node ref="R1" pin="2"/>
+      <node ref="C4" pin="1"/>
+      <node ref="J1" pin="2"/>
+      <node ref="C1" pin="2"/>
+    </net>
+    <net code="17" name="/A+15V_A-15V.sch/A-15V">
+      <node ref="U2" pin="2"/>
+      <node ref="C8" pin="2"/>
+    </net>
+    <net code="18" name="Net-(C12-Pad2)">
+      <node ref="C12" pin="2"/>
+      <node ref="U3" pin="5"/>
+      <node ref="R3" pin="2"/>
+      <node ref="R4" pin="1"/>
+    </net>
+    <net code="19" name="Net-(C11-Pad2)">
+      <node ref="U3" pin="1"/>
+      <node ref="L1" pin="1"/>
+      <node ref="C11" pin="2"/>
+      <node ref="D2" pin="1"/>
+    </net>
+    <net code="20" name="Net-(C11-Pad1)">
+      <node ref="U3" pin="4"/>
+      <node ref="C11" pin="1"/>
+    </net>
+    <net code="21" name="Net-(C18-Pad2)">
+      <node ref="U4" pin="5"/>
+      <node ref="R7" pin="1"/>
+      <node ref="R6" pin="2"/>
+      <node ref="C18" pin="2"/>
+    </net>
+    <net code="22" name="Net-(C17-Pad2)">
+      <node ref="L2" pin="1"/>
+      <node ref="D3" pin="1"/>
+      <node ref="C17" pin="2"/>
+      <node ref="U4" pin="1"/>
+    </net>
+    <net code="23" name="Net-(C17-Pad1)">
+      <node ref="C17" pin="1"/>
+      <node ref="U4" pin="4"/>
+    </net>
+    <net code="24" name="Net-(C23-Pad1)">
+      <node ref="F3" pin="2"/>
+      <node ref="U5" pin="3"/>
+      <node ref="C23" pin="1"/>
+    </net>
+    <net code="25" name="Net-(R10-Pad2)">
+      <node ref="U6" pin="4"/>
+      <node ref="R11" pin="1"/>
+      <node ref="R10" pin="2"/>
+    </net>
+    <net code="26" name="Net-(J6-Pad2)">
+      <node ref="J6" pin="2"/>
+      <node ref="Q1" pin="1"/>
+    </net>
+  </nets>
+</export>
