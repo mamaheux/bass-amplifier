@@ -254,13 +254,13 @@ Wire Wire Line
 	3350 4400 3550 4400
 $Comp
 L bass_amplifier:AudioJack2_X4 J5
-U 3 1 5E5EA704
+U 2 1 5E5EA704
 P 4600 3900
 F 0 "J5" H 4420 3883 50  0000 R CNN
 F 1 "AudioJack2_X4" H 4420 3974 50  0000 R CNN
 F 2 "Connector_PinSocket_2.54mm:PinSocket_1x08_P2.54mm_Vertical" H 4600 3900 50  0001 C CNN
 F 3 "~" H 4600 3900 50  0001 C CNN
-	3    4600 3900
+	2    4600 3900
 	-1   0    0    1   
 $EndComp
 $Comp
@@ -404,13 +404,13 @@ Wire Wire Line
 	4100 7700 4350 7700
 $Comp
 L bass_amplifier:AudioJack2_X4 J5
-U 4 1 5E61BC6A
+U 3 1 5E61BC6A
 P 5450 7200
 F 0 "J5" H 5270 7183 50  0000 R CNN
 F 1 "AudioJack2_X4" H 5270 7274 50  0000 R CNN
 F 2 "Connector_PinSocket_2.54mm:PinSocket_1x08_P2.54mm_Vertical" H 5450 7200 50  0001 C CNN
 F 3 "~" H 5450 7200 50  0001 C CNN
-	4    5450 7200
+	3    5450 7200
 	-1   0    0    1   
 $EndComp
 $Comp
@@ -899,13 +899,13 @@ F 3 "" H 2000 9550 50  0001 C CNN
 $EndComp
 $Comp
 L bass_amplifier:AudioJack2_X4 J5
-U 2 1 5E65D67F
+U 4 1 5E65D67F
 P 1550 9000
 F 0 "J5" H 1370 8983 50  0000 R CNN
 F 1 "AudioJack2_X4" H 1370 9074 50  0000 R CNN
 F 2 "Connector_PinSocket_2.54mm:PinSocket_1x08_P2.54mm_Vertical" H 1550 9000 50  0001 C CNN
 F 3 "~" H 1550 9000 50  0001 C CNN
-	2    1550 9000
+	4    1550 9000
 	1    0    0    1   
 $EndComp
 Text Notes 4900 10100 0    197  ~ 0
@@ -918,17 +918,6 @@ Wire Notes Line
 	5900 10300 5900 8250
 Wire Notes Line
 	800  8250 5900 8250
-$Comp
-L bass_amplifier:TL074 U2
-U 3 1 5E881A22
-P 8550 9100
-F 0 "U2" H 8750 9350 50  0000 L CNN
-F 1 "TL074" H 8750 9250 50  0000 L CNN
-F 2 "Package_SO:SOIC-14_3.9x8.7mm_P1.27mm" H 8550 9100 50  0001 C CNN
-F 3 "" H 8550 9100 50  0001 C CNN
-	3    8550 9100
-	1    0    0    -1  
-$EndComp
 $Comp
 L bass_amplifier:AudioJack2_XLR_SW J6
 U 1 1 5E89D002
@@ -1009,12 +998,12 @@ $EndComp
 $Comp
 L bass_amplifier:TL074 U2
 U 4 1 5E8E8BC2
-P 8550 7750
-F 0 "U2" H 8750 8000 50  0000 L CNN
-F 1 "TL074" H 8750 7900 50  0000 L CNN
-F 2 "Package_SO:SOIC-14_3.9x8.7mm_P1.27mm" H 8550 7750 50  0001 C CNN
-F 3 "" H 8550 7750 50  0001 C CNN
-	4    8550 7750
+P 10450 5500
+F 0 "U2" H 10650 5750 50  0000 L CNN
+F 1 "TL074" H 10650 5650 50  0000 L CNN
+F 2 "Package_SO:SOIC-14_3.9x8.7mm_P1.27mm" H 10450 5500 50  0001 C CNN
+F 3 "" H 10450 5500 50  0001 C CNN
+	4    10450 5500
 	1    0    0    -1  
 $EndComp
 $Comp
@@ -1042,17 +1031,6 @@ $EndComp
 Text Notes 2500 6800 0    50   ~ 0
 x6 gain
 $Comp
-L Device:R_POT_Dual_Separate RV1
-U 1 1 5E8F87E9
-P 7900 8100
-F 0 "RV1" H 7831 8146 50  0000 R CNN
-F 1 "10k" H 7831 8055 50  0000 R CNN
-F 2 "Connector_PinSocket_2.54mm:PinSocket_1x06_P2.54mm_Vertical" H 7900 8100 50  0001 C CNN
-F 3 "~" H 7900 8100 50  0001 C CNN
-	1    7900 8100
-	1    0    0    -1  
-$EndComp
-$Comp
 L power:GNDA #PWR040
 U 1 1 5E90376A
 P 7900 8350
@@ -1070,40 +1048,29 @@ Wire Wire Line
 $Comp
 L Device:R R31
 U 1 1 5E928F99
-P 8600 8700
-F 0 "R31" V 8393 8700 50  0000 C CNN
-F 1 "10k" V 8484 8700 50  0000 C CNN
-F 2 "Resistor_SMD:R_0805_2012Metric" V 8530 8700 50  0001 C CNN
-F 3 "~" H 8600 8700 50  0001 C CNN
-	1    8600 8700
+P 8600 8750
+F 0 "R31" V 8393 8750 50  0000 C CNN
+F 1 "10k" V 8484 8750 50  0000 C CNN
+F 2 "Resistor_SMD:R_0805_2012Metric" V 8530 8750 50  0001 C CNN
+F 3 "~" H 8600 8750 50  0001 C CNN
+	1    8600 8750
 	0    1    1    0   
 $EndComp
 $Comp
 L Device:R R30
 U 1 1 5E930154
-P 8600 8350
-F 0 "R30" V 8393 8350 50  0000 C CNN
-F 1 "10k" V 8484 8350 50  0000 C CNN
-F 2 "Resistor_SMD:R_0805_2012Metric" V 8530 8350 50  0001 C CNN
-F 3 "~" H 8600 8350 50  0001 C CNN
-	1    8600 8350
+P 8600 8450
+F 0 "R30" V 8393 8450 50  0000 C CNN
+F 1 "10k" V 8484 8450 50  0000 C CNN
+F 2 "Resistor_SMD:R_0805_2012Metric" V 8530 8450 50  0001 C CNN
+F 3 "~" H 8600 8450 50  0001 C CNN
+	1    8600 8450
 	0    1    1    0   
 $EndComp
 Wire Wire Line
 	8300 9000 8150 9000
 Wire Wire Line
-	8150 9000 8150 8700
-Wire Wire Line
-	8150 8350 8450 8350
-Wire Wire Line
-	8450 8700 8150 8700
-Connection ~ 8150 8700
-Wire Wire Line
-	8150 8700 8150 8350
-Wire Wire Line
-	8750 8700 9200 8700
-Wire Wire Line
-	9350 8700 9350 9100
+	8150 9000 8150 8750
 Wire Wire Line
 	9350 9100 9100 9100
 $Comp
@@ -1166,14 +1133,10 @@ Wire Wire Line
 Wire Wire Line
 	9350 6950 9350 6850
 Wire Wire Line
-	8750 8350 9350 8350
-Wire Wire Line
 	9350 7650 9350 7750
 Wire Wire Line
 	9100 7750 9200 7750
 Connection ~ 9350 7750
-Wire Wire Line
-	9350 7750 9350 8350
 $Comp
 L power:GNDA #PWR042
 U 1 1 5E9BFFD3
@@ -1405,17 +1368,17 @@ Wire Notes Line
 $Comp
 L bass_amplifier:TL072 U3
 U 1 1 5EAD54F8
-P 8500 5600
-F 0 "U3" H 8750 5900 50  0000 L CNN
-F 1 "TL072" H 8750 5800 50  0000 L CNN
-F 2 "Package_SO:SOIC-8_3.9x4.9mm_P1.27mm" H 8500 5600 50  0001 C CNN
-F 3 "" H 8500 5600 50  0001 C CNN
-	1    8500 5600
+P 8550 7750
+F 0 "U3" H 8800 8050 50  0000 L CNN
+F 1 "TL072" H 8800 7950 50  0000 L CNN
+F 2 "Package_SO:SOIC-8_3.9x4.9mm_P1.27mm" H 8550 7750 50  0001 C CNN
+F 3 "" H 8550 7750 50  0001 C CNN
+	1    8550 7750
 	1    0    0    -1  
 $EndComp
-Text GLabel 8600 5250 0    50   Input ~ 0
+Text GLabel 8650 7400 0    50   Input ~ 0
 A+15V
-Text GLabel 8600 5950 0    50   Input ~ 0
+Text GLabel 8650 8100 0    50   Input ~ 0
 A-15V
 Connection ~ 6800 7850
 Text Notes 8900 5150 0    50   ~ 0
@@ -1470,28 +1433,15 @@ Wire Wire Line
 	8500 5000 9350 5000
 Wire Wire Line
 	9350 5000 9350 5600
-Wire Wire Line
-	9350 5600 9050 5600
 $Comp
 L bass_amplifier:TL072 U3
 U 2 1 5EB2D9DA
-P 10450 5500
-F 0 "U3" H 10700 5800 50  0000 L CNN
-F 1 "TL072" H 10700 5700 50  0000 L CNN
-F 2 "Package_SO:SOIC-8_3.9x4.9mm_P1.27mm" H 10450 5500 50  0001 C CNN
-F 3 "" H 10450 5500 50  0001 C CNN
-	2    10450 5500
-	1    0    0    -1  
-$EndComp
-$Comp
-L Device:R_POT_Dual_Separate RV1
-U 2 1 5EB34810
-P 9600 5850
-F 0 "RV1" H 9530 5896 50  0000 R CNN
-F 1 "10k" H 9530 5805 50  0000 R CNN
-F 2 "Connector_PinSocket_2.54mm:PinSocket_1x06_P2.54mm_Vertical" H 9600 5850 50  0001 C CNN
-F 3 "~" H 9600 5850 50  0001 C CNN
-	2    9600 5850
+P 8550 9100
+F 0 "U3" H 8800 9400 50  0000 L CNN
+F 1 "TL072" H 8800 9300 50  0000 L CNN
+F 2 "Package_SO:SOIC-8_3.9x4.9mm_P1.27mm" H 8550 9100 50  0001 C CNN
+F 3 "" H 8550 9100 50  0001 C CNN
+	2    8550 9100
 	1    0    0    -1  
 $EndComp
 $Comp
@@ -1871,17 +1821,6 @@ F 3 "~" H 11400 1650 50  0001 C CNN
 	0    1    1    0   
 $EndComp
 $Comp
-L Device:R R39
-U 1 1 5E79B3A9
-P 11850 1850
-F 0 "R39" H 11920 1896 50  0000 L CNN
-F 1 "10k" H 11920 1805 50  0000 L CNN
-F 2 "Resistor_SMD:R_0805_2012Metric" V 11780 1850 50  0001 C CNN
-F 3 "~" H 11850 1850 50  0001 C CNN
-	1    11850 1850
-	1    0    0    -1  
-$EndComp
-$Comp
 L Device:R R38
 U 1 1 5E79B73F
 P 11850 1450
@@ -1897,25 +1836,10 @@ Wire Wire Line
 Wire Wire Line
 	11850 1150 11850 1300
 Wire Wire Line
-	11850 1700 11850 1650
-Wire Wire Line
 	11550 1650 11850 1650
 Connection ~ 11850 1650
 Wire Wire Line
 	11850 1650 11850 1600
-$Comp
-L power:GNDA #PWR049
-U 1 1 5E82615E
-P 11850 2100
-F 0 "#PWR049" H 11850 1850 50  0001 C CNN
-F 1 "GNDA" H 11855 1927 50  0000 C CNN
-F 2 "" H 11850 2100 50  0001 C CNN
-F 3 "" H 11850 2100 50  0001 C CNN
-	1    11850 2100
-	1    0    0    -1  
-$EndComp
-Wire Wire Line
-	11850 2100 11850 2000
 Wire Wire Line
 	11850 1650 12150 1650
 Wire Wire Line
@@ -2315,19 +2239,14 @@ $EndComp
 $Comp
 L Connector:TestPoint TP14
 U 1 1 5E8D84D9
-P 9200 8600
-F 0 "TP14" H 9258 8718 50  0000 L CNN
-F 1 "TP" H 9258 8627 50  0000 L CNN
-F 2 "Connector_PinHeader_1.00mm:PinHeader_1x01_P1.00mm_Vertical" H 9400 8600 50  0001 C CNN
-F 3 "~" H 9400 8600 50  0001 C CNN
-	1    9200 8600
+P 9200 8700
+F 0 "TP14" H 9258 8818 50  0000 L CNN
+F 1 "TP" H 9258 8727 50  0000 L CNN
+F 2 "Connector_PinHeader_1.00mm:PinHeader_1x01_P1.00mm_Vertical" H 9400 8700 50  0001 C CNN
+F 3 "~" H 9400 8700 50  0001 C CNN
+	1    9200 8700
 	1    0    0    -1  
 $EndComp
-Wire Wire Line
-	9200 8600 9200 8700
-Connection ~ 9200 8700
-Wire Wire Line
-	9200 8700 9350 8700
 $Comp
 L Connector:TestPoint TP17
 U 1 1 5E8F2159
@@ -2354,4 +2273,59 @@ Wire Wire Line
 Connection ~ 4000 3900
 Wire Wire Line
 	4000 3900 3550 3900
+$Comp
+L Device:R_POT RV1
+U 1 1 5E7E5FD5
+P 7900 8100
+F 0 "RV1" H 7831 8146 50  0000 R CNN
+F 1 "R_POT" H 7831 8055 50  0000 R CNN
+F 2 "Connector_PinSocket_2.54mm:PinSocket_1x03_P2.54mm_Vertical" H 7900 8100 50  0001 C CNN
+F 3 "~" H 7900 8100 50  0001 C CNN
+	1    7900 8100
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R_POT RV2
+U 1 1 5E7ED3E5
+P 9600 5850
+F 0 "RV2" H 9531 5896 50  0000 R CNN
+F 1 "R_POT" H 9531 5805 50  0000 R CNN
+F 2 "Connector_PinSocket_2.54mm:PinSocket_1x03_P2.54mm_Vertical" H 9600 5850 50  0001 C CNN
+F 3 "~" H 9600 5850 50  0001 C CNN
+	1    9600 5850
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	9350 5600 9050 5600
+$Comp
+L bass_amplifier:TL074 U2
+U 3 1 5E881A22
+P 8500 5600
+F 0 "U2" H 8700 5850 50  0000 L CNN
+F 1 "TL074" H 8700 5750 50  0000 L CNN
+F 2 "Package_SO:SOIC-14_3.9x8.7mm_P1.27mm" H 8500 5600 50  0001 C CNN
+F 3 "" H 8500 5600 50  0001 C CNN
+	3    8500 5600
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	8750 8450 9350 8450
+Wire Wire Line
+	9350 7750 9350 8450
+Wire Wire Line
+	8450 8450 8150 8450
+Wire Wire Line
+	8450 8750 8150 8750
+Connection ~ 8150 8750
+Wire Wire Line
+	8150 8450 8150 8750
+Wire Wire Line
+	8750 8750 9200 8750
+Wire Wire Line
+	9350 8750 9350 9100
+Wire Wire Line
+	9200 8700 9200 8750
+Connection ~ 9200 8750
+Wire Wire Line
+	9200 8750 9350 8750
 $EndSCHEMATC

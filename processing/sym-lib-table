@@ -1,3 +1,4 @@
 (sym_lib_table
   (lib (name bass_amplifier)(type Legacy)(uri /home/marc-antoine/Bureau/bass-amplifier/bass_amplifier.lib)(options "")(descr ""))
+  (lib (name processing-rescue)(type Legacy)(uri ${KIPRJMOD}/processing-rescue.lib)(options "")(descr ""))
 )
