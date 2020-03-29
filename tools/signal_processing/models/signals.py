@@ -160,4 +160,3 @@ class SinModSignal(BaseSignal):
         s_sin = np.sin(2 * np.pi * F * t)
 
         return t, s_step * s_sin
-

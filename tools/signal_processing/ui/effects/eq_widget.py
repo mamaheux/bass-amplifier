@@ -5,9 +5,10 @@ from ui.utils.double_slider import DoubleSlider
 from ui.utils.gain_plot_widget import GainPlotWidget
 
 class EqWidget(QWidget):
-    def __init__(self, configuration):
+    def __init__(self, configuration, model):
         super().__init__()
         self._configuration = configuration
+        self._model = model
         self._create_ui()
 
         self._low_freq_slider.set_value(100)
@@ -77,8 +78,3 @@ class EqWidget(QWidget):
         vlayout.addWidget(self._plot)
         vlayout.addLayout(hlayout)
         self.setLayout(vlayout)
-
-
-
-
-

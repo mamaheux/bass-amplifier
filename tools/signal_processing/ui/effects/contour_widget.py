@@ -62,9 +62,3 @@ class ContourWidget(QWidget):
                                   self._high_freq_slider.value(),
                                   self._high_q_slider.value())
         self._plot.update(f, g)
-
-
-
-
-
-

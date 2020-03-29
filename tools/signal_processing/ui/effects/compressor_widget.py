@@ -1,5 +1,5 @@
-from PySide2.QtCore import Qt, Slot
-from PySide2.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout, QGroupBox
+from PySide2.QtCore import Slot
+from PySide2.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout
 
 from ui.utils.double_slider import DoubleSlider
 from ui.utils.time_plot_widget import TimePlotWidget
@@ -55,8 +55,3 @@ class CompressorWidget(QWidget):
         s = self._model.process_audio(s)
 
         self._plot.update(t, s)
-
-
-
-
-

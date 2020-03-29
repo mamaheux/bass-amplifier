@@ -47,7 +47,3 @@ class DoubleSlider(QWidget):
 
     def set_value(self, value):
         return self._slider.setValue(value / self._resolution)
-
-
-
-

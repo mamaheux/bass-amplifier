@@ -40,4 +40,3 @@ class ContourModel:
 
     def process_audio(self, x):
         return signal.sosfilt(self._sos, x)
-

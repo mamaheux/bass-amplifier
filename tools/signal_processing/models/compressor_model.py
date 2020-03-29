@@ -1,7 +1,4 @@
-import numpy as np
-from scipy import signal
 
-from models.utils import sqrt_gain_db, design_high_shelving_filter
 
 class CompressorModel:
     def __init__(self, configuration):

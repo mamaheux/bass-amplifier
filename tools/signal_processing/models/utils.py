@@ -66,4 +66,3 @@ def design_high_shelving_filter(g_db, f, q, fs):
         a2 = 0
 
     return np.array([b0, b1, b2, a0, a1, a2])
-

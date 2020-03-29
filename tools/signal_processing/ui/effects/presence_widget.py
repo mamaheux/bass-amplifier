@@ -1,5 +1,5 @@
-from PySide2.QtCore import Qt, Slot
-from PySide2.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout, QGroupBox
+from PySide2.QtCore import Slot
+from PySide2.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout
 
 from ui.utils.double_slider import DoubleSlider
 from ui.utils.gain_plot_widget import GainPlotWidget
@@ -43,8 +43,3 @@ class PresenceWidget(QWidget):
                                   self._freq_slider.value(),
                                   self._q_slider.value())
         self._plot.update(f, g)
-
-
-
-
-
