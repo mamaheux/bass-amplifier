@@ -51,5 +51,10 @@ Module.symvers
 Mkfile.old
 dkms.conf
 
-#kicad tmp files
+# Kicad tmp files
 *-bak
+
+# Python
+__pycache__
+.idea
+venv
