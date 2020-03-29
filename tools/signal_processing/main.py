@@ -5,9 +5,9 @@ from PySide2.QtWidgets import QApplication
 from configuration import Configuration
 
 from ui.signal_processing_interface import SignalProcessingInterface
-from ui.effects.presence_widget import PresenceWidget
+from ui.effects.compressor_widget import CompressorWidget
 
-from models.presence_model import PresenceModel
+from models.compressor_model import CompressorModel
 
 def main():
     configuration = Configuration(fs=48000)
@@ -17,7 +17,7 @@ def main():
     interface.show()
 
 
-    a = PresenceWidget(configuration, PresenceModel(configuration))
+    a = CompressorWidget(configuration, CompressorModel(configuration))
     a.show()
 
     sys.exit(app.exec_())

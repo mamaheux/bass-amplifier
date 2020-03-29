@@ -38,6 +38,6 @@ class ContourModel:
         f, h = signal.sosfreqz(self._sos, worN=self._configuration.freqz_f, fs=self._configuration.fs)
         return f, 20 * np.log10(np.abs(h))
 
-    def filter(self, x):
+    def process_audio(self, x):
         return signal.sosfilt(self._sos, x)
 
