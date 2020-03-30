@@ -34,11 +34,22 @@ class OverdriveWidget(QWidget):
         self._gain_slider.valueChanged.connect(self._on_slider_valued_changed)
         self._tone_slider.valueChanged.connect(self._on_slider_valued_changed)
 
+        self._plot.signalChanged.connect(self._on_signal_changed)
+
     @Slot()
     def _on_slider_valued_changed(self, _):
+        self._update_model()
+        self._update_plot()
+
+    @Slot()
+    def _on_signal_changed(self):
+        self._update_plot()
+
+    def _update_model(self):
         self._model.update(self._gain_slider.value(),
                            self._tone_slider.value())
 
+    def _update_plot(self):
         t, s = self._plot.signal().signal()
         s = self._model.process_audio(s)
 
