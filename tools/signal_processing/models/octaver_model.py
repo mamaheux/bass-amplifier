@@ -6,6 +6,7 @@ OCTAVE_DOWN_LOW_PASS_FC = 338
 OCTAVE_UP_BAND_PASS_ORDER = 4
 OCTAVE_UP_BAND_PASS_FC = (100, 2000)
 
+
 class OctaverModel:
     def __init__(self, configuration):
         self._configuration = configuration
@@ -18,10 +19,10 @@ class OctaverModel:
                                                       'bandpass', output='sos', fs=configuration.fs)
 
     def dowm_volume_ranges(self):
-        return { 'minValue': 0.0, 'maxValue': 1, 'resolution': 0.01}
+        return {'minValue': 0.0, 'maxValue': 1, 'resolution': 0.01}
 
     def up_volume_ranges(self):
-        return { 'minValue': 0.0, 'maxValue': 1, 'resolution': 0.01}
+        return {'minValue': 0.0, 'maxValue': 1, 'resolution': 0.01}
 
     def update(self, dowm_volume, up_volume):
         self._down_volume = dowm_volume

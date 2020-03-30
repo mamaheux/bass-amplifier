@@ -1,8 +1,8 @@
 from PySide2.QtWidgets import QWidget, QHBoxLayout, QGroupBox
 
+from ui.effects.freq_effect_widget import FreqEffectWidget
 from ui.utils.double_slider import DoubleSlider
 
-from ui.effects.freq_effect_widget import FreqEffectWidget
 
 class ContourWidget(FreqEffectWidget):
     def __init__(self, configuration, model):
@@ -12,8 +12,8 @@ class ContourWidget(FreqEffectWidget):
         self._gain_slider = DoubleSlider('Gain (dB)', **self._model.gain_ranges())
 
         self._low_group_box = QGroupBox('Low')
-        self._low_freq_slider = DoubleSlider('Freq (Hz)',  **self._model.low_freq_ranges())
-        self._low_q_slider = DoubleSlider('Q',  **self._model.low_q_ranges())
+        self._low_freq_slider = DoubleSlider('Freq (Hz)', **self._model.low_freq_ranges())
+        self._low_q_slider = DoubleSlider('Q', **self._model.low_q_ranges())
 
         hlayout = QHBoxLayout()
         hlayout.addWidget(self._low_freq_slider)

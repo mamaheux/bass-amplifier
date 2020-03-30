@@ -1,7 +1,8 @@
-from PySide2.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout, QGroupBox
+from PySide2.QtWidgets import QWidget, QHBoxLayout, QGroupBox
 
-from ui.utils.double_slider import DoubleSlider
 from ui.effects.freq_effect_widget import FreqEffectWidget
+from ui.utils.double_slider import DoubleSlider
+
 
 class EqWidget(FreqEffectWidget):
     def __init__(self, configuration, model):

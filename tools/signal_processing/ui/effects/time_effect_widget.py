@@ -3,6 +3,7 @@ from PySide2.QtWidgets import QWidget, QVBoxLayout
 
 from ui.utils.time_plot_widget import TimePlotWidget
 
+
 class TimeEffectWidget(QWidget):
     def __init__(self, configuration, model):
         super().__init__()

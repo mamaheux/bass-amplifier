@@ -22,7 +22,6 @@ class DoubleSlider(QWidget):
         self._max_label = QLabel(str(self._max))
         self._value_label = QLabel(str(self._slider.value() * self._resolution))
 
-
         label_layout = QVBoxLayout()
         label_layout.addWidget(self._max_label, 0, Qt.AlignRight | Qt.AlignTop)
         label_layout.addWidget(self._value_label, 0, Qt.AlignRight | Qt.AlignCenter)

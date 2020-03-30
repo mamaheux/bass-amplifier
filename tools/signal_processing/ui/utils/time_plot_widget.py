@@ -4,8 +4,10 @@ from PySide2.QtCore import Slot, Signal
 from PySide2.QtWidgets import QWidget, QHBoxLayout, QVBoxLayout, QFormLayout, QComboBox, QDoubleSpinBox
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg
 
+
 class TimePlotWidget(QWidget):
     signalChanged = Signal()
+
     def __init__(self, signals):
         super().__init__()
         self._signals = signals

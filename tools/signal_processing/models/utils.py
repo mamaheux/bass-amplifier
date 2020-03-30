@@ -1,12 +1,14 @@
 import numpy as np
 
+
 def sqrt_gain_db(gain_db):
     return 20 * np.log10(np.sqrt(np.power(10, gain_db / 20)))
+
 
 def design_low_shelving_filter(g_db, f, q, fs):
     k = np.tan((np.pi * f) / fs);
     v0 = np.power(10.0, g_db / 20.0);
-    root2 =  1.0 / q
+    root2 = 1.0 / q
 
     if v0 < 1:
         v0 = 1 / v0
@@ -34,6 +36,7 @@ def design_low_shelving_filter(g_db, f, q, fs):
         a2 = 0
 
     return np.array([b0, b1, b2, a0, a1, a2])
+
 
 def design_high_shelving_filter(g_db, f, q, fs):
     k = np.tan(np.pi * f / fs)

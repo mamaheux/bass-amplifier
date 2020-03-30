@@ -1,5 +1,6 @@
 import numpy as np
 
+
 class BaseSignal:
     def __init__(self, name, parameter_names, fs):
         self._name = name
@@ -105,6 +106,7 @@ class SinStepSignal(BaseSignal):
         s_sin = A_sin * np.sin(2 * np.pi * F_sin * t)
 
         return t, s_step + s_sin
+
 
 class LinearSignal(BaseSignal):
     def __init__(self, fs):

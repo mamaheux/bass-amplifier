@@ -5,6 +5,7 @@ import sounddevice as sd
 from PySide2.QtCore import Slot
 from PySide2.QtWidgets import QWidget, QTabWidget, QHBoxLayout, QVBoxLayout, QLabel, QLineEdit, QPushButton, QFileDialog
 
+
 class SignalProcessingInterface(QWidget):
     def __init__(self, tabs):
         super().__init__()

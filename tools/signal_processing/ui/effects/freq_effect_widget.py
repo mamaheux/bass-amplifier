@@ -3,6 +3,7 @@ from PySide2.QtWidgets import QWidget, QVBoxLayout
 
 from ui.utils.gain_plot_widget import GainPlotWidget
 
+
 class FreqEffectWidget(QWidget):
     def __init__(self, configuration, model):
         super().__init__()

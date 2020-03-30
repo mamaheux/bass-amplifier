@@ -12,7 +12,6 @@ class EqModel:
                low_mid_gain_db, low_mid_freq, low_mid_q,
                high_mid_gain_db, high_mid_freq, high_mid_q,
                high_gain_db, high_freq, high_q):
-
         f, h = signal.sosfreqz(self._sos, worN=self._configuration.freqz_f, fs=self._configuration.fs)
         return f, 20 * np.log10(np.abs(h))
 

@@ -1,7 +1,8 @@
 from PySide2.QtWidgets import QWidget, QHBoxLayout
 
-from ui.utils.double_slider import DoubleSlider
 from ui.effects.freq_effect_widget import FreqEffectWidget
+from ui.utils.double_slider import DoubleSlider
+
 
 class PresenceWidget(FreqEffectWidget):
     def __init__(self, configuration, model):

@@ -4,16 +4,17 @@ from scipy import signal
 LOW_PASS_ORDER = 2
 LOW_PASS_RANGE = (1000, 7000)
 
+
 class OverdriveModel:
     def __init__(self, configuration):
         self._configuration = configuration
         self.update(0, 0)
 
     def gain_ranges(self):
-        return { 'minValue': 0.0, 'maxValue': 20, 'resolution': 0.1}
+        return {'minValue': 0.0, 'maxValue': 20, 'resolution': 0.1}
 
     def tone_ranges(self):
-        return { 'minValue': 0.0, 'maxValue': 1, 'resolution': 0.01}
+        return {'minValue': 0.0, 'maxValue': 1, 'resolution': 0.01}
 
     def update(self, gain, tone):
         self._gain = gain

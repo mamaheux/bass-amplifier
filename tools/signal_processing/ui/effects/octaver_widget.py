@@ -1,7 +1,8 @@
 from PySide2.QtWidgets import QWidget, QHBoxLayout
 
-from ui.utils.double_slider import DoubleSlider
 from ui.effects.time_effect_widget import TimeEffectWidget
+from ui.utils.double_slider import DoubleSlider
+
 
 class OctaverWidget(TimeEffectWidget):
     def __init__(self, configuration, model):

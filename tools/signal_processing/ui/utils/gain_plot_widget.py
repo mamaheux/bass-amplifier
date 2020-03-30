@@ -3,6 +3,7 @@ import matplotlib.pyplot as plt
 from PySide2.QtWidgets import QWidget, QVBoxLayout
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg
 
+
 class GainPlotWidget(QWidget):
     def __init__(self, min_frequency=10, max_frequency=24000, min_gain=-20, max_gain=20):
         super().__init__()
@@ -23,7 +24,6 @@ class GainPlotWidget(QWidget):
         vlayout = QVBoxLayout()
         vlayout.addWidget(self._canvas)
         self.setLayout(vlayout)
-
 
     def update(self, f, g):
         self._ax.cla()
