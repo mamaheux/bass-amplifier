@@ -21,9 +21,6 @@ class TimePlotWidget(QWidget):
         self._fig = plt.figure()
         self._ax = self._fig.add_subplot(111)
 
-        self._ax.set_xlabel('Time (s)')
-        self._ax.set_ylabel('A')
-
         self._canvas = FigureCanvasQTAgg(self._fig)
 
         self._signal_combo_box = self._create_signal_combo_box()
@@ -89,5 +86,8 @@ class TimePlotWidget(QWidget):
 
         t, s = self.signal().signal()
         self._ax.plot(t, s, color='tab:blue')
+
+        self._ax.set_xlabel('Time (s)')
+        self._ax.set_ylabel('A')
 
         self._canvas.draw()

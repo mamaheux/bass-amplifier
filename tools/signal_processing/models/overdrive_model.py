@@ -11,7 +11,7 @@ class OverdriveModel:
         self.update(0, 0)
 
     def gain_ranges(self):
-        return {'minValue': 0.0, 'maxValue': 20, 'resolution': 0.1}
+        return {'minValue': 0.0, 'maxValue': 40, 'resolution': 0.1}
 
     def tone_ranges(self):
         return {'minValue': 0.0, 'maxValue': 1, 'resolution': 0.01}

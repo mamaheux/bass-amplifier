@@ -16,9 +16,6 @@ class GainPlotWidget(QWidget):
         self._fig = plt.figure()
         self._ax = self._fig.add_subplot(111)
 
-        self._ax.set_xlabel('Frequency (Hz)')
-        self._ax.set_ylabel('Gain (dB)')
-
         self._canvas = FigureCanvasQTAgg(self._fig)
 
         vlayout = QVBoxLayout()
@@ -33,5 +30,8 @@ class GainPlotWidget(QWidget):
 
         self._ax.set_xlim(self._min_frequency, self._max_frequency)
         self._ax.set_ylim(self._min_gain, self._max_gain)
+
+        self._ax.set_xlabel('Frequency (Hz)')
+        self._ax.set_ylabel('Gain (dB)')
 
         self._canvas.draw()
