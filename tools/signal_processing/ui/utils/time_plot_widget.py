@@ -32,9 +32,13 @@ class TimePlotWidget(QWidget):
         vlayout.addWidget(self._signal_combo_box)
         vlayout.addLayout(self._signal_parameter_layout)
 
+        parameter_widget = QWidget()
+        parameter_widget.setLayout(vlayout)
+        parameter_widget.setMaximumWidth(200)
+
         hlayout = QHBoxLayout()
         hlayout.addWidget(self._canvas)
-        hlayout.addLayout(vlayout)
+        hlayout.addWidget(parameter_widget)
         self.setLayout(hlayout)
 
     def _create_signal_combo_box(self):

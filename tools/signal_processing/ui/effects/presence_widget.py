@@ -1,20 +1,13 @@
-from PySide2.QtCore import Slot
-from PySide2.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout
+from PySide2.QtWidgets import QWidget, QHBoxLayout
 
 from ui.utils.double_slider import DoubleSlider
-from ui.utils.gain_plot_widget import GainPlotWidget
+from ui.effects.freq_effect_widget import FreqEffectWidget
 
-class PresenceWidget(QWidget):
+class PresenceWidget(FreqEffectWidget):
     def __init__(self, configuration, model):
-        super().__init__()
-        self._configuration = configuration
-        self._model = model
+        super().__init__(configuration, model)
 
-        self._create_ui()
-        self._connect_events()
-        self._on_slider_valued_changed(0)
-
-    def _create_ui(self):
+    def _create_slider_widget(self):
         self._gain_slider = DoubleSlider('Gain (dB)', **self._model.gain_ranges())
         self._freq_slider = DoubleSlider('Freq (Hz)', **self._model.freq_ranges())
         self._q_slider = DoubleSlider('Q', **self._model.q_ranges())
@@ -25,21 +18,17 @@ class PresenceWidget(QWidget):
         hlayout.addWidget(self._q_slider)
         hlayout.addStretch()
 
-        self._plot = GainPlotWidget(max_frequency=self._configuration.fs // 2)
-
-        vlayout = QVBoxLayout()
-        vlayout.addWidget(self._plot)
-        vlayout.addLayout(hlayout)
-        self.setLayout(vlayout)
+        widget = QWidget()
+        widget.setLayout(hlayout)
+        return widget
 
     def _connect_events(self):
+        super()._connect_events()
         self._gain_slider.valueChanged.connect(self._on_slider_valued_changed)
         self._freq_slider.valueChanged.connect(self._on_slider_valued_changed)
         self._q_slider.valueChanged.connect(self._on_slider_valued_changed)
 
-    @Slot()
-    def _on_slider_valued_changed(self, _):
-        f, g = self._model.update(self._gain_slider.value(),
-                                  self._freq_slider.value(),
-                                  self._q_slider.value())
-        self._plot.update(f, g)
+    def _get_slider_values(self):
+        return [self._gain_slider.value(),
+                self._freq_slider.value(),
+                self._q_slider.value()]

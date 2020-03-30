@@ -1,22 +1,18 @@
-from PySide2.QtCore import Slot
 from PySide2.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout, QGroupBox
 
 from ui.utils.double_slider import DoubleSlider
-from ui.utils.gain_plot_widget import GainPlotWidget
+from ui.effects.freq_effect_widget import FreqEffectWidget
 
-class EqWidget(QWidget):
+class EqWidget(FreqEffectWidget):
     def __init__(self, configuration, model):
-        super().__init__()
-        self._configuration = configuration
-        self._model = model
-        self._create_ui()
+        super().__init__(configuration, model)
 
         self._low_freq_slider.set_value(100)
         self._low_mid_freq_slider.set_value(250)
         self._high_mid_freq_slider.set_value(1000)
         self._high_freq_slider.set_value(2500)
 
-    def _create_ui(self):
+    def _create_slider_widget(self):
         self._low_group_box = QGroupBox('Low')
         self._low_gain_slider = DoubleSlider('Gain (dB)', minValue=0, maxValue=5, resolution=0.1)
         self._low_freq_slider = DoubleSlider('Freq (Hz)', minValue=10, maxValue=self._configuration.fs // 200,
@@ -72,9 +68,41 @@ class EqWidget(QWidget):
         hlayout.addWidget(self._high_group_box)
         hlayout.addStretch()
 
-        self._plot = GainPlotWidget(max_frequency=self._configuration.fs // 2)
+        widget = QWidget()
+        widget.setLayout(hlayout)
+        return widget
 
-        vlayout = QVBoxLayout()
-        vlayout.addWidget(self._plot)
-        vlayout.addLayout(hlayout)
-        self.setLayout(vlayout)
+    def _connect_events(self):
+        super()._connect_events()
+        self._low_gain_slider.valueChanged.connect(self._on_slider_valued_changed)
+        self._low_freq_slider.valueChanged.connect(self._on_slider_valued_changed)
+        self._low_q_slider.valueChanged.connect(self._on_slider_valued_changed)
+
+        self._low_mid_gain_slider.valueChanged.connect(self._on_slider_valued_changed)
+        self._low_mid_freq_slider.valueChanged.connect(self._on_slider_valued_changed)
+        self._low_mid_q_slider.valueChanged.connect(self._on_slider_valued_changed)
+
+        self._high_mid_gain_slider.valueChanged.connect(self._on_slider_valued_changed)
+        self._high_mid_freq_slider.valueChanged.connect(self._on_slider_valued_changed)
+        self._high_mid_q_slider.valueChanged.connect(self._on_slider_valued_changed)
+
+        self._high_gain_slider.valueChanged.connect(self._on_slider_valued_changed)
+        self._high_freq_slider.valueChanged.connect(self._on_slider_valued_changed)
+        self._high_q_slider.valueChanged.connect(self._on_slider_valued_changed)
+
+    def _get_slider_values(self):
+        return [self._low_gain_slider.value(),
+                self._low_freq_slider.value(),
+                self._low_q_slider.value(),
+
+                self._low_mid_gain_slider.value(),
+                self._low_mid_freq_slider.value(),
+                self._low_mid_q_slider.value(),
+
+                self._high_mid_gain_slider.value(),
+                self._high_mid_freq_slider.value(),
+                self._high_mid_q_slider.value(),
+
+                self._high_gain_slider.value(),
+                self._high_freq_slider.value(),
+                self._high_q_slider.value()]
