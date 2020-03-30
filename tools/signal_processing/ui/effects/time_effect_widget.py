@@ -44,3 +44,6 @@ class TimeEffectWidget(QWidget):
         s = self._model.process_audio(s)
 
         self._plot.update(t, s)
+
+    def model(self):
+        return self._model

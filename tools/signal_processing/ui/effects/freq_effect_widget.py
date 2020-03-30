@@ -30,3 +30,6 @@ class FreqEffectWidget(QWidget):
     def _on_slider_valued_changed(self, _):
         f, g = self._model.update(*self._get_slider_values())
         self._plot.update(f, g)
+
+    def model(self):
+        return self._model

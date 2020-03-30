@@ -26,7 +26,7 @@ from models.reverb_model import ReverbModel
 from models.overdrive_model import OverdriveModel
 
 def main():
-    configuration = Configuration(fs=48000)
+    configuration = Configuration(fs=44100)
 
     app = QApplication(sys.argv)
 
