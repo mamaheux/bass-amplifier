@@ -23,5 +23,5 @@ class ReverbWidget(TimeEffectWidget):
         super()._connect_events()
         self._volume_slider.valueChanged.connect(self._on_slider_valued_changed)
 
-    def _update_model(self):
+    def _get_slider_values(self):
         return [self._volume_slider.value()]

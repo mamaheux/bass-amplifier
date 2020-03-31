@@ -69,3 +69,35 @@ def design_high_shelving_filter(g_db, f, q, fs):
         a2 = 0
 
     return np.array([b0, b1, b2, a0, a1, a2])
+
+def iir_comb(x, gain, delay):
+    # BL = 1, FB = gain, FF = 0
+    y = np.zeros(delay + x.shape[0])
+
+    for i in range(x.shape[0]):
+        y[i + delay] = x[i] + gain * y[i]
+
+    y = y[delay:]
+
+    return y
+
+def feedback_comb(x, gain, delay):
+    # BL = 0, FB = gain, FF = 1
+    y = np.zeros(delay + x.shape[0])
+
+    for i in range(x.shape[0]):
+        y[i + delay] = x[i] + gain * y[i]
+
+    y = y[:x.shape[0]]
+
+    return y
+
+def all_pass_comb(x, gain, delay):
+    # BL = gain, FB = -gain, FF = 1
+    delayed_s = np.zeros(delay + x.shape[0])
+    y = np.zeros_like(x)
+    for i in range(x.shape[0]):
+        delayed_s[i + delay] = x[i] + -gain * delayed_s[i]
+        y[i] = gain * delayed_s[i + delay] + delayed_s[i]
+
+    return y
