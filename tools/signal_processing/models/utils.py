@@ -70,6 +70,23 @@ def design_high_shelving_filter(g_db, f, q, fs):
 
     return np.array([b0, b1, b2, a0, a1, a2])
 
+
+def design_peak_filter(g_db, f, q, fs):
+    w_c = (2 * np.pi * f / fs);
+    mu = np.power(10, g_db / 20)
+    k_q = 4 / (1 + mu) * np.tan(w_c / (2 * q))
+    c_pk = (1 + k_q * mu) / (1 + k_q)
+
+    b0 = c_pk
+    b1 = c_pk * (-2 * np.cos(w_c) / (1 + k_q * mu))
+    b2 = c_pk * (1 - k_q * mu) / (1 + k_q * mu)
+    a0 = 1
+    a1 = -2 * np.cos(w_c) / (1 + k_q)
+    a2 = (1 - k_q) / (1 + k_q)
+
+    return np.array([b0, b1, b2, a0, a1, a2])
+
+
 def iir_comb(x, gain, delay):
     # BL = 1, FB = gain, FF = 0
     y = np.zeros(delay + x.shape[0])
@@ -81,6 +98,7 @@ def iir_comb(x, gain, delay):
 
     return y
 
+
 def feedback_comb(x, gain, delay):
     # BL = 0, FB = gain, FF = 1
     y = np.zeros(delay + x.shape[0])
@@ -91,6 +109,7 @@ def feedback_comb(x, gain, delay):
     y = y[:x.shape[0]]
 
     return y
+
 
 def all_pass_comb(x, gain, delay):
     # BL = gain, FB = -gain, FF = 1
