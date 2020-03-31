@@ -3,6 +3,7 @@ import numpy as np
 ATTACK = 0.995
 RELEASE = 0.9997
 
+
 class CompressorModel:
     def __init__(self, configuration):
         self._configuration = configuration

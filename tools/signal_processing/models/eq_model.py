@@ -1,7 +1,7 @@
 import numpy as np
 from scipy import signal
 
-from models.utils import design_low_shelving_filter, design_high_shelving_filter, design_peak_filter
+from models.utils import design_peak_filter
 
 FC = [40, 80, 160, 315, 630, 1250, 2500, 5000]
 R = 2
