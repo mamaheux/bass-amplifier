@@ -79,13 +79,13 @@ class TimePlotWidget(QWidget):
     def signal(self):
         return self._signals[self._signal_combo_box.currentIndex()]
 
-    def update(self, t, s):
+    def update(self, t_out, s_out):
         self._ax.cla()
 
-        self._ax.plot(t, s, color='tab:orange')
+        t_in, s_in = self.signal().signal()
+        self._ax.plot(t_in, s_in, color='tab:blue')
 
-        t, s = self.signal().signal()
-        self._ax.plot(t, s, color='tab:blue')
+        self._ax.plot(t_out, s_out, color='tab:orange')
 
         self._ax.set_xlabel('Time (s)')
         self._ax.set_ylabel('A')
