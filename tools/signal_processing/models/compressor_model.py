@@ -1,6 +1,6 @@
 import numpy as np
 
-ATTACK = 0.98
+ATTACK = 0.995
 RELEASE = 0.9997
 
 class CompressorModel:
