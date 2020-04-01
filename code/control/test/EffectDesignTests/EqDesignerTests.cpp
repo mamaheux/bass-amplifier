@@ -5,7 +5,7 @@
 
 constexpr float MAX_ABS_ERROR = 0.0001;
 
-static void test_getters()
+static void test_EqDesigner_getters()
 {
     constexpr float SAMPLING_FREQUENCY = 48000;
     EqDesigner designer(SAMPLING_FREQUENCY);
@@ -16,7 +16,7 @@ static void test_getters()
     TEST_ASSERT_EQUAL(true, designer.isDirty());
 }
 
-static void test_update()
+static void test_EqDesigner_update()
 {
     constexpr float SAMPLING_FREQUENCY = 48000;
     constexpr uint8_t LOW_GAIN = 255;
@@ -100,6 +100,6 @@ static void test_update()
 
 void runEqDesignerTests()
 {
-    RUN_TEST(test_getters);
-    RUN_TEST(test_update);
+    RUN_TEST(test_EqDesigner_getters);
+    RUN_TEST(test_EqDesigner_update);
 }

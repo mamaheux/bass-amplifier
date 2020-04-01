@@ -7,5 +7,6 @@
 #include "ContourDesigner.h"
 #include "PresenceDesigner.h"
 #include "EqDesigner.h"
+#include "CompressorDesigner.h"
 
 #endif

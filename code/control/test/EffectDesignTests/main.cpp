@@ -7,6 +7,7 @@
 #include "ContourDesignerTests.h"
 #include "PresenceDesignerTests.h"
 #include "EqDesignerTests.h"
+#include "CompressorDesignerTests.h"
 
 int main()
 {
@@ -17,6 +18,7 @@ int main()
     runContourDesignerTests();
     runPresenceDesignerTests();
     runEqDesignerTests();
+    runCompressorDesignerTests();
 
     UNITY_END();
 }

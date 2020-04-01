@@ -12,10 +12,10 @@ class CompressorModel:
         self._ratio = 0
 
     def threshold_ranges(self):
-        return {'minValue': 0.01, 'maxValue': 1, 'resolution': 0.01}
+        return {'minValue': 0, 'maxValue': 1, 'resolution': 0.01}
 
     def ratio_ranges(self):
-        return {'minValue': 0.1, 'maxValue': 1.0, 'resolution': 0.01}
+        return {'minValue': 0, 'maxValue': 1, 'resolution': 0.01}
 
     def update(self, threshold, ratio):
         self._threshold = threshold

@@ -3,7 +3,7 @@
 
 #include "EffectDesignerTests.h"
 
-static void test_getters()
+static void test_EffectDesigner_getters()
 {
     constexpr float SAMPLING_FREQUENCY = 48000;
     uint8_t EFFECT_CODE = 5;
@@ -18,7 +18,7 @@ static void test_getters()
     TEST_ASSERT_EQUAL(data, designer.data());
 }
 
-static void test_isDirty()
+static void test_EffectDesigner_isDirty()
 {
     constexpr float SAMPLING_FREQUENCY = 48000;
     uint8_t EFFECT_CODE = 5;
@@ -35,5 +35,6 @@ static void test_isDirty()
 
 void runEffectDesignerTests()
 {
-    RUN_TEST(test_getters);
+    RUN_TEST(test_EffectDesigner_getters);
+    RUN_TEST(test_EffectDesigner_isDirty);
 }

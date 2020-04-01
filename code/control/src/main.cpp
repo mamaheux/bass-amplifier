@@ -7,6 +7,7 @@ constexpr float SAMPLING_FREQUENCY = 48000;
 ContourDesigner contourDesigner(SAMPLING_FREQUENCY);
 PresenceDesigner presenceDesigner(SAMPLING_FREQUENCY);
 EqDesigner eqDesigner(SAMPLING_FREQUENCY);
+CompressorDesigner compressorDesigner(SAMPLING_FREQUENCY);
 
 void setup()
 {
