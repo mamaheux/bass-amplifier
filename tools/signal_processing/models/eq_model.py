@@ -23,7 +23,7 @@ class EqModel:
         return {'minValue': -12, 'maxValue': 12, 'resolution': 0.1}
 
     def update(self, low_gain_db, low_mid_gain_db, high_mid_gain_db, high_gain_db):
-        g_db = np.zeros_like(FC)
+        g_db = np.zeros_like(FC, dtype=float)
         g_db[LOW_INDEXES] = low_gain_db
         g_db[LOW_MID_INDEXES] = low_mid_gain_db
         g_db[HIGH_MID_INDEXES] = high_mid_gain_db
@@ -40,7 +40,6 @@ class EqModel:
 
     def _calculate_inv_b(self):
         g_db = 10
-        g = np.power(10, g_db / 20)
 
         sos = self._design_sos(g_db * np.ones_like(FC))
 

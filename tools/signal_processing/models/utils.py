@@ -2,7 +2,7 @@ import numpy as np
 
 
 def sqrt_gain_db(gain_db):
-    return 20 * np.log10(np.sqrt(np.power(10, gain_db / 20)))
+    return gain_db / 2
 
 
 def design_low_shelving_filter(g_db, f, q, fs):
