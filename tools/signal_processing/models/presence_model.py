@@ -15,7 +15,7 @@ class PresenceModel:
         return {'minValue': 0, 'maxValue': 20, 'resolution': 0.1}
 
     def freq_ranges(self):
-        return {'minValue': self._configuration.fs // 40, 'maxValue': self._configuration.fs // 8, 'resolution': 10}
+        return {'minValue': self._configuration.fs // 80, 'maxValue': self._configuration.fs // 8, 'resolution': 10}
 
     def q_ranges(self):
         return {'minValue': 0.1, 'maxValue': 2, 'resolution': 0.1}

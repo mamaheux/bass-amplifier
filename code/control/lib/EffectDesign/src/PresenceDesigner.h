@@ -9,7 +9,7 @@ class PresenceDesigner : public EffectDesigner
     static constexpr float MIN_GAIN_DB = 0;
     static constexpr float MAX_GAIN_DB = 12;
 
-    static constexpr float CENTER_FREQUENCY = 1750;
+    static constexpr float CENTER_FREQUENCY = 1000;
     static constexpr float Q = 0.4;
 
     static constexpr uint8_t EFFECT_CODE = 1;
