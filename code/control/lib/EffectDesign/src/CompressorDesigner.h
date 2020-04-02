@@ -24,7 +24,7 @@ class CompressorDesigner : public EffectDesigner
     uint8_t m_currentRatioLevel;
 
 public:
-    CompressorDesigner(float samplingFrequency);
+    explicit CompressorDesigner(float samplingFrequency);
     ~CompressorDesigner() override;
     
     void update(uint8_t thresholdLevel, uint8_t ratioLevel);

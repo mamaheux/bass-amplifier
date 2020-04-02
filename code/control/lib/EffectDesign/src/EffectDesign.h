@@ -10,5 +10,6 @@
 #include "CompressorDesigner.h"
 #include "OctaverDesigner.h"
 #include "DelayDesigner.h"
+#include "ReverbDesigner.h"
 
 #endif

@@ -11,6 +11,7 @@ EqDesigner eqDesigner(SAMPLING_FREQUENCY);
 CompressorDesigner compressorDesigner(SAMPLING_FREQUENCY);
 OctaverDesigner octaverDesigner(SAMPLING_FREQUENCY);
 DelayDesigner delayDesigner(SAMPLING_FREQUENCY, MAX_DELAY);
+ReverbDesigner reverbDesigner(SAMPLING_FREQUENCY);
 
 void setup()
 {

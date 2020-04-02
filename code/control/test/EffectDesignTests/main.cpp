@@ -10,6 +10,7 @@
 #include "CompressorDesignerTests.h"
 #include "OctaverDesignerTests.h"
 #include "DelayDesignerTests.h"
+#include "ReverbDesignerTests.h"
 
 int main()
 {
@@ -23,6 +24,7 @@ int main()
     runCompressorDesignerTests();
     runOctaverDesignerTests();
     runDelayDesignerTests();
+    runReverbDesignerTests();
 
     UNITY_END();
 }

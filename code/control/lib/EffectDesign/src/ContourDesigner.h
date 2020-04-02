@@ -23,7 +23,7 @@ class ContourDesigner : public EffectDesigner
     uint8_t m_currentGainLevel;
 
 public:
-    ContourDesigner(float samplingFrequency);
+    explicit ContourDesigner(float samplingFrequency);
     ~ContourDesigner() override;
     
     void update(uint8_t gainLevel);

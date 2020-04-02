@@ -20,7 +20,7 @@ class PresenceDesigner : public EffectDesigner
     uint8_t m_currentGainLevel;
 
 public:
-    PresenceDesigner(float samplingFrequency);
+    explicit PresenceDesigner(float samplingFrequency);
     ~PresenceDesigner() override;
     
     void update(uint8_t gainLevel);

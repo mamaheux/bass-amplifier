@@ -21,7 +21,7 @@ class OctaverDesigner : public EffectDesigner
     uint8_t m_currentOctaveUpVolumeLevel;
 
 public:
-    OctaverDesigner(float samplingFrequency);
+    explicit OctaverDesigner(float samplingFrequency);
     ~OctaverDesigner() override;
     
     void update(uint8_t octaveDownVolumeLevel, uint8_t octaveUpVolumeLevel);

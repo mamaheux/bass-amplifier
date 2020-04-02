@@ -28,7 +28,7 @@ class EqDesigner : public EffectDesigner
     uint8_t m_currentHighGainLevel;
 
 public:
-    EqDesigner(float samplingFrequency);
+    explicit EqDesigner(float samplingFrequency);
     ~EqDesigner() override;
 
     void update(uint8_t lowGainLevel, uint8_t lowMidGainLevel, uint8_t highMidGainLevel, uint8_t highGainLevel);
