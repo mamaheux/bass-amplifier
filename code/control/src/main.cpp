@@ -2,12 +2,14 @@
 #include "ControlAdc.h"
 #include "EffectControls.h"
 #include "StatusLed.h"
+#include "FanController.h"
 
 #include <EffectDesign.h>
 
 ControlAdc adc;
 EffectControls effectControls(adc);
 StatusLed statusLed;
+FanController fanController(adc);
 
 ContourDesigner contourDesigner(SAMPLING_FREQUENCY);
 PresenceDesigner presenceDesigner(SAMPLING_FREQUENCY);
@@ -28,12 +30,14 @@ void setup()
 
     adc.begin();
     effectControls.begin();
+    fanController.begin();
 }
 
 void loop()
 {
     updateDesigner();
     updateStatusLed();
+    fanController.update();
 }
 
 void updateDesigner()

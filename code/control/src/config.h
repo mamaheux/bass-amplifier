@@ -61,7 +61,16 @@ constexpr uint8_t OVERDRIVE_LED_PIN = 6;
 constexpr uint8_t MUTE_LED_PIN = 25;
 constexpr uint8_t CLIPPING_LED_PIN = 8;
 
+constexpr AdcChannel THERMISTOR = {AdcSource::EXTERNAL_ADC, 6};
+constexpr uint8_t FAN_PIN = 3;
+
 // Other
 constexpr uint32_t CLIPPING_LED_ON_DURATION_MS = 500;
+
+constexpr float FAN_THERMISTOR_BETA = 3900;
+constexpr float FAN_THERMISTOR_RTH1 = 10000;
+constexpr float FAN_THERMISTOR_RB = 10000;
+constexpr float FAN_THERMISTOR_T_KELVIN = 298.15; //25 °C
+constexpr float FAN_THRESHOLD_T_KELVIN = 323.15; // 50 °C
 
 #endif
