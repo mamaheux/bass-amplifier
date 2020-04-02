@@ -11,6 +11,7 @@
 #include "OctaverDesignerTests.h"
 #include "DelayDesignerTests.h"
 #include "ReverbDesignerTests.h"
+#include "OverdriveDesignerTests.h"
 
 int main()
 {
@@ -25,6 +26,7 @@ int main()
     runOctaverDesignerTests();
     runDelayDesignerTests();
     runReverbDesignerTests();
+    runOverdriveDesignerTests();
 
     UNITY_END();
 }
