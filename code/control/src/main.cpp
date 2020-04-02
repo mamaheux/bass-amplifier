@@ -17,6 +17,10 @@ OctaverDesigner octaverDesigner(SAMPLING_FREQUENCY);
 DelayDesigner delayDesigner(SAMPLING_FREQUENCY, MAX_DELAY);
 ReverbDesigner reverbDesigner(SAMPLING_FREQUENCY);
 OverdriveDesigner overdriveDesigner(SAMPLING_FREQUENCY);
+MuteDesigner muteDesigner(SAMPLING_FREQUENCY);
+
+void updateDesigner();
+void updateStatusLed();
 
 void setup()
 {
@@ -28,15 +32,34 @@ void setup()
 
 void loop()
 {
-    uint8_t gain = rand();
+    updateDesigner();
+    updateStatusLed();
+}
 
-    unsigned long start = micros();
-    overdriveDesigner.update(gain, gain);
-    unsigned long end = micros();
+void updateDesigner()
+{
+    contourDesigner.update(effectControls.getContourGain());
+    presenceDesigner.update(effectControls.getPresenceGain());
+    eqDesigner.update(effectControls.getEqLowGain(),
+        effectControls.getEqLowMidGain(),
+        effectControls.getEqHighMidGain(),
+        effectControls.getEqHighGain());
 
-    unsigned long duration = end - start;
+    compressorDesigner.update(effectControls.getCompressorThreshold(), effectControls.getCompressorRatio());
+    octaverDesigner.update(effectControls.getOctaverDownVolume(), effectControls.getOctaverUpVolume());
+    delayDesigner.update(effectControls.getDelayVolume(), effectControls.getDelay());
+    reverbDesigner.update(effectControls.getReverbVolume());
+    overdriveDesigner.update(effectControls.getOverdriveGain(), effectControls.getOverdriveTone());
+    muteDesigner.setIsEnabled(effectControls.getMuteState());
+}
 
-    DEBUG_SERIAL.printf("%d us\n", duration);
-
-    delay(1000);
+void updateStatusLed()
+{
+    statusLed.setCompressorLed(compressorDesigner.isActive());
+    statusLed.setOctaverLed(octaverDesigner.isActive());
+    statusLed.setDelayLed(delayDesigner.isActive());
+    statusLed.setReverbLed(reverbDesigner.isActive());
+    statusLed.setOverdriveLed(overdriveDesigner.isActive());
+    statusLed.setMuteLed(muteDesigner.isActive());
+    statusLed.update();
 }

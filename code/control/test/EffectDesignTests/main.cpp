@@ -12,6 +12,7 @@
 #include "DelayDesignerTests.h"
 #include "ReverbDesignerTests.h"
 #include "OverdriveDesignerTests.h"
+#include "MuteDesignerTests.h"
 
 int main()
 {
@@ -27,6 +28,7 @@ int main()
     runDelayDesignerTests();
     runReverbDesignerTests();
     runOverdriveDesignerTests();
+    runMuteDesignerTests();
 
     UNITY_END();
 }

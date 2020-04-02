@@ -57,7 +57,6 @@ inline void StatusLed::setMuteLed(bool value)
 
 inline void StatusLed::notifyClipping()
 {
-    m_lastClippingMs - millis();
     setClippingLed(true);
 }
 

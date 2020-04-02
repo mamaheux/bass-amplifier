@@ -12,5 +12,6 @@
 #include "DelayDesigner.h"
 #include "ReverbDesigner.h"
 #include "OverdriveDesigner.h"
+#include "MuteDesigner.h"
 
 #endif
