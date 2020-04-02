@@ -28,6 +28,13 @@ public:
     ~CompressorDesigner() override;
     
     void update(uint8_t thresholdLevel, uint8_t ratioLevel);
+
+    bool isActive() const override;
 };
+
+inline bool CompressorDesigner::isActive() const
+{
+    return EffectDesigner::isActive() && m_currentRatioLevel > 0;
+}
 
 #endif

@@ -24,6 +24,13 @@ public:
     ~DelayDesigner() override;
     
     void update(uint8_t volumeLevel, uint32_t delay);
+
+    bool isActive() const override;
 };
+
+inline bool DelayDesigner::isActive() const
+{
+    return EffectDesigner::isActive() && m_currentVolumeLevel > 0 && m_currentDelay > 0;
+}
 
 #endif

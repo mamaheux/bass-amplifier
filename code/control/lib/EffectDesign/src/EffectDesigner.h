@@ -12,6 +12,7 @@ class EffectDesigner
     const uint8_t* m_data;
 
     bool m_isDirty;
+    bool m_isEnabled;
 
 public:
     EffectDesigner(float samplingFrequency, uint8_t effectCode, uint8_t dataSize, const uint8_t* data);
@@ -25,6 +26,10 @@ public:
 
     bool isDirty() const;
     void setIsDirty(bool isDirty);
+
+    bool isEnabled() const;
+    void setIsEnabled(bool isEnabled);
+    virtual bool isActive() const;
 };
 
 inline float EffectDesigner::samplingFrequency() const
@@ -55,6 +60,21 @@ inline bool EffectDesigner::isDirty() const
 inline void EffectDesigner::setIsDirty(bool isDirty)
 {
     m_isDirty = isDirty;
+}
+
+inline bool EffectDesigner::isEnabled() const
+{
+    return m_isEnabled;
+}
+
+inline void EffectDesigner::setIsEnabled(bool isEnabled)
+{
+    m_isEnabled = isEnabled;
+}
+
+inline bool EffectDesigner::isActive() const
+{
+    return m_isEnabled;
 }
 
 #endif

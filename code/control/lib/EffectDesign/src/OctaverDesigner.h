@@ -25,6 +25,14 @@ public:
     ~OctaverDesigner() override;
     
     void update(uint8_t octaveDownVolumeLevel, uint8_t octaveUpVolumeLevel);
+
+    bool isActive() const override;
 };
+
+inline bool OctaverDesigner::isActive() const
+{
+    return EffectDesigner::isActive() &&
+        (m_currentOctaveDownVolumeLevel > 0 || m_currentOctaveUpVolumeLevel > 0);
+}
 
 #endif

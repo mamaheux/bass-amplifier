@@ -14,6 +14,17 @@ static void test_PresenceDesigner_getters()
     TEST_ASSERT_EQUAL(1, designer.effectCode());
     TEST_ASSERT_EQUAL(28, designer.dataSize());
     TEST_ASSERT_EQUAL(true, designer.isDirty());
+
+
+    designer.update(0);
+    designer.setIsEnabled(false);
+    TEST_ASSERT_EQUAL(false, designer.isActive());
+
+    designer.setIsEnabled(true);
+    TEST_ASSERT_EQUAL(false, designer.isActive());
+
+    designer.update(1);
+    TEST_ASSERT_EQUAL(true, designer.isActive());
 }
 
 static void test_PresenceDesigner_update()

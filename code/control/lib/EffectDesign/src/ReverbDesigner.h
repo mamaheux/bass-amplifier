@@ -21,6 +21,13 @@ public:
     ~ReverbDesigner() override;
     
     void update(uint8_t volumeLevel);
+
+    bool isActive() const override;
 };
+
+inline bool ReverbDesigner::isActive() const
+{
+    return EffectDesigner::isActive() && m_currentVolumeLevel;
+}
 
 #endif

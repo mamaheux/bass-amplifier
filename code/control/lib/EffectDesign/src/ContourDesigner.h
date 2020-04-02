@@ -27,6 +27,13 @@ public:
     ~ContourDesigner() override;
     
     void update(uint8_t gainLevel);
+
+    bool isActive() const override;
 };
+
+inline bool ContourDesigner::isActive() const
+{
+    return EffectDesigner::isActive() && m_currentGainLevel > 0;
+}
 
 #endif

@@ -25,6 +25,13 @@ public:
     ~OverdriveDesigner() override;
     
     void update(uint8_t gainLevel, uint8_t toneLevel);
+
+    bool isActive() const override;
 };
+
+inline bool OverdriveDesigner::isActive() const
+{
+    return EffectDesigner::isActive() && m_currentGainLevel;
+}
 
 #endif

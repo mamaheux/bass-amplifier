@@ -16,6 +16,14 @@ static void test_EffectDesigner_getters()
     TEST_ASSERT_EQUAL(EFFECT_CODE, designer.effectCode());
     TEST_ASSERT_EQUAL(DATA_SIZE, designer.dataSize());
     TEST_ASSERT_EQUAL(data, designer.data());
+
+
+    TEST_ASSERT_EQUAL(true, designer.isEnabled());
+    TEST_ASSERT_EQUAL(true, designer.isActive());
+
+    designer.setIsEnabled(false);
+    TEST_ASSERT_EQUAL(false, designer.isEnabled());
+    TEST_ASSERT_EQUAL(false, designer.isActive());
 }
 
 static void test_EffectDesigner_isDirty()

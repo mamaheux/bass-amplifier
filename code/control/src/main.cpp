@@ -12,6 +12,7 @@ CompressorDesigner compressorDesigner(SAMPLING_FREQUENCY);
 OctaverDesigner octaverDesigner(SAMPLING_FREQUENCY);
 DelayDesigner delayDesigner(SAMPLING_FREQUENCY, MAX_DELAY);
 ReverbDesigner reverbDesigner(SAMPLING_FREQUENCY);
+OverdriveDesigner overdriveDesigner(SAMPLING_FREQUENCY);
 
 void setup()
 {
@@ -23,7 +24,7 @@ void loop()
     uint8_t gain = rand();
 
     unsigned long start = micros();
-    compressorDesigner.update(gain, gain);
+    overdriveDesigner.update(gain, gain);
     unsigned long end = micros();
 
     unsigned long duration = end - start;

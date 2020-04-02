@@ -24,6 +24,13 @@ public:
     ~PresenceDesigner() override;
     
     void update(uint8_t gainLevel);
+
+    bool isActive() const override;
 };
+
+inline bool PresenceDesigner::isActive() const
+{
+    return EffectDesigner::isActive() && m_currentGainLevel > 0;
+}
 
 #endif
