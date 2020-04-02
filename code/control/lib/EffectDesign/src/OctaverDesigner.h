@@ -15,7 +15,7 @@ class OctaverDesigner : public EffectDesigner
     static constexpr uint8_t EFFECT_CODE = 4;
     static constexpr uint8_t DATA_SIZE = 2 *sizeof(BiquadCoefficients) + 2 * sizeof(float);
 
-    uint8_t m_data[DATA_SIZE]; // BiquadCoefficients, global gain
+    uint8_t m_data[DATA_SIZE]; // 2 x BiquadCoefficients, octaver down volume, octaver up volume
 
     uint8_t m_currentOctaveDownVolumeLevel;
     uint8_t m_currentOctaveUpVolumeLevel;

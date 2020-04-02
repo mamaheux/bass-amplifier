@@ -9,6 +9,7 @@
 #include "EqDesignerTests.h"
 #include "CompressorDesignerTests.h"
 #include "OctaverDesignerTests.h"
+#include "DelayDesignerTests.h"
 
 int main()
 {
@@ -21,6 +22,7 @@ int main()
     runEqDesignerTests();
     runCompressorDesignerTests();
     runOctaverDesignerTests();
+    runDelayDesignerTests();
 
     UNITY_END();
 }

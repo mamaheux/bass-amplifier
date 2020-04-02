@@ -9,5 +9,6 @@
 #include "EqDesigner.h"
 #include "CompressorDesigner.h"
 #include "OctaverDesigner.h"
+#include "DelayDesigner.h"
 
 #endif

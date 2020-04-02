@@ -3,12 +3,14 @@
 #include <EffectDesign.h>
 
 constexpr float SAMPLING_FREQUENCY = 48000;
+constexpr uint32_t MAX_DELAY = 96000;
 
 ContourDesigner contourDesigner(SAMPLING_FREQUENCY);
 PresenceDesigner presenceDesigner(SAMPLING_FREQUENCY);
 EqDesigner eqDesigner(SAMPLING_FREQUENCY);
 CompressorDesigner compressorDesigner(SAMPLING_FREQUENCY);
 OctaverDesigner octaverDesigner(SAMPLING_FREQUENCY);
+DelayDesigner delayDesigner(SAMPLING_FREQUENCY, MAX_DELAY);
 
 void setup()
 {
