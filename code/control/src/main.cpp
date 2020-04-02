@@ -8,6 +8,7 @@ ContourDesigner contourDesigner(SAMPLING_FREQUENCY);
 PresenceDesigner presenceDesigner(SAMPLING_FREQUENCY);
 EqDesigner eqDesigner(SAMPLING_FREQUENCY);
 CompressorDesigner compressorDesigner(SAMPLING_FREQUENCY);
+OctaverDesigner octaverDesigner(SAMPLING_FREQUENCY);
 
 void setup()
 {
@@ -19,7 +20,7 @@ void loop()
     uint8_t gain = rand();
 
     unsigned long start = micros();
-    eqDesigner.update(gain, gain, gain, gain);
+    compressorDesigner.update(gain, gain);
     unsigned long end = micros();
 
     unsigned long duration = end - start;

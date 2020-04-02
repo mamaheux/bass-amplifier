@@ -8,6 +8,7 @@
 #include "PresenceDesignerTests.h"
 #include "EqDesignerTests.h"
 #include "CompressorDesignerTests.h"
+#include "OctaverDesignerTests.h"
 
 int main()
 {
@@ -19,6 +20,7 @@ int main()
     runPresenceDesignerTests();
     runEqDesignerTests();
     runCompressorDesignerTests();
+    runOctaverDesignerTests();
 
     UNITY_END();
 }

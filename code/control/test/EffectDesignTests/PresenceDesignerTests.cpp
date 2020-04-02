@@ -29,13 +29,13 @@ static void test_PresenceDesigner_update()
 
     const float* data = reinterpret_cast<const float*>(designer.data());
 
-    // Low shelving filter
-    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 1.85630217, data[0]);
-    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, -3.0473136, data[1]);
-    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 1.2317064, data[2]);
+    // High shelving filter
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 1.90986258, data[0]);
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, -3.40873779, data[1]);
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 1.5135854, data[2]);
     TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 1, data[3]);
-    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, -1.51712509, data[4]);
-    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 0.55782005, data[5]);
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, -1.70474705, data[4]);
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 0.71945724, data[5]);
 
     // Global gain
     TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 0.5012, data[6]);

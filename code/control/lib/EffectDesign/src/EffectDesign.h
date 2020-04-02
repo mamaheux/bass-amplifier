@@ -8,5 +8,6 @@
 #include "PresenceDesigner.h"
 #include "EqDesigner.h"
 #include "CompressorDesigner.h"
+#include "OctaverDesigner.h"
 
 #endif

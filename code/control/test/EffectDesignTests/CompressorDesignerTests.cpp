@@ -30,11 +30,10 @@ static void test_CompressorDesigner_update()
 
     const float* data = reinterpret_cast<const float*>(designer.data());
 
-    // Low shelving filter
-    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 0.2510, data[0]);
-    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 0.5020, data[1]);
-    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 0.995, data[2]);
-    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 0.9997, data[3]);
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 0.2510, data[0]); // Threshold
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 0.5020, data[1]); // Ratio
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 0.995, data[2]); // Attack
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 0.9997, data[3]); // Release
     
 
     designer.setIsDirty(false);
