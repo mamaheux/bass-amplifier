@@ -147,5 +147,5 @@ float sqrtGainDb(float gainDb)
 
 float map(uint8_t value, float min, float max)
 {
-    return (max - min) * value / 255 + min;
+    return (max - min) * value / UINT8_MAX + min;
 }

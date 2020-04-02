@@ -2,8 +2,12 @@
 
 #include <EffectDesign.h>
 
-constexpr float SAMPLING_FREQUENCY = 48000;
-constexpr uint32_t MAX_DELAY = 96000;
+#include "config.h"
+#include "ControlAdc.h"
+#include "EffectControls.h"
+
+ControlAdc adc;
+EffectControls effectControls(adc);
 
 ContourDesigner contourDesigner(SAMPLING_FREQUENCY);
 PresenceDesigner presenceDesigner(SAMPLING_FREQUENCY);
@@ -16,7 +20,10 @@ OverdriveDesigner overdriveDesigner(SAMPLING_FREQUENCY);
 
 void setup()
 {
-    Serial.begin(9600);
+    DEBUG_SERIAL.begin(9600);
+
+    adc.begin();
+    effectControls.begin();
 }
 
 void loop()
@@ -29,7 +36,7 @@ void loop()
 
     unsigned long duration = end - start;
 
-    Serial.printf("%d us\n", duration);
+    DEBUG_SERIAL.printf("%d us\n", duration);
 
     delay(1000);
 }
