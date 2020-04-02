@@ -1,13 +1,13 @@
-#include <Arduino.h>
-
-#include <EffectDesign.h>
-
 #include "config.h"
 #include "ControlAdc.h"
 #include "EffectControls.h"
+#include "StatusLed.h"
+
+#include <EffectDesign.h>
 
 ControlAdc adc;
 EffectControls effectControls(adc);
+StatusLed statusLed;
 
 ContourDesigner contourDesigner(SAMPLING_FREQUENCY);
 PresenceDesigner presenceDesigner(SAMPLING_FREQUENCY);

@@ -61,4 +61,7 @@ constexpr uint8_t OVERDRIVE_LED_PIN = 6;
 constexpr uint8_t MUTE_LED_PIN = 25;
 constexpr uint8_t CLIPPING_LED_PIN = 8;
 
+// Other
+constexpr uint32_t CLIPPING_LED_ON_DURATION_MS = 500;
+
 #endif
