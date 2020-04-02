@@ -1,12 +1,13 @@
 #include "OverdriveDesigner.h"
-
 #include "Utils.h"
+
+#include <Communication.h>
 
 #include <math.h>
 #include <string.h>
 
 OverdriveDesigner::OverdriveDesigner(float samplingFrequency) : 
-    EffectDesigner(samplingFrequency, EFFECT_CODE, DATA_SIZE, m_data), m_currentGainLevel(1), m_currentToneLevel(1)
+    EffectDesigner(samplingFrequency, OVERDRIVE_CODE, DATA_SIZE, m_data), m_currentGainLevel(1), m_currentToneLevel(1)
 {
     update(0, 0);
 }

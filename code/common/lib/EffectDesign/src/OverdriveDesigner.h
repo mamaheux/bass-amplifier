@@ -12,7 +12,6 @@ class OverdriveDesigner : public EffectDesigner
     static constexpr float MIN_TONE_FC = 1000;
     static constexpr float MAX_TONE_FC = 7000;
 
-    static constexpr uint8_t EFFECT_CODE = 7;
     static constexpr uint8_t DATA_SIZE = sizeof(BiquadCoefficients) + sizeof(float);
 
     uint8_t m_data[DATA_SIZE]; // Gain, BiquadCoefficients

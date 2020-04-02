@@ -1,6 +1,7 @@
 #include "EqDesigner.h"
-
 #include "Utils.h"
+
+#include <Communication.h>
 
 #include <math.h>
 #include <string.h>
@@ -9,7 +10,7 @@ constexpr float EqDesigner::CENTER_FREQUENCIES[];
 constexpr float EqDesigner::INV_B[];
 
 EqDesigner::EqDesigner(float samplingFrequency) : 
-    EffectDesigner(samplingFrequency, EFFECT_CODE, DATA_SIZE, m_data),
+    EffectDesigner(samplingFrequency, EQ_CODE, DATA_SIZE, m_data),
      m_currentLowGainLevel(1), m_currentLowMidGainLevel(1),
      m_currentHighMidGainLevel(1), m_currentHighGainLevel(1)
 {

@@ -12,7 +12,6 @@ class PresenceDesigner : public EffectDesigner
     static constexpr float CENTER_FREQUENCY = 1000;
     static constexpr float Q = 0.4;
 
-    static constexpr uint8_t EFFECT_CODE = 1;
     static constexpr uint8_t DATA_SIZE = sizeof(BiquadCoefficients) + sizeof(float);
 
     uint8_t m_data[DATA_SIZE]; // BiquadCoefficients, global gain

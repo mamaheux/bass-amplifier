@@ -1,9 +1,10 @@
 #include "CompressorDesigner.h"
-
 #include "Utils.h"
 
+#include <Communication.h>
+
 CompressorDesigner::CompressorDesigner(float samplingFrequency) : 
-    EffectDesigner(samplingFrequency, EFFECT_CODE, DATA_SIZE, m_data),
+    EffectDesigner(samplingFrequency, COMPRESSOR_CODE, DATA_SIZE, m_data),
     m_currentThresholdLevel(1), m_currentRatioLevel(1)
 {
     update(0, 0);

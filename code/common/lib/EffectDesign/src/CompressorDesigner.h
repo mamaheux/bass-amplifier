@@ -15,7 +15,6 @@ class CompressorDesigner : public EffectDesigner
     static constexpr float ATTACK = 0.995;
     static constexpr float RELEASE = 0.9997;
 
-    static constexpr uint8_t EFFECT_CODE = 3;
     static constexpr uint8_t DATA_SIZE = 4 * sizeof(float);
 
     uint8_t m_data[DATA_SIZE]; // Threshold, ratio, attack, release

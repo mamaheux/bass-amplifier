@@ -9,7 +9,6 @@ class DelayDesigner : public EffectDesigner
     static constexpr float MIN_VOLUME = 0;
     static constexpr float MAX_VOLUME = 0.5;
 
-    static constexpr uint8_t EFFECT_CODE = 5;
     static constexpr uint8_t DATA_SIZE = sizeof(float) + sizeof(uint32_t);
 
     uint32_t m_maxDelay;

@@ -1,9 +1,10 @@
 #include "DelayDesigner.h"
-
 #include "Utils.h"
 
+#include <Communication.h>
+
 DelayDesigner::DelayDesigner(float samplingFrequency, uint32_t maxDelay) : 
-    EffectDesigner(samplingFrequency, EFFECT_CODE, DATA_SIZE, m_data),
+    EffectDesigner(samplingFrequency, DELAY_CODE, DATA_SIZE, m_data),
     m_maxDelay(maxDelay), m_currentVolumeLevel(1), m_currentDelay(1)
 {
     update(0, 0);

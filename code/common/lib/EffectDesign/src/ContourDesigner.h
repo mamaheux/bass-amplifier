@@ -15,7 +15,6 @@ class ContourDesigner : public EffectDesigner
     static constexpr float HIGH_CENTER_FREQUENCY = 2500;
     static constexpr float HIGH_Q = 0.5;
 
-    static constexpr uint8_t EFFECT_CODE = 0;
     static constexpr uint8_t DATA_SIZE = 2 * sizeof(BiquadCoefficients) + sizeof(float);
 
     uint8_t m_data[DATA_SIZE]; // Low pass BiquadCoefficients, high pass BiquadCoefficients, global gain

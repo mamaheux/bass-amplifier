@@ -1,11 +1,12 @@
 #include "OctaverDesigner.h"
-
 #include "Utils.h"
+
+#include <Communication.h>
 
 #include <string.h>
 
 OctaverDesigner::OctaverDesigner(float samplingFrequency) : 
-    EffectDesigner(samplingFrequency, EFFECT_CODE, DATA_SIZE, m_data), 
+    EffectDesigner(samplingFrequency, OCTAVER_CODE, DATA_SIZE, m_data), 
     m_currentOctaveDownVolumeLevel(1), m_currentOctaveUpVolumeLevel(1)
 {
     BiquadCoefficients filterCoefficients;

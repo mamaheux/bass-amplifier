@@ -1,9 +1,10 @@
 #include "ReverbDesigner.h"
-
 #include "Utils.h"
 
+#include <Communication.h>
+
 ReverbDesigner::ReverbDesigner(float samplingFrequency) : 
-    EffectDesigner(samplingFrequency, EFFECT_CODE, DATA_SIZE, m_data),
+    EffectDesigner(samplingFrequency, REVERB_CODE, DATA_SIZE, m_data),
     m_currentVolumeLevel(1)
 {
     update(0);

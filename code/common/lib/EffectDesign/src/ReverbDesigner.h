@@ -9,7 +9,6 @@ class ReverbDesigner : public EffectDesigner
     static constexpr float MIN_VOLUME = 0;
     static constexpr float MAX_VOLUME = 0.9;
 
-    static constexpr uint8_t EFFECT_CODE = 6;
     static constexpr uint8_t DATA_SIZE = sizeof(float);
 
     uint8_t m_data[DATA_SIZE]; // Volume
