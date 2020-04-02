@@ -97,6 +97,49 @@ void designPeakFilter(BiquadCoefficients& out, float gainDb, float Q, float cent
     out.a2 = (1 - k_q) / (1 + k_q);
 }
 
+void designSecondOrderButterworthLowPassFilter(BiquadCoefficients& out, float cutoffFrequency, float samplingFrequency)
+{
+    constexpr float K = 1.414213562;
+
+    float thetaC = 2 * M_PI * cutoffFrequency / samplingFrequency;
+    float omegaC = 2 * tan(thetaC / 2);
+    float omegaCPow2 = omegaC * omegaC;
+
+    float unnormalizedA0 = 4 + omegaCPow2 + 2 * K * omegaC;
+
+    float invUnnormalizedA0 = 1 / unnormalizedA0;
+    out.b0 = invUnnormalizedA0;
+    out.b1 = 2 * invUnnormalizedA0;
+    out.b2 = invUnnormalizedA0;
+    out.a0 = 1;
+    out.a1 = (2 * omegaCPow2 - 8) * invUnnormalizedA0;
+    out.a2 = (omegaCPow2 - 2 * K * omegaC + 4) * invUnnormalizedA0;
+
+    float invDcG = (out.a0 + out.a1 + out.a2) / (out.b0 + out.b1 + out.b2);
+    out.b0 *= invDcG;
+    out.b1 *= invDcG;
+    out.b2 *= invDcG;
+}
+
+void designSecondOrderButterworthHighPassFilter(BiquadCoefficients& out, float cutoffFrequency, float samplingFrequency)
+{
+    constexpr float K = 1.414213562;
+
+    float thetaC = 2 * M_PI * cutoffFrequency / samplingFrequency;
+    float omegaC = 2 * tan(thetaC / 2);
+    float omegaCPow2 = omegaC * omegaC;
+
+    float unnormalizedA0 = 4 + omegaCPow2 + 2 * K * omegaC;
+
+    float invUnnormalizedA0 = 1 / unnormalizedA0;
+    out.b0 = 4 * invUnnormalizedA0;
+    out.b1 = -8 * invUnnormalizedA0;
+    out.b2 = 4 * invUnnormalizedA0;
+    out.a0 = 1;
+    out.a1 = (2 * omegaCPow2 - 8) * invUnnormalizedA0;
+    out.a2 = (omegaCPow2 - 2 * K * omegaC + 4) * invUnnormalizedA0;
+}
+
 float sqrtGainDb(float gainDb)
 {
     return gainDb / 2;

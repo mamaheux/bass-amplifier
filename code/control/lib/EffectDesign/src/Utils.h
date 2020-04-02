@@ -17,6 +17,9 @@ void designLowShelvingFilter(BiquadCoefficients& out, float gainDb, float Q, flo
 void designHighShelvingFilter(BiquadCoefficients& out, float gainDb, float Q, float centerFrequency, float samplingFrequency);
 void designPeakFilter(BiquadCoefficients& out, float gainDb, float Q, float centerFrequency, float samplingFrequency);
 
+void designSecondOrderButterworthLowPassFilter(BiquadCoefficients& out, float cutoffFrequency, float samplingFrequency);
+void designSecondOrderButterworthHighPassFilter(BiquadCoefficients& out, float cutoffFrequency, float samplingFrequency);
+
 float sqrtGainDb(float gainDb);
 float map(uint8_t value, float min, float max);
 

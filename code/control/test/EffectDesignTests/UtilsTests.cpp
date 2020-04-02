@@ -131,6 +131,36 @@ static void test_designPeakFilter()
     TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 0.9888, out.a2);
 }
 
+static void test_designSecondOrderButterworthLowPassFilter()
+{
+    constexpr float CUTOFF_FREQUENCY = 1000;
+    constexpr float SAMPLING_FREQUENCY = 48000;
+    BiquadCoefficients out;
+    designSecondOrderButterworthLowPassFilter(out, CUTOFF_FREQUENCY, SAMPLING_FREQUENCY);
+
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 0.00391613, out.b0);
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 0.00783225, out.b1);
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 0.00391613, out.b2);
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 1, out.a0);
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, -1.81534108, out.a1);
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 0.83100559, out.a2);
+}
+
+static void test_designSecondOrderButterworthHighPassFilter()
+{
+    constexpr float CUTOFF_FREQUENCY = 1000;
+    constexpr float SAMPLING_FREQUENCY = 48000;
+    BiquadCoefficients out;
+    designSecondOrderButterworthHighPassFilter(out, CUTOFF_FREQUENCY, SAMPLING_FREQUENCY);
+
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 0.91158667, out.b0);
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, -1.82317334, out.b1);
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 0.91158667, out.b2);
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 1, out.a0);
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, -1.81534108, out.a1);
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 0.83100559, out.a2);
+}
+
 static void test_sqrtGainDb()
 {
     TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 10, sqrtGainDb(20));
@@ -152,6 +182,9 @@ void runUtilsTests()
     RUN_TEST(test_designHighShelvingFilter_negativeGainDb);
     RUN_TEST(test_designHighShelvingFilter_positiveGainDb);
     RUN_TEST(test_designHighShelvingFilter_zeroGainDb);
+
+    RUN_TEST(test_designSecondOrderButterworthLowPassFilter);
+    RUN_TEST(test_designSecondOrderButterworthHighPassFilter);
 
     RUN_TEST(test_designPeakFilter);
     RUN_TEST(test_map);
