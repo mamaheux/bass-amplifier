@@ -13,4 +13,6 @@ constexpr uint8_t REVERB_CODE = 6;
 constexpr uint8_t OVERDRIVE_CODE = 7;
 constexpr uint8_t MUTE_CODE = 8;
 
+constexpr uint8_t EFFECT_CODE_COUNT = 9;
+
 #endif

@@ -2,5 +2,6 @@
 #define COMMUNICATION_H
 
 #include "constants.h"
+#include "ControllerFootswitchCommunication.h"
 
 #endif

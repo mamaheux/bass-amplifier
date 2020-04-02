@@ -1,0 +1,6 @@
+#ifndef CONTROLLER_FOOTSWITCH_COMMUNICATION_H
+#define CONTROLLER_FOOTSWITCH_COMMUNICATION_H
+
+void runControllerFootswitchCommunicationTests();
+
+#endif
