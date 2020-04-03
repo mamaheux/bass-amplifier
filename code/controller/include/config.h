@@ -4,6 +4,13 @@
 #include <Arduino.h>
 #include <SPI.h>
 
+// Update interval
+constexpr uint32_t EFFECT_DESIGNER_UPDATE_INTERVAL_US = 2500;
+constexpr uint32_t STATUS_LED_UPDATE_INTERVAL_US = 20000;
+constexpr uint32_t FAN_UPDATE_INTERVAL_US = 1000000;
+constexpr uint32_t FOOTSWITCH_COMMUNICATION_FAST_UPDATE_INTERVAL_US = 2500;
+constexpr uint32_t FOOTSWITCH_COMMUNICATION_SLOW_UPDATE_INTERVAL_US = 50000;
+
 // Effects
 constexpr float SAMPLING_FREQUENCY = 48000;
 constexpr uint32_t MAX_DELAY = 96000;

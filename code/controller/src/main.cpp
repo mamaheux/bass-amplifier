@@ -6,6 +6,7 @@
 
 #include <EffectDesign.h>
 #include <ControllerFootswitchCommunication.h>
+#include <Ticker.h>
 
 ControlAdc adc;
 EffectControls effectControls(adc);
@@ -29,16 +30,28 @@ uint32_t lastHeartbeatTimeMs;
 bool isHeartbeatPending;
 
 void setupEffectDesigners();
+void setupFootswitchCommunication();
 
-void updateDesigner();
+void updateEffectDesigners();
 void updateStatusLed();
+void updateFan();
 
-void updateFootswitchCommunication();
+void updateFootswitchCommunicationFast();
+void updateFootswitchCommunicationSlow();
 void resetAllEffectEnabledStates();
 
 void footswitchHeatbeatHandler();
 void footswitchToogleEffectHandler(uint8_t effectCode);
 void footswitchDelayUsHandler(uint32_t delayUs);
+
+Ticker updateEffectDesignersTicker(updateEffectDesigners, EFFECT_DESIGNER_UPDATE_INTERVAL_US, MICROS);
+Ticker updateStatusLedTicker(updateStatusLed, STATUS_LED_UPDATE_INTERVAL_US, MICROS);
+Ticker updateFanTicker(updateFan, FAN_UPDATE_INTERVAL_US, MICROS);
+
+Ticker updateFootswitchCommunicationFastTicker(updateFootswitchCommunicationFast,
+    FOOTSWITCH_COMMUNICATION_FAST_UPDATE_INTERVAL_US, MICROS);
+Ticker updateFootswitchCommunicationSlowTicker(updateFootswitchCommunicationSlow,
+    FOOTSWITCH_COMMUNICATION_SLOW_UPDATE_INTERVAL_US, MICROS);
 
 void setup()
 {
@@ -49,14 +62,13 @@ void setup()
     fanController.begin();
 
     setupEffectDesigners();
+    setupFootswitchCommunication();
 
-    footswitchCommunication.begin(FOOTSWITCH_SERIALL_BAUD_RATE);
-    footswitchCommunication.registerHeatbeatHandler(footswitchHeatbeatHandler);
-    footswitchCommunication.registerToogleEffectHandler(footswitchToogleEffectHandler);
-    footswitchCommunication.registerDelayUsHandler(footswitchDelayUsHandler);
-
-    lastHeartbeatTimeMs = millis();
-    isHeartbeatPending = true;
+    updateEffectDesignersTicker.start();
+    updateStatusLedTicker.start();
+    updateFanTicker.start();
+    updateFootswitchCommunicationFastTicker.start();
+    updateFootswitchCommunicationSlowTicker.start();
 }
 
 void setupEffectDesigners()
@@ -72,15 +84,27 @@ void setupEffectDesigners()
     effectDesigners[muteDesigner.effectCode()] = &muteDesigner;
 }
 
-void loop()
+void setupFootswitchCommunication()
 {
-    updateDesigner();
-    updateStatusLed();
-    fanController.update();
-    updateFootswitchCommunication();
+    footswitchCommunication.begin(FOOTSWITCH_SERIALL_BAUD_RATE);
+    footswitchCommunication.registerHeatbeatHandler(footswitchHeatbeatHandler);
+    footswitchCommunication.registerToogleEffectHandler(footswitchToogleEffectHandler);
+    footswitchCommunication.registerDelayUsHandler(footswitchDelayUsHandler);
+
+    lastHeartbeatTimeMs = millis();
+    isHeartbeatPending = true;
 }
 
-void updateDesigner()
+void loop()
+{
+    updateEffectDesignersTicker.update();
+    updateStatusLedTicker.update();
+    updateFanTicker.update();
+    updateFootswitchCommunicationFastTicker.update();
+    updateFootswitchCommunicationSlowTicker.update();
+}
+
+void updateEffectDesigners()
 {
     contourDesigner.update(effectControls.getContourGain());
     presenceDesigner.update(effectControls.getPresenceGain());
@@ -108,10 +132,18 @@ void updateStatusLed()
     statusLed.update();
 }
 
-void updateFootswitchCommunication()
+void updateFan()
+{
+    fanController.update();
+}
+
+void updateFootswitchCommunicationFast()
 {
     while (footswitchCommunication.receive());
+}
 
+void updateFootswitchCommunicationSlow()
+{
     footswitchCommunication.sendEffectActiveStates(compressorDesigner.isActive(),
         octaverDesigner.isActive(),
         delayDesigner.isActive(),

@@ -107,7 +107,7 @@ inline uint32_t EffectControls::getDelay()
     return static_cast<uint32_t>(delaySec * SAMPLING_FREQUENCY);
 }
 
-void EffectControls::setDelayUs(uint32_t delayUs)
+inline void EffectControls::setDelayUs(uint32_t delayUs)
 {
     m_delayUs = delayUs;
 }
