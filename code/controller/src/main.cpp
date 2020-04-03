@@ -43,6 +43,7 @@ void resetAllEffectEnabledStates();
 void footswitchHeatbeatHandler();
 void footswitchToogleEffectHandler(uint8_t effectCode);
 void footswitchDelayUsHandler(uint32_t delayUs);
+void footswitchSetEffectHandler(uint8_t effectCode, bool isEnabled);
 
 Ticker updateEffectDesignersTicker(updateEffectDesigners, EFFECT_DESIGNER_UPDATE_INTERVAL_US, MICROS);
 Ticker updateStatusLedTicker(updateStatusLed, STATUS_LED_UPDATE_INTERVAL_US, MICROS);
@@ -90,6 +91,7 @@ void setupFootswitchCommunication()
     footswitchCommunication.registerHeatbeatHandler(footswitchHeatbeatHandler);
     footswitchCommunication.registerToogleEffectHandler(footswitchToogleEffectHandler);
     footswitchCommunication.registerDelayUsHandler(footswitchDelayUsHandler);
+    footswitchCommunication.registerSetEffectHandler(footswitchSetEffectHandler);
 
     lastHeartbeatTimeMs = millis();
     isHeartbeatPending = true;
@@ -188,4 +190,16 @@ void footswitchToogleEffectHandler(uint8_t effectCode)
 void footswitchDelayUsHandler(uint32_t delayUs)
 {
     effectControls.setDelayUs(delayUs);
+}
+
+void footswitchSetEffectHandler(uint8_t effectCode, bool isEnabled)
+{
+    if (effectCode < EFFECT_CODE_COUNT && effectCode != MUTE_CODE)
+    {
+        effectDesigners[effectCode]->setIsEnabled(isEnabled);
+    }
+    else if (effectCode == MUTE_CODE)
+    {
+        effectControls.setMuteState(isEnabled);
+    }
 }

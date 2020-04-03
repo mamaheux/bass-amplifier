@@ -19,18 +19,21 @@ public:
         bool overrideActiveState,
         bool muteActiveState);
     typedef void (*DelayUsHandler)(uint32_t delayUs);
+    typedef void (*SetEffectHandler)(uint8_t effectCode, bool isEnabled);
 
     static constexpr uint8_t HEARTBEAT_MESSAGE_CODE = 0;
     static constexpr uint8_t TOOGLE_EFFECT_MESSAGE_CODE = 50;
     static constexpr uint8_t CLIPPING_NOTIFICATION_MESSAGE_CODE = 100;
     static constexpr uint8_t EFFECT_ACTIVE_STATES_MESSAGE_CODE = 150;
     static constexpr uint8_t DELAY_US_MESSAGE_CODE = 200;
+    static constexpr uint8_t SET_EFFECT_MESSAGE_CODE = 250;
 
     static constexpr uint8_t HEARTBEAT_DATA_SIZE = 3;
     static constexpr uint8_t TOOGLE_EFFECT_DATA_SIZE = 4;
     static constexpr uint8_t CLIPPING_NOTIFICATION_DATA_SIZE = 3;
     static constexpr uint8_t EFFECT_ACTIVE_STATES_DATA_SIZE = 9;
     static constexpr uint8_t DELAY_US_DATA_SIZE = 7;
+    static constexpr uint8_t SET_EFFECT_DATA_SIZE = 5;
 
 private:
     TSerial& m_serial;
@@ -40,6 +43,7 @@ private:
     ClippingNotificationHandler m_clippingNotificationHandler;
     EffectActiveStatesHandler m_effectActiveStatesHandler;
     DelayUsHandler m_delayUsHandler;
+    SetEffectHandler m_setEffectHandler;
 
 public:
     ControllerFootswitchCommunication(TSerial& serial);
@@ -50,6 +54,7 @@ public:
     void registerClippingNotificationHandler(ClippingNotificationHandler handler);
     void registerEffectActiveStatesHandler(EffectActiveStatesHandler handler);
     void registerDelayUsHandler(DelayUsHandler handler);
+    void registerSetEffectHandler(SetEffectHandler handler);
 
     void sendHeartbeat();
     void sendToogleEffect(uint8_t effectCode);
@@ -61,6 +66,7 @@ public:
         bool overrideActiveState,
         bool muteActiveState);
     void sendDelayUs(uint32_t delayUs);
+    void sendSetEffect(uint8_t effectCode, bool isEnabled);
 
     bool receive();
 
@@ -72,7 +78,7 @@ template <class TSerial>
 ControllerFootswitchCommunication<TSerial>::ControllerFootswitchCommunication(TSerial& serial) : m_serial(serial),
     m_heartbeatHandler(nullptr), m_toogleEffectHandler(nullptr),
     m_clippingNotificationHandler(nullptr), m_effectActiveStatesHandler(nullptr),
-    m_delayUsHandler(nullptr)
+    m_delayUsHandler(nullptr), m_setEffectHandler(nullptr)
 {
 }
 
@@ -110,6 +116,12 @@ template <class TSerial>
 void ControllerFootswitchCommunication<TSerial>::registerDelayUsHandler(DelayUsHandler handler)
 {
     m_delayUsHandler = handler;
+}
+
+template <class TSerial>
+void ControllerFootswitchCommunication<TSerial>::registerSetEffectHandler(SetEffectHandler handler)
+{
+    m_setEffectHandler = handler;
 }
 
 template <class TSerial>
@@ -187,6 +199,15 @@ void ControllerFootswitchCommunication<TSerial>::sendDelayUs(uint32_t delayUs)
 }
 
 template <class TSerial>
+void ControllerFootswitchCommunication<TSerial>::sendSetEffect(uint8_t effectCode, bool isEnabled)
+{
+    const uint8_t checksum =  UINT8_MAX - (SET_EFFECT_DATA_SIZE + SET_EFFECT_MESSAGE_CODE + effectCode + isEnabled) + 1;
+    uint8_t data[SET_EFFECT_DATA_SIZE] = {SET_EFFECT_DATA_SIZE, SET_EFFECT_MESSAGE_CODE, effectCode, isEnabled, checksum};
+
+    m_serial.write(reinterpret_cast<char*>(data), SET_EFFECT_DATA_SIZE);
+}
+
+template <class TSerial>
 bool ControllerFootswitchCommunication<TSerial>::receive()
 {
     if (m_serial.available() == 0) 
@@ -258,6 +279,13 @@ void ControllerFootswitchCommunication<TSerial>::handleMessage(uint8_t* data, ui
                 (static_cast<uint32_t>(data[5]) << 24);
             m_delayUsHandler(delayUs);
         }
+
+    case SET_EFFECT_MESSAGE_CODE:
+        if (dataSize == SET_EFFECT_DATA_SIZE && m_setEffectHandler != nullptr)
+        {
+            m_setEffectHandler(data[2], data[3]);
+        }
+        break;
     }
 }
 
