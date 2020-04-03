@@ -5,6 +5,7 @@
 MuteDesigner::MuteDesigner(float samplingFrequency) : 
     EffectDesigner(samplingFrequency, MUTE_CODE, DATA_SIZE, nullptr)
 {
+    setIsEnabled(false);
 }
 
 MuteDesigner::~MuteDesigner()

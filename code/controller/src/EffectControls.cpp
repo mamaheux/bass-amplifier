@@ -2,7 +2,7 @@
 
 static volatile uint32_t* delayUs = nullptr;
 static volatile uint32_t lastDelayTapUs = 0;
-static void delayTapInInterrupt()
+static void delayTapInterrupt()
 {
     if (delayUs == nullptr)
     {
@@ -14,6 +14,12 @@ static void delayTapInInterrupt()
     lastDelayTapUs = timeUs;
 }
 
+static volatile bool* muteState = nullptr;
+static void muteInterrupt()
+{
+    *muteState = !muteState;
+}
+
 EffectControls::EffectControls(ControlAdc& adc) : m_adc(adc), m_delayUs(0)
 {
 }
@@ -22,9 +28,11 @@ void EffectControls::begin()
 {
     delayUs = &m_delayUs;
     pinMode(DELAY_TAP_PIN, INPUT);
-    attachInterrupt(digitalPinToInterrupt(DELAY_TAP_PIN), delayTapInInterrupt, RISING);
+    attachInterrupt(digitalPinToInterrupt(DELAY_TAP_PIN), delayTapInterrupt, RISING);
 
+    muteState = &m_muteState;
     pinMode(MUTE_PIN, INPUT);
+    attachInterrupt(digitalPinToInterrupt(MUTE_PIN), muteInterrupt, RISING);
 }
 
 uint8_t EffectControls::readAdc(AdcChannel channel)

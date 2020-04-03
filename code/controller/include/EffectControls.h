@@ -9,6 +9,7 @@ class EffectControls
     ControlAdc& m_adc;
 
     volatile uint32_t m_delayUs;
+    volatile bool m_muteState;
 
 public:
     EffectControls(ControlAdc& adc);
@@ -31,6 +32,7 @@ public:
 
     uint8_t getDelayVolume();
     uint32_t getDelay();
+    void setDelayUs(uint32_t delayUs);
 
     uint8_t getReverbVolume();
 
@@ -38,6 +40,7 @@ public:
     uint8_t getOverdriveTone();
 
     bool getMuteState();
+    void setMuteState(bool muteState);
 
 private:
     uint8_t readAdc(AdcChannel channel);
@@ -104,6 +107,11 @@ inline uint32_t EffectControls::getDelay()
     return static_cast<uint32_t>(delaySec * SAMPLING_FREQUENCY);
 }
 
+void EffectControls::setDelayUs(uint32_t delayUs)
+{
+    m_delayUs = delayUs;
+}
+
 inline uint8_t EffectControls::getReverbVolume()
 {
     return readAdc(REVERB_VOLUME_POT);
@@ -121,7 +129,12 @@ inline uint8_t EffectControls::getOverdriveTone()
 
 inline bool EffectControls::getMuteState()
 {
-    return digitalRead(MUTE_PIN);
+    return m_muteState;
+}
+
+inline void EffectControls::setMuteState(bool muteState)
+{
+    m_muteState = muteState;
 }
 
 #endif

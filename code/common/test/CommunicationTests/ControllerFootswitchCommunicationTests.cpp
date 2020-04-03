@@ -43,26 +43,26 @@ public:
     }
 };
 
-bool heartbeatReceived = false;
-void heartbeatHandler()
+static bool heartbeatReceived = false;
+static void heartbeatHandler()
 {
     heartbeatReceived = true;
 }
 
-uint8_t receivedEffectCode = UINT8_MAX;
-void toogleEffectHandler(uint8_t effectCode)
+static uint8_t receivedEffectCode = UINT8_MAX;
+static void toogleEffectHandler(uint8_t effectCode)
 {
     receivedEffectCode = effectCode;
 }
 
-bool clippingNotificationReceived = false;
-void clippingNotificationHandler()
+static bool clippingNotificationReceived = false;
+static void clippingNotificationHandler()
 {
     clippingNotificationReceived = true;
 }
 
-bool effectActiveStates[6] = {false};
-void effectActiveStatesHandler(bool compressorActiveState,
+static bool effectActiveStates[6] = {false};
+static void effectActiveStatesHandler(bool compressorActiveState,
     bool octaverActiveState,
     bool delayActiveState,
     bool reverbActiveState,
@@ -77,7 +77,13 @@ void effectActiveStatesHandler(bool compressorActiveState,
     effectActiveStates[5] = muteActiveState;
 }
 
-void test_ControllerFootswitchCommunication_begin()
+static uint32_t receivedDelayUs = 0;
+static void delayUsHandler(uint32_t delayUs)
+{
+    receivedDelayUs = delayUs;
+}
+
+static void test_ControllerFootswitchCommunication_begin()
 {
     constexpr uint32_t BAUD_RATE = 9600;
 
@@ -88,7 +94,7 @@ void test_ControllerFootswitchCommunication_begin()
     TEST_ASSERT_EQUAL(BAUD_RATE, serialMock.baudRate);
 }
 
-void test_ControllerFootswitchCommunication_sendHeartbeat()
+static void test_ControllerFootswitchCommunication_sendHeartbeat()
 {
     SerialMock serialMock;
     ControllerFootswitchCommunication<SerialMock> testee(serialMock);
@@ -100,7 +106,7 @@ void test_ControllerFootswitchCommunication_sendHeartbeat()
     TEST_ASSERT_EQUAL(253, serialMock.outBuffer[2]);
 }
 
-void test_ControllerFootswitchCommunication_sendToogleEffect()
+static void test_ControllerFootswitchCommunication_sendToogleEffect()
 {
     constexpr uint8_t EFFECT_CODE = 5;
 
@@ -115,7 +121,7 @@ void test_ControllerFootswitchCommunication_sendToogleEffect()
     TEST_ASSERT_EQUAL(197, serialMock.outBuffer[3]);
 }
 
-void test_ControllerFootswitchCommunication_sendClippingNotification()
+static void test_ControllerFootswitchCommunication_sendClippingNotification()
 {
     SerialMock serialMock;
     ControllerFootswitchCommunication<SerialMock> testee(serialMock);
@@ -127,7 +133,7 @@ void test_ControllerFootswitchCommunication_sendClippingNotification()
     TEST_ASSERT_EQUAL(153, serialMock.outBuffer[2]);
 }
 
-void test_ControllerFootswitchCommunication_sendEffectActiveStates()
+static void test_ControllerFootswitchCommunication_sendEffectActiveStates()
 {
     SerialMock serialMock;
     ControllerFootswitchCommunication<SerialMock> testee(serialMock);
@@ -145,7 +151,24 @@ void test_ControllerFootswitchCommunication_sendEffectActiveStates()
     TEST_ASSERT_EQUAL(94, serialMock.outBuffer[8]);
 }
 
-void test_ControllerFootswitchCommunication_receiveHeartbeat()
+static void test_ControllerFootswitchCommunication_sendDelayUs()
+{
+    constexpr uint32_t DELAY_US = 0x01020304;
+    SerialMock serialMock;
+    ControllerFootswitchCommunication<SerialMock> testee(serialMock);
+
+    testee.sendDelayUs(DELAY_US);
+
+    TEST_ASSERT_EQUAL(7, serialMock.outBuffer[0]);
+    TEST_ASSERT_EQUAL(200, serialMock.outBuffer[1]);
+    TEST_ASSERT_EQUAL(0x04, serialMock.outBuffer[2]);
+    TEST_ASSERT_EQUAL(0x03, serialMock.outBuffer[3]);
+    TEST_ASSERT_EQUAL(0x02, serialMock.outBuffer[4]);
+    TEST_ASSERT_EQUAL(0x01, serialMock.outBuffer[5]);
+    TEST_ASSERT_EQUAL(39, serialMock.outBuffer[6]);
+}
+
+static void test_ControllerFootswitchCommunication_receiveHeartbeat()
 {
     SerialMock serialMock;
     serialMock.inBuffer[0] = 3;
@@ -158,7 +181,7 @@ void test_ControllerFootswitchCommunication_receiveHeartbeat()
 
     // Wrong checksum
     heartbeatReceived = false;
-    testee.receive();
+    TEST_ASSERT_EQUAL(true, testee.receive());
     TEST_ASSERT_EQUAL(false, heartbeatReceived);
 
     // Reset the mock and udpate the checksum    
@@ -166,11 +189,11 @@ void test_ControllerFootswitchCommunication_receiveHeartbeat()
     serialMock.inBuffer[2] = 253;
 
     heartbeatReceived = false;
-    testee.receive();
+    TEST_ASSERT_EQUAL(true, testee.receive());
     TEST_ASSERT_EQUAL(true, heartbeatReceived);
 }
 
-void test_ControllerFootswitchCommunication_receiveToogleEffect()
+static void test_ControllerFootswitchCommunication_receiveToogleEffect()
 {
     constexpr uint8_t EFFECT_CODE = 5;
     SerialMock serialMock;
@@ -184,11 +207,11 @@ void test_ControllerFootswitchCommunication_receiveToogleEffect()
     testee.registerToogleEffectHandler(toogleEffectHandler);
 
     receivedEffectCode = UINT8_MAX;
-    testee.receive();
+    TEST_ASSERT_EQUAL(true, testee.receive());
     TEST_ASSERT_EQUAL(EFFECT_CODE, receivedEffectCode);
 }
 
-void test_ControllerFootswitchCommunication_receiveClippingNotification()
+static void test_ControllerFootswitchCommunication_receiveClippingNotification()
 {
     SerialMock serialMock;
     serialMock.inBuffer[0] = 3;
@@ -200,11 +223,11 @@ void test_ControllerFootswitchCommunication_receiveClippingNotification()
     testee.registerClippingNotificationHandler(clippingNotificationHandler);
 
     clippingNotificationReceived = false;
-    testee.receive();
+    TEST_ASSERT_EQUAL(true, testee.receive());
     TEST_ASSERT_EQUAL(true, clippingNotificationReceived);
 }
 
-void test_ControllerFootswitchCommunication_receiveEffectActiveStates()
+static void test_ControllerFootswitchCommunication_receiveEffectActiveStates()
 {
     SerialMock serialMock;
     serialMock.inBuffer[0] = 9;
@@ -221,13 +244,44 @@ void test_ControllerFootswitchCommunication_receiveEffectActiveStates()
 
     testee.registerEffectActiveStatesHandler(effectActiveStatesHandler);
 
-    testee.receive();
+    TEST_ASSERT_EQUAL(true, testee.receive());
     TEST_ASSERT_EQUAL(true, effectActiveStates[0]);
     TEST_ASSERT_EQUAL(true, effectActiveStates[1]);
     TEST_ASSERT_EQUAL(true, effectActiveStates[2]);
     TEST_ASSERT_EQUAL(true, effectActiveStates[3]);
     TEST_ASSERT_EQUAL(true, effectActiveStates[4]);
     TEST_ASSERT_EQUAL(true, effectActiveStates[5]);
+}
+
+static void test_ControllerFootswitchCommunication_receiveDelayUs()
+{
+    SerialMock serialMock;
+    serialMock.inBuffer[0] = 7;
+    serialMock.inBuffer[1] = 200;
+    serialMock.inBuffer[2] = 1;
+    serialMock.inBuffer[3] = 2;
+    serialMock.inBuffer[4] = 3;
+    serialMock.inBuffer[5] = 4;
+    serialMock.inBuffer[6] = 39;
+
+    ControllerFootswitchCommunication<SerialMock> testee(serialMock);
+
+    testee.registerDelayUsHandler(delayUsHandler);
+
+    TEST_ASSERT_EQUAL(true, testee.receive());
+    TEST_ASSERT_EQUAL(0x04030201, receivedDelayUs);
+}
+
+static void test_ControllerFootswitchCommunication_receiveEmptySerial()
+{
+    SerialMock serialMock;
+    serialMock.inIndex = SerialMock::BUFFER_SIZE;
+
+    ControllerFootswitchCommunication<SerialMock> testee(serialMock);
+
+    testee.registerEffectActiveStatesHandler(effectActiveStatesHandler);
+
+    TEST_ASSERT_EQUAL(false, testee.receive());
 }
 
 void runControllerFootswitchCommunicationTests()
@@ -238,9 +292,12 @@ void runControllerFootswitchCommunicationTests()
     RUN_TEST(test_ControllerFootswitchCommunication_sendToogleEffect);
     RUN_TEST(test_ControllerFootswitchCommunication_sendClippingNotification);
     RUN_TEST(test_ControllerFootswitchCommunication_sendEffectActiveStates);
+    RUN_TEST(test_ControllerFootswitchCommunication_sendDelayUs);
 
     RUN_TEST(test_ControllerFootswitchCommunication_receiveHeartbeat);
     RUN_TEST(test_ControllerFootswitchCommunication_receiveToogleEffect);
     RUN_TEST(test_ControllerFootswitchCommunication_receiveClippingNotification);
     RUN_TEST(test_ControllerFootswitchCommunication_receiveEffectActiveStates);
+    RUN_TEST(test_ControllerFootswitchCommunication_receiveEmptySerial);
+    RUN_TEST(test_ControllerFootswitchCommunication_receiveDelayUs);
 }

@@ -3,6 +3,8 @@
 
 #include "constants.h"
 
+constexpr uint32_t CONTROLLER_FOOTSWITCH_HEARTBEAT_TIMEOUT_MS = 1000;
+
 template <class TSerial>
 class ControllerFootswitchCommunication
 {
@@ -16,16 +18,19 @@ public:
         bool reverbActiveState,
         bool overrideActiveState,
         bool muteActiveState);
+    typedef void (*DelayUsHandler)(uint32_t delayUs);
 
     static constexpr uint8_t HEARTBEAT_MESSAGE_CODE = 0;
     static constexpr uint8_t TOOGLE_EFFECT_MESSAGE_CODE = 50;
     static constexpr uint8_t CLIPPING_NOTIFICATION_MESSAGE_CODE = 100;
     static constexpr uint8_t EFFECT_ACTIVE_STATES_MESSAGE_CODE = 150;
+    static constexpr uint8_t DELAY_US_MESSAGE_CODE = 200;
 
     static constexpr uint8_t HEARTBEAT_DATA_SIZE = 3;
     static constexpr uint8_t TOOGLE_EFFECT_DATA_SIZE = 4;
-    static constexpr uint8_t CLIPPING_NOTIFICATION_DATA_SIZE = 3;    
+    static constexpr uint8_t CLIPPING_NOTIFICATION_DATA_SIZE = 3;
     static constexpr uint8_t EFFECT_ACTIVE_STATES_DATA_SIZE = 9;
+    static constexpr uint8_t DELAY_US_DATA_SIZE = 7;
 
 private:
     TSerial& m_serial;
@@ -34,6 +39,7 @@ private:
     ToogleEffectHandler m_toogleEffectHandler;
     ClippingNotificationHandler m_clippingNotificationHandler;
     EffectActiveStatesHandler m_effectActiveStatesHandler;
+    DelayUsHandler m_delayUsHandler;
 
 public:
     ControllerFootswitchCommunication(TSerial& serial);
@@ -43,6 +49,7 @@ public:
     void registerToogleEffectHandler(ToogleEffectHandler handler);
     void registerClippingNotificationHandler(ClippingNotificationHandler handler);
     void registerEffectActiveStatesHandler(EffectActiveStatesHandler handler);
+    void registerDelayUsHandler(DelayUsHandler handler);
 
     void sendHeartbeat();
     void sendToogleEffect(uint8_t effectCode);
@@ -53,8 +60,9 @@ public:
         bool reverbActiveState,
         bool overrideActiveState,
         bool muteActiveState);
+    void sendDelayUs(uint32_t delayUs);
 
-    void receive();
+    bool receive();
 
 private:
     void handleMessage(uint8_t* data, uint8_t dataSize);
@@ -63,7 +71,8 @@ private:
 template <class TSerial>
 ControllerFootswitchCommunication<TSerial>::ControllerFootswitchCommunication(TSerial& serial) : m_serial(serial),
     m_heartbeatHandler(nullptr), m_toogleEffectHandler(nullptr),
-    m_clippingNotificationHandler(nullptr), m_effectActiveStatesHandler(nullptr)
+    m_clippingNotificationHandler(nullptr), m_effectActiveStatesHandler(nullptr),
+    m_delayUsHandler(nullptr)
 {
 }
 
@@ -95,6 +104,12 @@ template <class TSerial>
 void ControllerFootswitchCommunication<TSerial>::registerEffectActiveStatesHandler(EffectActiveStatesHandler handler)
 {
     m_effectActiveStatesHandler = handler;
+}
+
+template <class TSerial>
+void ControllerFootswitchCommunication<TSerial>::registerDelayUsHandler(DelayUsHandler handler)
+{
+    m_delayUsHandler = handler;
 }
 
 template <class TSerial>
@@ -153,11 +168,30 @@ void ControllerFootswitchCommunication<TSerial>::sendEffectActiveStates(bool com
 }
 
 template <class TSerial>
-void ControllerFootswitchCommunication<TSerial>::receive()
+void ControllerFootswitchCommunication<TSerial>::sendDelayUs(uint32_t delayUs)
+{
+    uint8_t b0 = delayUs & 0xFF;
+    uint8_t b1 = (delayUs >> 8) & 0xFF;
+    uint8_t b2 = (delayUs >> 16) & 0xFF;
+    uint8_t b3 = (delayUs >> 24) & 0xFF;
+
+    uint8_t checksum =  UINT8_MAX - (DELAY_US_DATA_SIZE + DELAY_US_MESSAGE_CODE + b0 + b1 + b2 + b3) + 1;
+    uint8_t data[DELAY_US_DATA_SIZE] =
+    {
+        DELAY_US_DATA_SIZE, DELAY_US_MESSAGE_CODE,
+        b0, b1, b2, b3,
+        checksum
+    };
+
+    m_serial.write(reinterpret_cast<char*>(data), DELAY_US_DATA_SIZE);
+}
+
+template <class TSerial>
+bool ControllerFootswitchCommunication<TSerial>::receive()
 {
     if (m_serial.available() == 0) 
     {
-        return;
+        return false;
     }
     
     constexpr uint8_t MAX_DATA_SIZE = 9;
@@ -178,6 +212,8 @@ void ControllerFootswitchCommunication<TSerial>::receive()
     {
         handleMessage(data, dataSize);
     }
+
+    return true;
 }
 
 template <class TSerial>
@@ -212,6 +248,16 @@ void ControllerFootswitchCommunication<TSerial>::handleMessage(uint8_t* data, ui
             m_effectActiveStatesHandler(data[2], data[3], data[4], data[5], data[6], data[7]);
         }
         break;
+
+    case DELAY_US_MESSAGE_CODE:
+        if (dataSize == DELAY_US_DATA_SIZE && m_delayUsHandler != nullptr)
+        {
+            uint32_t delayUs = static_cast<uint32_t>(data[2]) |
+                (static_cast<uint32_t>(data[3]) << 8) |
+                (static_cast<uint32_t>(data[4]) << 16) |
+                (static_cast<uint32_t>(data[5]) << 24);
+            m_delayUsHandler(delayUs);
+        }
     }
 }
 

@@ -10,7 +10,11 @@ constexpr uint32_t MAX_DELAY = 96000;
 
 // IO
 #define DEBUG_SERIAL Serial
+constexpr uint32_t DEBUG_SERIAL_BAUD_RATE = 9600;
+
 #define FOOTSWITCH_SERIAL Serial2
+constexpr uint32_t FOOTSWITCH_SERIALL_BAUD_RATE = 115200;
+
 #define DSP_SERIAL Serial1
 
 constexpr uint8_t ADC_RESOLUTION = 12;
@@ -60,6 +64,7 @@ constexpr uint8_t REVERB_LED_PIN = 7;
 constexpr uint8_t OVERDRIVE_LED_PIN = 6;
 constexpr uint8_t MUTE_LED_PIN = 25;
 constexpr uint8_t CLIPPING_LED_PIN = 8;
+
 
 constexpr AdcChannel THERMISTOR = {AdcSource::EXTERNAL_ADC, 6};
 constexpr uint8_t FAN_PIN = 3;

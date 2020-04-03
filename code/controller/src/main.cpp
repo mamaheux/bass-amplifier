@@ -5,6 +5,7 @@
 #include "FanController.h"
 
 #include <EffectDesign.h>
+#include <ControllerFootswitchCommunication.h>
 
 ControlAdc adc;
 EffectControls effectControls(adc);
@@ -21,16 +22,54 @@ ReverbDesigner reverbDesigner(SAMPLING_FREQUENCY);
 OverdriveDesigner overdriveDesigner(SAMPLING_FREQUENCY);
 MuteDesigner muteDesigner(SAMPLING_FREQUENCY);
 
+EffectDesigner* effectDesigners[EFFECT_CODE_COUNT];
+
+ControllerFootswitchCommunication<HardwareSerial2> footswitchCommunication(FOOTSWITCH_SERIAL);
+uint32_t lastHeartbeatTimeMs;
+bool isHeartbeatPending;
+
+void setupEffectDesigners();
+
 void updateDesigner();
 void updateStatusLed();
 
+void updateFootswitchCommunication();
+void resetAllEffectEnabledStates();
+
+void footswitchHeatbeatHandler();
+void footswitchToogleEffectHandler(uint8_t effectCode);
+void footswitchDelayUsHandler(uint32_t delayUs);
+
 void setup()
 {
-    DEBUG_SERIAL.begin(9600);
+    DEBUG_SERIAL.begin(DEBUG_SERIAL_BAUD_RATE);
 
     adc.begin();
     effectControls.begin();
     fanController.begin();
+
+    setupEffectDesigners();
+
+    footswitchCommunication.begin(FOOTSWITCH_SERIALL_BAUD_RATE);
+    footswitchCommunication.registerHeatbeatHandler(footswitchHeatbeatHandler);
+    footswitchCommunication.registerToogleEffectHandler(footswitchToogleEffectHandler);
+    footswitchCommunication.registerDelayUsHandler(footswitchDelayUsHandler);
+
+    lastHeartbeatTimeMs = millis();
+    isHeartbeatPending = true;
+}
+
+void setupEffectDesigners()
+{
+    effectDesigners[contourDesigner.effectCode()] = &contourDesigner;
+    effectDesigners[presenceDesigner.effectCode()] = &presenceDesigner;
+    effectDesigners[eqDesigner.effectCode()] = &eqDesigner;
+    effectDesigners[compressorDesigner.effectCode()] = &compressorDesigner;
+    effectDesigners[octaverDesigner.effectCode()] = &octaverDesigner;
+    effectDesigners[delayDesigner.effectCode()] = &delayDesigner;
+    effectDesigners[reverbDesigner.effectCode()] = &reverbDesigner;
+    effectDesigners[overdriveDesigner.effectCode()] = &overdriveDesigner;
+    effectDesigners[muteDesigner.effectCode()] = &muteDesigner;
 }
 
 void loop()
@@ -38,6 +77,7 @@ void loop()
     updateDesigner();
     updateStatusLed();
     fanController.update();
+    updateFootswitchCommunication();
 }
 
 void updateDesigner()
@@ -66,4 +106,54 @@ void updateStatusLed()
     statusLed.setOverdriveLed(overdriveDesigner.isActive());
     statusLed.setMuteLed(muteDesigner.isActive());
     statusLed.update();
+}
+
+void updateFootswitchCommunication()
+{
+    while (footswitchCommunication.receive());
+
+    footswitchCommunication.sendEffectActiveStates(compressorDesigner.isActive(),
+        octaverDesigner.isActive(),
+        delayDesigner.isActive(),
+        reverbDesigner.isActive(),
+        overdriveDesigner.isActive(),
+        muteDesigner.isActive());
+
+    if ((millis() - lastHeartbeatTimeMs) > CONTROLLER_FOOTSWITCH_HEARTBEAT_TIMEOUT_MS && isHeartbeatPending)
+    {
+        resetAllEffectEnabledStates();
+        isHeartbeatPending = false;
+    }
+}
+
+void resetAllEffectEnabledStates()
+{
+    for (int i = 0; i < EFFECT_CODE_COUNT; i++)
+    {
+        effectDesigners[i]->setIsEnabled(true);
+    }
+    muteDesigner.setIsEnabled(false);
+}
+
+void footswitchHeatbeatHandler()
+{
+    lastHeartbeatTimeMs = millis();
+    isHeartbeatPending = true;
+}
+
+void footswitchToogleEffectHandler(uint8_t effectCode)
+{
+    if (effectCode < EFFECT_CODE_COUNT && effectCode != MUTE_CODE)
+    {
+        effectDesigners[effectCode]->setIsEnabled(!effectDesigners[effectCode]->isEnabled());
+    }
+    else if (effectCode == MUTE_CODE)
+    {
+        effectControls.setMuteState(!effectControls.getMuteState());
+    }
+}
+
+void footswitchDelayUsHandler(uint32_t delayUs)
+{
+    effectControls.setDelayUs(delayUs);
 }
