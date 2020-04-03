@@ -25,7 +25,7 @@ MuteDesigner muteDesigner(SAMPLING_FREQUENCY);
 
 EffectDesigner* effectDesigners[EFFECT_CODE_COUNT];
 
-ControllerFootswitchCommunication<HardwareSerial2> footswitchCommunication(FOOTSWITCH_SERIAL);
+ControllerFootswitchCommunication<decltype(FOOTSWITCH_SERIAL)> footswitchCommunication(FOOTSWITCH_SERIAL);
 uint32_t lastHeartbeatTimeMs;
 bool isHeartbeatPending;
 
@@ -41,9 +41,8 @@ void updateFootswitchCommunicationSlow();
 void resetAllEffectEnabledStates();
 
 void footswitchHeatbeatHandler();
-void footswitchToogleEffectHandler(uint8_t effectCode);
-void footswitchDelayUsHandler(uint32_t delayUs);
 void footswitchSetEffectHandler(uint8_t effectCode, bool isEnabled);
+void footswitchDelayUsHandler(uint32_t delayUs);
 
 Ticker updateEffectDesignersTicker(updateEffectDesigners, EFFECT_DESIGNER_UPDATE_INTERVAL_US, MICROS);
 Ticker updateStatusLedTicker(updateStatusLed, STATUS_LED_UPDATE_INTERVAL_US, MICROS);
@@ -89,9 +88,8 @@ void setupFootswitchCommunication()
 {
     footswitchCommunication.begin(FOOTSWITCH_SERIALL_BAUD_RATE);
     footswitchCommunication.registerHeatbeatHandler(footswitchHeatbeatHandler);
-    footswitchCommunication.registerToogleEffectHandler(footswitchToogleEffectHandler);
-    footswitchCommunication.registerDelayUsHandler(footswitchDelayUsHandler);
     footswitchCommunication.registerSetEffectHandler(footswitchSetEffectHandler);
+    footswitchCommunication.registerDelayUsHandler(footswitchDelayUsHandler);
 
     lastHeartbeatTimeMs = millis();
     isHeartbeatPending = true;
@@ -175,23 +173,6 @@ void footswitchHeatbeatHandler()
     isHeartbeatPending = true;
 }
 
-void footswitchToogleEffectHandler(uint8_t effectCode)
-{
-    if (effectCode < EFFECT_CODE_COUNT && effectCode != MUTE_CODE)
-    {
-        effectDesigners[effectCode]->setIsEnabled(!effectDesigners[effectCode]->isEnabled());
-    }
-    else if (effectCode == MUTE_CODE)
-    {
-        effectControls.setMuteState(!effectControls.getMuteState());
-    }
-}
-
-void footswitchDelayUsHandler(uint32_t delayUs)
-{
-    effectControls.setDelayUs(delayUs);
-}
-
 void footswitchSetEffectHandler(uint8_t effectCode, bool isEnabled)
 {
     if (effectCode < EFFECT_CODE_COUNT && effectCode != MUTE_CODE)
@@ -202,4 +183,9 @@ void footswitchSetEffectHandler(uint8_t effectCode, bool isEnabled)
     {
         effectControls.setMuteState(isEnabled);
     }
+}
+
+void footswitchDelayUsHandler(uint32_t delayUs)
+{
+    effectControls.setDelayUs(delayUs);
 }
