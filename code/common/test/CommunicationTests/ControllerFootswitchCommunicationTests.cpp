@@ -173,8 +173,21 @@ static void test_ControllerFootswitchCommunication_sendDelayUs()
     TEST_ASSERT_EQUAL(39, serialMock.outBuffer[6]);
 }
 
+static void test_ControllerFootswitchCommunication_sendAck()
+{
+    SerialMock serialMock;
+    ControllerFootswitchCommunication<SerialMock> testee(serialMock);
+
+    testee.sendAck();
+
+    TEST_ASSERT_EQUAL(3, serialMock.outBuffer[0]);
+    TEST_ASSERT_EQUAL(250, serialMock.outBuffer[1]);
+    TEST_ASSERT_EQUAL(3, serialMock.outBuffer[2]);
+}
+
 static void test_ControllerFootswitchCommunication_receiveHeartbeat()
 {
+    uint8_t receivedMessageCode = UINT8_MAX;
     SerialMock serialMock;
     serialMock.inBuffer[0] = 3;
     serialMock.inBuffer[1] = 0;
@@ -186,16 +199,18 @@ static void test_ControllerFootswitchCommunication_receiveHeartbeat()
 
     // Wrong checksum
     heartbeatReceived = false;
-    TEST_ASSERT_EQUAL(true, testee.receive());
+    TEST_ASSERT_EQUAL(true, testee.receive(&receivedMessageCode));
     TEST_ASSERT_EQUAL(false, heartbeatReceived);
+    TEST_ASSERT_EQUAL(UINT8_MAX, receivedMessageCode);
 
     // Reset the mock and udpate the checksum    
     serialMock.inIndex = 0;
     serialMock.inBuffer[2] = 253;
 
     heartbeatReceived = false;
-    TEST_ASSERT_EQUAL(true, testee.receive());
+    TEST_ASSERT_EQUAL(true, testee.receive(&receivedMessageCode));
     TEST_ASSERT_EQUAL(true, heartbeatReceived);
+    TEST_ASSERT_EQUAL(serialMock.inBuffer[1], receivedMessageCode);
 }
 
 static void test_ControllerFootswitchCommunication_receiveSetEffect()
@@ -281,6 +296,20 @@ static void test_ControllerFootswitchCommunication_receiveDelayUs()
     TEST_ASSERT_EQUAL(0x04030201, receivedDelayUs);
 }
 
+static void test_ControllerFootswitchCommunication_receiveAck()
+{
+    uint8_t receivedMessageCode = UINT8_MAX;
+    SerialMock serialMock;
+    serialMock.inBuffer[0] = 3;
+    serialMock.inBuffer[1] = 250;
+    serialMock.inBuffer[2] = 3;
+
+    ControllerFootswitchCommunication<SerialMock> testee(serialMock);
+
+    TEST_ASSERT_EQUAL(true, testee.receive(&receivedMessageCode));
+    TEST_ASSERT_EQUAL(serialMock.inBuffer[1], receivedMessageCode);
+}
+
 static void test_ControllerFootswitchCommunication_receiveEmptySerial()
 {
     SerialMock serialMock;
@@ -302,6 +331,7 @@ void runControllerFootswitchCommunicationTests()
     RUN_TEST(test_ControllerFootswitchCommunication_sendClippingNotification);
     RUN_TEST(test_ControllerFootswitchCommunication_sendEffectActiveStates);
     RUN_TEST(test_ControllerFootswitchCommunication_sendDelayUs);
+    RUN_TEST(test_ControllerFootswitchCommunication_sendAck);
 
     RUN_TEST(test_ControllerFootswitchCommunication_receiveHeartbeat);
     RUN_TEST(test_ControllerFootswitchCommunication_receiveSetEffect);

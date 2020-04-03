@@ -25,12 +25,14 @@ public:
     static constexpr uint8_t CLIPPING_NOTIFICATION_MESSAGE_CODE = 100;
     static constexpr uint8_t EFFECT_ACTIVE_STATES_MESSAGE_CODE = 150;
     static constexpr uint8_t DELAY_US_MESSAGE_CODE = 200;
+    static constexpr uint8_t ACK_MESSAGE_CODE = 250;
 
     static constexpr uint8_t HEARTBEAT_DATA_SIZE = 3;
     static constexpr uint8_t SET_EFFECT_DATA_SIZE = 5;
     static constexpr uint8_t CLIPPING_NOTIFICATION_DATA_SIZE = 3;
     static constexpr uint8_t EFFECT_ACTIVE_STATES_DATA_SIZE = 9;
     static constexpr uint8_t DELAY_US_DATA_SIZE = 7;
+    static constexpr uint8_t ACK_DATA_SIZE = 3;
 
 private:
     TSerial& m_serial;
@@ -61,8 +63,12 @@ public:
         bool overrideActiveState,
         bool muteActiveState);
     void sendDelayUs(uint32_t delayUs);
+    void sendAck();
 
-    bool receive();
+    bool receive(uint8_t* receivedMessageCode = nullptr);
+
+    template <class FMillis>
+    bool waitAck(FMillis millis, uint32_t timeoutMs);
 
 private:
     void handleMessage(uint8_t* data, uint8_t dataSize);
@@ -186,9 +192,18 @@ void ControllerFootswitchCommunication<TSerial>::sendDelayUs(uint32_t delayUs)
 }
 
 template <class TSerial>
-bool ControllerFootswitchCommunication<TSerial>::receive()
+void ControllerFootswitchCommunication<TSerial>::sendAck()
 {
-    if (m_serial.available() == 0) 
+    constexpr uint8_t checksum = UINT8_MAX - (ACK_DATA_SIZE + ACK_MESSAGE_CODE) + 1;
+    uint8_t data[ACK_DATA_SIZE] = {ACK_DATA_SIZE, ACK_MESSAGE_CODE, checksum};
+
+    m_serial.write(reinterpret_cast<char*>(data), ACK_DATA_SIZE);
+}
+
+template <class TSerial>
+bool ControllerFootswitchCommunication<TSerial>::receive(uint8_t* receivedMessageCode)
+{
+    if (m_serial.available() == 0)
     {
         return false;
     }
@@ -210,9 +225,28 @@ bool ControllerFootswitchCommunication<TSerial>::receive()
     if (checksum == 0 && dataSize <= MAX_DATA_SIZE)
     {
         handleMessage(data, dataSize);
+
+        if (receivedMessageCode != nullptr)
+        {
+            *receivedMessageCode = data[1];
+        }
     }
 
     return true;
+}
+
+template <class TSerial>
+template <class FMillis>
+bool ControllerFootswitchCommunication<TSerial>::waitAck(FMillis millis, uint32_t timeoutMs)
+{
+    uint32_t startTimeMs = millis();
+    uint8_t receivedMessageCode = UINT8_MAX;
+    while (receivedMessageCode != ACK_MESSAGE_CODE && (millis() - startTimeMs) < timeoutMs)
+    {
+        receive(&receivedMessageCode);
+    }
+
+    return receivedMessageCode == ACK_MESSAGE_CODE;
 }
 
 template <class TSerial>
