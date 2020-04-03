@@ -55,10 +55,9 @@ static void heartbeatHandler()
     heartbeatReceived = true;
 }
 
-static void setEffectHandler(uint8_t effectCode, bool isEnabled)
+static void toogleEffectHandler(uint8_t effectCode)
 {
     receivedEffectCode = effectCode;
-    receivedIsEnabled = isEnabled;
 }
 
 static void clippingNotificationHandler()
@@ -86,6 +85,12 @@ static void delayUsHandler(uint32_t delayUs)
     receivedDelayUs = delayUs;
 }
 
+static void setEffectHandler(uint8_t effectCode, bool isEnabled)
+{
+    receivedEffectCode = effectCode;
+    receivedIsEnabled = isEnabled;
+}
+
 static void test_ControllerFootswitchCommunication_begin()
 {
     constexpr uint32_t BAUD_RATE = 9600;
@@ -109,21 +114,19 @@ static void test_ControllerFootswitchCommunication_sendHeartbeat()
     TEST_ASSERT_EQUAL(253, serialMock.outBuffer[2]);
 }
 
-static void test_ControllerFootswitchCommunication_sendSetEffect()
+static void test_ControllerFootswitchCommunication_sendToogleEffect()
 {
     constexpr uint8_t EFFECT_CODE = 5;
-    constexpr bool IS_ENABLED = true;
 
     SerialMock serialMock;
     ControllerFootswitchCommunication<SerialMock> testee(serialMock);
 
-    testee.sendSetEffect(EFFECT_CODE, IS_ENABLED);
+    testee.sendToogleEffect(EFFECT_CODE);
 
-    TEST_ASSERT_EQUAL(5, serialMock.outBuffer[0]);
-    TEST_ASSERT_EQUAL(50, serialMock.outBuffer[1]);
+    TEST_ASSERT_EQUAL(4, serialMock.outBuffer[0]);
+    TEST_ASSERT_EQUAL(25, serialMock.outBuffer[1]);
     TEST_ASSERT_EQUAL(EFFECT_CODE, serialMock.outBuffer[2]);
-    TEST_ASSERT_EQUAL(IS_ENABLED, serialMock.outBuffer[3]);
-    TEST_ASSERT_EQUAL(195, serialMock.outBuffer[4]);
+    TEST_ASSERT_EQUAL(222, serialMock.outBuffer[3]);
 }
 
 static void test_ControllerFootswitchCommunication_sendClippingNotification()
@@ -134,8 +137,8 @@ static void test_ControllerFootswitchCommunication_sendClippingNotification()
     testee.sendClippingNotification();
 
     TEST_ASSERT_EQUAL(3, serialMock.outBuffer[0]);
-    TEST_ASSERT_EQUAL(100, serialMock.outBuffer[1]);
-    TEST_ASSERT_EQUAL(153, serialMock.outBuffer[2]);
+    TEST_ASSERT_EQUAL(50, serialMock.outBuffer[1]);
+    TEST_ASSERT_EQUAL(203, serialMock.outBuffer[2]);
 }
 
 static void test_ControllerFootswitchCommunication_sendEffectActiveStates()
@@ -146,14 +149,14 @@ static void test_ControllerFootswitchCommunication_sendEffectActiveStates()
     testee.sendEffectActiveStates(true, false, true, false, true, false);
 
     TEST_ASSERT_EQUAL(9, serialMock.outBuffer[0]);
-    TEST_ASSERT_EQUAL(150, serialMock.outBuffer[1]);
+    TEST_ASSERT_EQUAL(75, serialMock.outBuffer[1]);
     TEST_ASSERT_EQUAL(true, serialMock.outBuffer[2]);
     TEST_ASSERT_EQUAL(false, serialMock.outBuffer[3]);
     TEST_ASSERT_EQUAL(true, serialMock.outBuffer[4]);
     TEST_ASSERT_EQUAL(false, serialMock.outBuffer[5]);
     TEST_ASSERT_EQUAL(true, serialMock.outBuffer[6]);
     TEST_ASSERT_EQUAL(false, serialMock.outBuffer[7]);
-    TEST_ASSERT_EQUAL(94, serialMock.outBuffer[8]);
+    TEST_ASSERT_EQUAL(169, serialMock.outBuffer[8]);
 }
 
 static void test_ControllerFootswitchCommunication_sendDelayUs()
@@ -165,12 +168,29 @@ static void test_ControllerFootswitchCommunication_sendDelayUs()
     testee.sendDelayUs(DELAY_US);
 
     TEST_ASSERT_EQUAL(7, serialMock.outBuffer[0]);
-    TEST_ASSERT_EQUAL(200, serialMock.outBuffer[1]);
+    TEST_ASSERT_EQUAL(100, serialMock.outBuffer[1]);
     TEST_ASSERT_EQUAL(0x04, serialMock.outBuffer[2]);
     TEST_ASSERT_EQUAL(0x03, serialMock.outBuffer[3]);
     TEST_ASSERT_EQUAL(0x02, serialMock.outBuffer[4]);
     TEST_ASSERT_EQUAL(0x01, serialMock.outBuffer[5]);
-    TEST_ASSERT_EQUAL(39, serialMock.outBuffer[6]);
+    TEST_ASSERT_EQUAL(139, serialMock.outBuffer[6]);
+}
+
+static void test_ControllerFootswitchCommunication_sendSetEffect()
+{
+    constexpr uint8_t EFFECT_CODE = 5;
+    constexpr bool IS_ENABLED = true;
+
+    SerialMock serialMock;
+    ControllerFootswitchCommunication<SerialMock> testee(serialMock);
+
+    testee.sendSetEffect(EFFECT_CODE, IS_ENABLED);
+
+    TEST_ASSERT_EQUAL(5, serialMock.outBuffer[0]);
+    TEST_ASSERT_EQUAL(125, serialMock.outBuffer[1]);
+    TEST_ASSERT_EQUAL(EFFECT_CODE, serialMock.outBuffer[2]);
+    TEST_ASSERT_EQUAL(IS_ENABLED, serialMock.outBuffer[3]);
+    TEST_ASSERT_EQUAL(120, serialMock.outBuffer[4]);
 }
 
 static void test_ControllerFootswitchCommunication_sendAck()
@@ -181,8 +201,8 @@ static void test_ControllerFootswitchCommunication_sendAck()
     testee.sendAck();
 
     TEST_ASSERT_EQUAL(3, serialMock.outBuffer[0]);
-    TEST_ASSERT_EQUAL(250, serialMock.outBuffer[1]);
-    TEST_ASSERT_EQUAL(3, serialMock.outBuffer[2]);
+    TEST_ASSERT_EQUAL(150, serialMock.outBuffer[1]);
+    TEST_ASSERT_EQUAL(103, serialMock.outBuffer[2]);
 }
 
 static void test_ControllerFootswitchCommunication_receiveHeartbeat()
@@ -213,34 +233,30 @@ static void test_ControllerFootswitchCommunication_receiveHeartbeat()
     TEST_ASSERT_EQUAL(serialMock.inBuffer[1], receivedMessageCode);
 }
 
-static void test_ControllerFootswitchCommunication_receiveSetEffect()
+static void test_ControllerFootswitchCommunication_receiveToogleEffect()
 {
     constexpr uint8_t EFFECT_CODE = 5;
-    constexpr bool IS_ENABLED = true;
     SerialMock serialMock;
-    serialMock.inBuffer[0] = 5;
-    serialMock.inBuffer[1] = 50;
+    serialMock.inBuffer[0] = 4;
+    serialMock.inBuffer[1] = 25;
     serialMock.inBuffer[2] = EFFECT_CODE;
-    serialMock.inBuffer[3] = IS_ENABLED;
-    serialMock.inBuffer[4] = 195;
+    serialMock.inBuffer[3] = 222;
 
     ControllerFootswitchCommunication<SerialMock> testee(serialMock);
 
-    testee.registerSetEffectHandler(setEffectHandler);
+    testee.registerToogleEffectHandler(toogleEffectHandler);
 
     receivedEffectCode = UINT8_MAX;
-    receivedIsEnabled = false;
     TEST_ASSERT_EQUAL(true, testee.receive());
     TEST_ASSERT_EQUAL(EFFECT_CODE, receivedEffectCode);
-    TEST_ASSERT_EQUAL(IS_ENABLED, receivedIsEnabled);
 }
 
 static void test_ControllerFootswitchCommunication_receiveClippingNotification()
 {
     SerialMock serialMock;
     serialMock.inBuffer[0] = 3;
-    serialMock.inBuffer[1] = 100;
-    serialMock.inBuffer[2] = 153;
+    serialMock.inBuffer[1] = 50;
+    serialMock.inBuffer[2] = 203;
 
     ControllerFootswitchCommunication<SerialMock> testee(serialMock);
 
@@ -255,14 +271,14 @@ static void test_ControllerFootswitchCommunication_receiveEffectActiveStates()
 {
     SerialMock serialMock;
     serialMock.inBuffer[0] = 9;
-    serialMock.inBuffer[1] = 150;
+    serialMock.inBuffer[1] = 75;
     serialMock.inBuffer[2] = 1;
     serialMock.inBuffer[3] = 1;
     serialMock.inBuffer[4] = 1;
     serialMock.inBuffer[5] = 1;
     serialMock.inBuffer[6] = 1;
     serialMock.inBuffer[7] = 1;
-    serialMock.inBuffer[8] = 91;
+    serialMock.inBuffer[8] = 166;
 
     ControllerFootswitchCommunication<SerialMock> testee(serialMock);
 
@@ -281,12 +297,12 @@ static void test_ControllerFootswitchCommunication_receiveDelayUs()
 {
     SerialMock serialMock;
     serialMock.inBuffer[0] = 7;
-    serialMock.inBuffer[1] = 200;
+    serialMock.inBuffer[1] = 100;
     serialMock.inBuffer[2] = 1;
     serialMock.inBuffer[3] = 2;
     serialMock.inBuffer[4] = 3;
     serialMock.inBuffer[5] = 4;
-    serialMock.inBuffer[6] = 39;
+    serialMock.inBuffer[6] = 139;
 
     ControllerFootswitchCommunication<SerialMock> testee(serialMock);
 
@@ -294,6 +310,28 @@ static void test_ControllerFootswitchCommunication_receiveDelayUs()
 
     TEST_ASSERT_EQUAL(true, testee.receive());
     TEST_ASSERT_EQUAL(0x04030201, receivedDelayUs);
+}
+
+static void test_ControllerFootswitchCommunication_receiveSetEffect()
+{
+    constexpr uint8_t EFFECT_CODE = 5;
+    constexpr bool IS_ENABLED = true;
+    SerialMock serialMock;
+    serialMock.inBuffer[0] = 5;
+    serialMock.inBuffer[1] = 125;
+    serialMock.inBuffer[2] = EFFECT_CODE;
+    serialMock.inBuffer[3] = IS_ENABLED;
+    serialMock.inBuffer[4] = 120;
+
+    ControllerFootswitchCommunication<SerialMock> testee(serialMock);
+
+    testee.registerSetEffectHandler(setEffectHandler);
+
+    receivedEffectCode = UINT8_MAX;
+    receivedIsEnabled = false;
+    TEST_ASSERT_EQUAL(true, testee.receive());
+    TEST_ASSERT_EQUAL(EFFECT_CODE, receivedEffectCode);
+    TEST_ASSERT_EQUAL(IS_ENABLED, receivedIsEnabled);
 }
 
 static void test_ControllerFootswitchCommunication_receiveAck()
@@ -327,16 +365,18 @@ void runControllerFootswitchCommunicationTests()
     RUN_TEST(test_ControllerFootswitchCommunication_begin);
 
     RUN_TEST(test_ControllerFootswitchCommunication_sendHeartbeat);
-    RUN_TEST(test_ControllerFootswitchCommunication_sendSetEffect);
+    RUN_TEST(test_ControllerFootswitchCommunication_sendToogleEffect);
     RUN_TEST(test_ControllerFootswitchCommunication_sendClippingNotification);
     RUN_TEST(test_ControllerFootswitchCommunication_sendEffectActiveStates);
     RUN_TEST(test_ControllerFootswitchCommunication_sendDelayUs);
+    RUN_TEST(test_ControllerFootswitchCommunication_sendSetEffect);
     RUN_TEST(test_ControllerFootswitchCommunication_sendAck);
 
     RUN_TEST(test_ControllerFootswitchCommunication_receiveHeartbeat);
-    RUN_TEST(test_ControllerFootswitchCommunication_receiveSetEffect);
+    RUN_TEST(test_ControllerFootswitchCommunication_receiveToogleEffect);
     RUN_TEST(test_ControllerFootswitchCommunication_receiveClippingNotification);
     RUN_TEST(test_ControllerFootswitchCommunication_receiveEffectActiveStates);
     RUN_TEST(test_ControllerFootswitchCommunication_receiveEmptySerial);
     RUN_TEST(test_ControllerFootswitchCommunication_receiveDelayUs);
+    RUN_TEST(test_ControllerFootswitchCommunication_receiveSetEffect);
 }

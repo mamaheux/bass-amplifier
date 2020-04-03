@@ -25,7 +25,7 @@ MuteDesigner muteDesigner(SAMPLING_FREQUENCY);
 
 EffectDesigner* effectDesigners[EFFECT_CODE_COUNT];
 
-ControllerFootswitchCommunication<decltype(FOOTSWITCH_SERIAL)> footswitchCommunication(FOOTSWITCH_SERIAL);
+ControllerFootswitchCommunication<HardwareSerial2> footswitchCommunication(FOOTSWITCH_SERIAL);
 uint32_t lastHeartbeatTimeMs;
 bool isHeartbeatPending;
 
@@ -41,8 +41,9 @@ void updateFootswitchCommunicationSlow();
 void resetAllEffectEnabledStates();
 
 void footswitchHeatbeatHandler();
-void footswitchSetEffectHandler(uint8_t effectCode, bool isEnabled);
+void footswitchToogleEffectHandler(uint8_t effectCode);
 void footswitchDelayUsHandler(uint32_t delayUs);
+void footswitchSetEffectHandler(uint8_t effectCode, bool isEnabled);
 
 Ticker updateEffectDesignersTicker(updateEffectDesigners, EFFECT_DESIGNER_UPDATE_INTERVAL_US, MICROS);
 Ticker updateStatusLedTicker(updateStatusLed, STATUS_LED_UPDATE_INTERVAL_US, MICROS);
@@ -89,8 +90,9 @@ void setupFootswitchCommunication()
 {
     footswitchCommunication.begin(FOOTSWITCH_SERIAL_BAUD_RATE);
     footswitchCommunication.registerHeatbeatHandler(footswitchHeatbeatHandler);
-    footswitchCommunication.registerSetEffectHandler(footswitchSetEffectHandler);
+    footswitchCommunication.registerToogleEffectHandler(footswitchToogleEffectHandler);
     footswitchCommunication.registerDelayUsHandler(footswitchDelayUsHandler);
+    footswitchCommunication.registerSetEffectHandler(footswitchSetEffectHandler);
 
     lastHeartbeatTimeMs = millis();
     isHeartbeatPending = true;
@@ -174,6 +176,25 @@ void footswitchHeatbeatHandler()
     isHeartbeatPending = true;
 }
 
+void footswitchToogleEffectHandler(uint8_t effectCode)
+{
+    if (effectCode < EFFECT_CODE_COUNT && effectCode != MUTE_CODE)
+    {
+        effectDesigners[effectCode]->setIsEnabled(!effectDesigners[effectCode]->isEnabled());
+    }
+    else if (effectCode == MUTE_CODE)
+    {
+        effectControls.setMuteState(!effectControls.getMuteState());
+    }
+    footswitchCommunication.sendAck();
+}
+
+void footswitchDelayUsHandler(uint32_t delayUs)
+{
+    effectControls.setDelayUs(delayUs);
+    footswitchCommunication.sendAck();
+}
+
 void footswitchSetEffectHandler(uint8_t effectCode, bool isEnabled)
 {
     if (effectCode < EFFECT_CODE_COUNT && effectCode != MUTE_CODE)
@@ -184,11 +205,5 @@ void footswitchSetEffectHandler(uint8_t effectCode, bool isEnabled)
     {
         effectControls.setMuteState(isEnabled);
     }
-    footswitchCommunication.sendAck();
-}
-
-void footswitchDelayUsHandler(uint32_t delayUs)
-{
-    effectControls.setDelayUs(delayUs);
     footswitchCommunication.sendAck();
 }
