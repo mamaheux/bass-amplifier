@@ -5,7 +5,7 @@
 #include "FanController.h"
 
 #include <EffectDesign.h>
-#include <ControllerFootswitchCommunication.h>
+#include <Communication.h>
 #include <Ticker.h>
 
 ControlAdc adc;
@@ -59,6 +59,7 @@ void setup()
 
     adc.begin();
     effectControls.begin();
+    statusLed.begin();
     fanController.begin();
 
     setupEffectDesigners();
@@ -86,7 +87,7 @@ void setupEffectDesigners()
 
 void setupFootswitchCommunication()
 {
-    footswitchCommunication.begin(FOOTSWITCH_SERIALL_BAUD_RATE);
+    footswitchCommunication.begin(FOOTSWITCH_SERIAL_BAUD_RATE);
     footswitchCommunication.registerHeatbeatHandler(footswitchHeatbeatHandler);
     footswitchCommunication.registerSetEffectHandler(footswitchSetEffectHandler);
     footswitchCommunication.registerDelayUsHandler(footswitchDelayUsHandler);
