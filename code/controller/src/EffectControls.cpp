@@ -17,6 +17,11 @@ static void delayTapInterrupt()
 static volatile bool* muteState = nullptr;
 static void muteInterrupt()
 {
+    if (muteState == nullptr)
+    {
+        return;
+    }
+
     *muteState = !muteState;
 }
 
