@@ -45,14 +45,14 @@ void footswitchToogleEffectHandler(uint8_t effectCode);
 void footswitchDelayUsHandler(uint32_t delayUs);
 void footswitchSetEffectHandler(uint8_t effectCode, bool isEnabled);
 
-Ticker updateEffectDesignersTicker(updateEffectDesigners, EFFECT_DESIGNER_UPDATE_INTERVAL_US, MICROS);
-Ticker updateStatusLedTicker(updateStatusLed, STATUS_LED_UPDATE_INTERVAL_US, MICROS);
-Ticker updateFanTicker(updateFan, FAN_UPDATE_INTERVAL_US, MICROS);
+Ticker updateEffectDesignersTicker(updateEffectDesigners, EFFECT_DESIGNER_UPDATE_INTERVAL_US, 0, MICROS_MICROS);
+Ticker updateStatusLedTicker(updateStatusLed, STATUS_LED_UPDATE_INTERVAL_US, 0, MICROS_MICROS);
+Ticker updateFanTicker(updateFan, FAN_UPDATE_INTERVAL_US, 0, MICROS_MICROS);
 
 Ticker updateFootswitchCommunicationFastTicker(updateFootswitchCommunicationFast,
-    FOOTSWITCH_COMMUNICATION_FAST_UPDATE_INTERVAL_US, MICROS);
+    FOOTSWITCH_COMMUNICATION_FAST_UPDATE_INTERVAL_US, 0, MICROS_MICROS);
 Ticker updateFootswitchCommunicationSlowTicker(updateFootswitchCommunicationSlow,
-    FOOTSWITCH_COMMUNICATION_SLOW_UPDATE_INTERVAL_US, MICROS);
+    FOOTSWITCH_COMMUNICATION_SLOW_UPDATE_INTERVAL_US, 0, MICROS_MICROS);
 
 void setup()
 {

@@ -3,6 +3,8 @@
 
 #include <Communication.h>
 
+#include <string.h>
+
 DelayDesigner::DelayDesigner(float samplingFrequency, uint32_t maxDelay) : 
     EffectDesigner(samplingFrequency, DELAY_CODE, DATA_SIZE, m_data),
     m_maxDelay(maxDelay), m_currentVolumeLevel(1), m_currentDelay(1)
@@ -32,6 +34,6 @@ void DelayDesigner::update(uint8_t volumeLevel, uint32_t delay)
 
     float volume = map(volumeLevel, MIN_VOLUME, MAX_VOLUME);
 
-    reinterpret_cast<float*>(m_data)[0] = volume;
-    reinterpret_cast<uint32_t*>(m_data + sizeof(float))[0] = delay;
+    memcpy(m_data, &volume, sizeof(float));
+    memcpy(m_data + sizeof(float), &delay, sizeof(uint32_t));
 }

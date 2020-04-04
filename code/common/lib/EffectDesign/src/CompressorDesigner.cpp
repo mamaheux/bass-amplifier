@@ -3,6 +3,8 @@
 
 #include <Communication.h>
 
+#include <string.h>
+
 CompressorDesigner::CompressorDesigner(float samplingFrequency) : 
     EffectDesigner(samplingFrequency, COMPRESSOR_CODE, DATA_SIZE, m_data),
     m_currentThresholdLevel(1), m_currentRatioLevel(1)
@@ -27,10 +29,11 @@ void CompressorDesigner::update(uint8_t thresholdLevel, uint8_t ratioLevel)
 
     float threshold = map(thresholdLevel, MIN_THRESHOLD, MAX_THRESHOLD);
     float ratio = map(ratioLevel, MIN_RATIO, MAX_RATIO);
+    float attack = ATTACK;
+    float release = RELEASE;
 
-    float* data = reinterpret_cast<float*>(m_data);
-    data[0] = threshold;
-    data[1] = ratio;
-    data[2] = ATTACK;
-    data[3] = RELEASE;
+    memcpy(m_data, &threshold, sizeof(float));
+    memcpy(m_data + sizeof(float), &ratio, sizeof(float));
+    memcpy(m_data + 2 * sizeof(float), &attack, sizeof(float));
+    memcpy(m_data + 3 * sizeof(float), &release, sizeof(float));
 }

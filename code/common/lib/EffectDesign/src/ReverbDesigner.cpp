@@ -3,6 +3,8 @@
 
 #include <Communication.h>
 
+#include <string.h>
+
 ReverbDesigner::ReverbDesigner(float samplingFrequency) : 
     EffectDesigner(samplingFrequency, REVERB_CODE, DATA_SIZE, m_data),
     m_currentVolumeLevel(1)
@@ -26,5 +28,5 @@ void ReverbDesigner::update(uint8_t volumeLevel)
 
     float volume = map(volumeLevel, MIN_VOLUME, MAX_VOLUME);
 
-    reinterpret_cast<float*>(m_data)[0] = volume;
+    memcpy(m_data, &volume, sizeof(float));
 }

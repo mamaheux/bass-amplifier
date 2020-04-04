@@ -33,5 +33,6 @@ void PresenceDesigner::update(uint8_t gainLevel)
     designHighShelvingFilter(filterCoefficients, gainDb, Q, CENTER_FREQUENCY, samplingFrequency());
     memcpy(m_data, &filterCoefficients, sizeof(BiquadCoefficients));
 
-    reinterpret_cast<float*>(m_data + sizeof(BiquadCoefficients))[0] = 1 / pow(10, gainDb / 20);
+    float globalGain = 1 / pow(10, gainDb / 20);
+    memcpy(m_data + sizeof(BiquadCoefficients), &globalGain, sizeof(float));
 }

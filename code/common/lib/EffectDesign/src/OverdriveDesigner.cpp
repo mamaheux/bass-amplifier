@@ -28,7 +28,8 @@ void OverdriveDesigner::update(uint8_t gainLevel, uint8_t toneLevel)
     setIsDirty(true);
 
     float gainDb = map(gainLevel, MIN_GAIN_DB, MAX_GAIN_DB);
-    reinterpret_cast<float*>(m_data)[0] = pow(10, gainDb / 20);
+    float gain = pow(10, gainDb / 20);
+    memcpy(m_data, &gain, sizeof(float));
 
     float toneFc = map(toneLevel, MIN_TONE_FC, MAX_TONE_FC);
     BiquadCoefficients filterCoefficients;

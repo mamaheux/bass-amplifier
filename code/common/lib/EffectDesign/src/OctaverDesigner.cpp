@@ -36,8 +36,7 @@ void OctaverDesigner::update(uint8_t octaveDownVolumeLevel, uint8_t octaveUpVolu
 
     float octaveDownVolume = map(octaveDownVolumeLevel, MIN_VOLUME, MAX_VOLUME);
     float octaveUpVolume = map(octaveUpVolumeLevel, MIN_VOLUME, MAX_VOLUME);
-   
-    float* data = reinterpret_cast<float*>(m_data + 2 * sizeof(BiquadCoefficients));
-    data[0] = octaveDownVolume;
-    data[1] = octaveUpVolume;
+
+    memcpy(m_data + 2 * sizeof(BiquadCoefficients), &octaveDownVolume, sizeof(float));
+    memcpy(m_data + 2 * sizeof(BiquadCoefficients) + sizeof(float), &octaveUpVolume, sizeof(float));
 }
