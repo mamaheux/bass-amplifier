@@ -15,6 +15,7 @@ void setupControllerCommunication();
 void updateControllerCommunication();
 void updateStatusLed();
 void updateEffectControls();
+void sendHeartbeat();
 
 void controllerClippingNotificationHandler();
 void controllerEffectActiveStatesHandler(bool compressorActiveState,
@@ -25,12 +26,15 @@ void controllerEffectActiveStatesHandler(bool compressorActiveState,
     bool muteActiveState);
 
 Ticker updateControllerCommunicationTicker(updateControllerCommunication,
-    CONTROLLER_COMMUNICATION_UPDATE_INTERVAL_US, MICROS);
-Ticker updateStatusLedTicker(updateStatusLed, STATUS_LED_UPDATE_INTERVAL_US, MICROS);
-Ticker updateEffectControlsTicker(updateEffectControls, EFFECT_CONTROLS_UPDATE_INTERVAL_US, MICROS);
+    CONTROLLER_COMMUNICATION_UPDATE_INTERVAL_US, 0, MICROS_MICROS);
+Ticker updateStatusLedTicker(updateStatusLed, STATUS_LED_UPDATE_INTERVAL_US, 0, MICROS_MICROS);
+Ticker updateEffectControlsTicker(updateEffectControls, EFFECT_CONTROLS_UPDATE_INTERVAL_US, 0, MICROS_MICROS);
+Ticker sendHeartbeatTicker(sendHeartbeat, HEARTBEAT_INTERVAL_US, 0, MICROS_MICROS);
 
 void setup() 
 {
+    DEBUG_SERIAL.begin(DEBUG_SERIAL_BAUD_RATE);
+
     setupControllerCommunication();
     statusLed.begin();
     effectControls.begin();
@@ -38,6 +42,7 @@ void setup()
     updateStatusLedTicker.start();
     updateControllerCommunicationTicker.start();
     updateEffectControlsTicker.start();
+    sendHeartbeatTicker.start();
 }
 
 void setupControllerCommunication()
@@ -52,6 +57,7 @@ void loop()
     updateControllerCommunicationTicker.update();
     updateStatusLedTicker.update();
     updateEffectControlsTicker.update();
+    sendHeartbeatTicker.update();
 }
 
 void updateControllerCommunication()
@@ -67,6 +73,11 @@ void updateStatusLed()
 void updateEffectControls()
 {
     effectControls.update();
+}
+
+void sendHeartbeat()
+{
+    controllerCommunication.sendHeartbeat();
 }
 
 void controllerClippingNotificationHandler()
