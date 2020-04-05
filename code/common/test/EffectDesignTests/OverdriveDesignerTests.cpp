@@ -12,7 +12,7 @@ static void test_OverdriveDesigner_getters()
 
     TEST_ASSERT_EQUAL(SAMPLING_FREQUENCY, designer.samplingFrequency());
     TEST_ASSERT_EQUAL(7, designer.effectCode());
-    TEST_ASSERT_EQUAL(28, designer.dataSize());
+    TEST_ASSERT_EQUAL(24, designer.dataSize());
     TEST_ASSERT_EQUAL(true, designer.isDirty());
 
 
@@ -48,9 +48,8 @@ static void test_OverdriveDesigner_update()
     TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 0.00391613, data[1]);
     TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 0.00783225, data[2]);
     TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 0.00391613, data[3]);
-    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 1, data[4]);
-    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, -1.81534108, data[5]);
-    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 0.83100559, data[6]);
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 1.81534108, data[4]);
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, -0.83100559, data[5]);
     
 
     designer.setIsDirty(false);

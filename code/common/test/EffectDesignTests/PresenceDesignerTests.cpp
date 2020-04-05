@@ -12,7 +12,7 @@ static void test_PresenceDesigner_getters()
 
     TEST_ASSERT_EQUAL(SAMPLING_FREQUENCY, designer.samplingFrequency());
     TEST_ASSERT_EQUAL(1, designer.effectCode());
-    TEST_ASSERT_EQUAL(28, designer.dataSize());
+    TEST_ASSERT_EQUAL(24, designer.dataSize());
     TEST_ASSERT_EQUAL(true, designer.isDirty());
 
 
@@ -44,12 +44,11 @@ static void test_PresenceDesigner_update()
     TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 1.90986258, data[0]);
     TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, -3.40873779, data[1]);
     TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 1.5135854, data[2]);
-    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 1, data[3]);
-    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, -1.70474705, data[4]);
-    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 0.71945724, data[5]);
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 1.70474705, data[3]);
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, -0.71945724, data[4]);
 
     // Global gain
-    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 0.5012, data[6]);
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 0.5012, data[5]);
     
 
     designer.setIsDirty(false);
