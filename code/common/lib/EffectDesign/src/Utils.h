@@ -5,6 +5,8 @@
 
 struct BiquadCoefficients
 {
+    static constexpr uint32_t COUNT = 5;
+
     float b0;
     float b1;
     float b2;
