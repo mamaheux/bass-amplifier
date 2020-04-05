@@ -14,5 +14,6 @@
 #include "Octaver.h"
 #include "Delay.h"
 #include "Reverb.h"
+#include "Overdrive.h"
 
 #endif

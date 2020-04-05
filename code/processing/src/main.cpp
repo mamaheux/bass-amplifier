@@ -37,6 +37,7 @@ Compressor<BLOCK_SIZE> compressor;
 Octaver<BLOCK_SIZE> octaver;
 DMAMEM Delay<BLOCK_SIZE, MAX_DELAY> delayEffect;
 Reverb<BLOCK_SIZE> reverb;
+Overdrive<BLOCK_SIZE> overdrive;
 
 void test_biquad()
 {
@@ -253,6 +254,59 @@ void test_reverb()
     TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 0.5, output[0]);
 }
 
+void test_overdrive()
+{
+    const float COEFFICIENTS[] = {2, 0, 0, 0, 0, 4};
+    float input[BLOCK_SIZE] = {0.1, 0.2, 0.3, 0.4, 0.3, 0.2, 0.1};
+
+    overdrive.update(reinterpret_cast<const uint8_t*>(COEFFICIENTS));
+
+    float* output = overdrive.process(input);
+
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 0.59020401, output[0]);
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 0.94818084, output[1]);
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 1.16530476, output[2]);
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 1.29699708, output[3]);
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 1.16530476, output[4]);
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 0.94818084, output[5]);
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 0.59020401, output[6]);
+}
+
+void randomize(float* input, uint32_t blockSize)
+{
+    for (uint32_t i = 0; i < blockSize; i++)
+    {
+        input[i] = (static_cast<float>(rand()) / static_cast<float>(RAND_MAX)) - 0.5;
+    }
+}
+
+void test_performance()
+{
+    constexpr uint32_t ITERATION_COUNT = 1500;
+    float input[BLOCK_SIZE];
+
+    uint32_t durationTotal = 0;
+
+    for (uint32_t i = 0; i < ITERATION_COUNT; i++)
+    {
+        randomize(input, BLOCK_SIZE);
+
+        uint32_t start = micros();
+        float* output = contour.process(input);
+        output = presence.process(output);
+        output = eq.process(output);
+
+        output = compressor.process(output);
+        output = octaver.process(output, input);
+        output = delayEffect.process(output);
+        output = reverb.process(output);
+        output = overdrive.process(output);
+        durationTotal += micros() - start;
+    }
+
+    Serial.printf("Duration = %d us\n", durationTotal);
+}
+
 void setup()
 {
     Serial.begin(9600);
@@ -271,6 +325,9 @@ void setup()
     RUN_TEST(test_octaver);
     RUN_TEST(test_delay);
     RUN_TEST(test_reverb);
+    RUN_TEST(test_overdrive);
+
+    RUN_TEST(test_performance);
 }
 
 void loop()
