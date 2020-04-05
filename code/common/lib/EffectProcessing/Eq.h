@@ -31,7 +31,6 @@ void Eq<BLOCK_SIZE>::update(const uint8_t* data)
     m_filters.update(reinterpret_cast<const float*>(data));
 }
 
-
 template<uint32_t BLOCK_SIZE>
 float* Eq<BLOCK_SIZE>::process(float* input)
 {

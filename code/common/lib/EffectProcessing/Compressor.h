@@ -8,7 +8,7 @@
 template<uint32_t BLOCK_SIZE>
 class Compressor : public Effect<BLOCK_SIZE>
 {
-    static constexpr uint32_t UNLOOP_FACTOR = 8;
+    static constexpr uint32_t UNROLL_FACTOR = 8;
 
     float m_absInput[BLOCK_SIZE];
     float m_levelState;
@@ -36,7 +36,7 @@ private:
 template<uint32_t BLOCK_SIZE>
 Compressor<BLOCK_SIZE>::Compressor() : m_levelState(0), m_threshold(0), m_ratio(0), m_attack(0), m_release(0)
 {
-    static_assert(BLOCK_SIZE % UNLOOP_FACTOR == 0, "BLOCK_SIZE must be greater than 0.");
+    static_assert(BLOCK_SIZE % UNROLL_FACTOR == 0, "BLOCK_SIZE must be a factor of UNROLL_FACTOR.");
 }
 
 template<uint32_t BLOCK_SIZE>
@@ -58,7 +58,7 @@ float* Compressor<BLOCK_SIZE>::process(float* input)
 
     for (uint32_t i = 0; i < BLOCK_SIZE;)
     {
-        UNLOOP_8(
+        UNROLL_8(
             if (m_level[i] > m_threshold)
             {
                 m_output[i] = (m_ratio * m_threshold / m_level[i] + (1 - m_ratio)) * input[i];
@@ -81,7 +81,7 @@ void Compressor<BLOCK_SIZE>::calculateLevel(float* input)
 
     for (uint32_t i = 0; i < BLOCK_SIZE;)
     {
-        UNLOOP_8(
+        UNROLL_8(
             float nextLevel;
             if (m_absInput[i] > m_levelState)
             {

@@ -9,5 +9,6 @@
 #include "Eq.h"
 #include "Compressor.h"
 #include "Octaver.h"
+#include "Delay.h"
 
 #endif

@@ -26,9 +26,19 @@ constexpr float MAX_ABS_ERROR = 0.0001;
         Serial.printf("Elapsed time: %d us\n\n", duration); \
     } while(false);
 
+
+constexpr uint32_t BLOCK_SIZE = 32;
+constexpr uint32_t MAX_DELAY = 96;
+
+Eq<BLOCK_SIZE> eq;
+Presence<BLOCK_SIZE> presence;
+Contour<BLOCK_SIZE> contour;
+Compressor<BLOCK_SIZE> compressor;
+Octaver<BLOCK_SIZE> octaver;
+DMAMEM Delay<BLOCK_SIZE, MAX_DELAY> delayEffect;
+
 void test_biquad()
 {
-    constexpr uint32_t BLOCK_SIZE = 32;
     constexpr uint32_t NUM_STAGES = 1;
     const float COEFFICIENTS[] = {0.00554272, 0.01108543, 0.00554272, 1.77863178, -0.80080265};
     float input[BLOCK_SIZE] = {1, 0, 0, 0, 0, 0, 0, 0};
@@ -50,11 +60,9 @@ void test_biquad()
 
 void test_contour()
 {
-    constexpr uint32_t BLOCK_SIZE = 32;
     const float COEFFICIENTS[] = {2, 0, 0, 0, 0, 0.5, 0, 0, 0, 0, 0.5};
     float input[BLOCK_SIZE] = {1, 0, 0, 0, 0, 0, 0, 0};
 
-    Contour<BLOCK_SIZE> contour;
     contour.update(reinterpret_cast<const uint8_t*>(COEFFICIENTS));
 
     float* output = contour.process(input);
@@ -71,11 +79,9 @@ void test_contour()
 
 void test_presence()
 {
-    constexpr uint32_t BLOCK_SIZE = 32;
     const float COEFFICIENTS[] = {2, 0, 0, 0, 0, 0.5};
     float input[BLOCK_SIZE] = {1, 0, 0, 0, 0, 0, 0, 0};
 
-    Presence<BLOCK_SIZE> presence;
     presence.update(reinterpret_cast<const uint8_t*>(COEFFICIENTS));
 
     float* output = presence.process(input);
@@ -92,11 +98,9 @@ void test_presence()
 
 void test_eq()
 {
-    constexpr uint32_t BLOCK_SIZE = 32;
     const float COEFFICIENTS[] = {2, 0, 0, 0, 0, 0.5, 0, 0, 0, 0, 0.25, 0, 0, 0, 0, 4, 0, 0, 0, 0, 8, 0, 0, 0, 0, 0.125, 0, 0, 0, 0, 5, 0, 0, 0, 0, 0.2, 0, 0, 0, 0};
     float input[BLOCK_SIZE] = {1, 0, 0, 0, 0, 0, 0, 0};
 
-    Eq<BLOCK_SIZE> eq;
     eq.update(reinterpret_cast<const uint8_t*>(COEFFICIENTS));
 
     float* output = eq.process(input);
@@ -113,11 +117,9 @@ void test_eq()
 
 void test_compressor()
 {
-    constexpr uint32_t BLOCK_SIZE = 32;
     const float COEFFICIENTS[] = {0.15, 0.5, 0.5, 0.75};
     float input[BLOCK_SIZE] = {0.1, 0.2, 0.3, 0.4, 0.3, 0.2, 0.1, 0};
 
-    Compressor<BLOCK_SIZE> compressor;
     compressor.update(reinterpret_cast<const uint8_t*>(COEFFICIENTS));
 
     float* output = compressor.process(input);
@@ -134,12 +136,10 @@ void test_compressor()
 
 void test_octaver()
 {
-    constexpr uint32_t BLOCK_SIZE = 32;
     const float COEFFICIENTS[] = {4, 0, 0, 0, 0, 0.5, 0, 0, 0, 0, 0.25, 0.75};
     float input[BLOCK_SIZE] = {1, 2, -1, -2};
     float downOctave[BLOCK_SIZE] = {2, 2, 2, 2};
 
-    Octaver<BLOCK_SIZE> octaver;
     octaver.update(reinterpret_cast<const uint8_t*>(COEFFICIENTS));
 
     float* output = octaver.process(input, downOctave);
@@ -150,14 +150,41 @@ void test_octaver()
     TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 0.75, output[3]);
 }
 
-void setup() 
+void test_delay()
 {
-    Serial.begin(9600);   
+    uint8_t data[8];
+    float volume = 0.95;
+    uint32_t delayValue = 1;
+    memcpy(data, &volume, sizeof(float));
+    memcpy(data + sizeof(float), &delayValue, sizeof(uint32_t));
+
+    float input[BLOCK_SIZE] = {1, 0, 0, 0};
+
+    delayEffect.update(data);
+
+    float* output = delayEffect.process(input);
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 1, output[0]);
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 0.95, output[1]);
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 0.9025, output[2]);
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 0.857375, output[3]);
+
+    input[0] = 0;
+    output = delayEffect.process(input);
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 0.19371148, output[0]);
+
+    output = delayEffect.process(input);
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 0.0375241392, output[0]);
+
+    output = delayEffect.process(input);
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 0.0072688567, output[0]);
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 0.0069054139, output[1]);
 }
 
-void loop()
+void setup()
 {
-    delay(2000);
+    Serial.begin(9600);
+
+    delay(5000);
 
     Serial.printf("Processing tests:\n");
     RUN_TEST(test_biquad);
@@ -166,4 +193,9 @@ void loop()
     RUN_TEST(test_eq);
     RUN_TEST(test_compressor);
     RUN_TEST(test_octaver);
+    RUN_TEST(test_delay);
+}
+
+void loop()
+{
 }

@@ -42,7 +42,6 @@ void Contour<BLOCK_SIZE>::update(const uint8_t* data)
     memcpy(&m_globalGain, data + 2 * sizeof(BiquadCoefficients), sizeof(float));
 }
 
-
 template<uint32_t BLOCK_SIZE>
 float* Contour<BLOCK_SIZE>::process(float* input)
 {

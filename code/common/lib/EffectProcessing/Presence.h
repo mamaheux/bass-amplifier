@@ -40,7 +40,6 @@ void Presence<BLOCK_SIZE>::update(const uint8_t* data)
     memcpy(&m_globalGain, data + sizeof(BiquadCoefficients), sizeof(float));
 }
 
-
 template<uint32_t BLOCK_SIZE>
 float* Presence<BLOCK_SIZE>::process(float* input)
 {

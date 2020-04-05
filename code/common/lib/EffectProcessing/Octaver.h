@@ -46,7 +46,6 @@ void Octaver<BLOCK_SIZE>::update(const uint8_t* data)
     m_scaleFactor = 1 / (m_downOctaveVolume + m_upOctaveVolume + 1);
 }
 
-
 template<uint32_t BLOCK_SIZE>
 float* Octaver<BLOCK_SIZE>::process(float* input, float* downOctave)
 {
