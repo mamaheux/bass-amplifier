@@ -9,8 +9,8 @@ class OctaverWidget(TimeEffectWidget):
         super().__init__(configuration, model)
 
     def _create_slider_widget(self):
-        self._dowm_volume_slider = DoubleSlider('Octaver Down Volume', **self._model.dowm_volume_ranges())
-        self._up_volume_slider = DoubleSlider('Octaver Up Volume', **self._model.up_volume_ranges())
+        self._dowm_volume_slider = DoubleSlider('Down Octave Volume', **self._model.dowm_volume_ranges())
+        self._up_volume_slider = DoubleSlider('Up Octave Volume', **self._model.up_volume_ranges())
 
         hlayout = QHBoxLayout()
         hlayout.addWidget(self._dowm_volume_slider)

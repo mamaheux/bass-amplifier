@@ -24,8 +24,8 @@ public:
 };
 
 template<uint32_t BLOCK_SIZE>
-Contour<BLOCK_SIZE>::Contour()
-{    
+Contour<BLOCK_SIZE>::Contour() : m_globalGain(0)
+{
 }
 
 template<uint32_t BLOCK_SIZE>

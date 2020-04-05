@@ -7,7 +7,7 @@
 
 OctaverDesigner::OctaverDesigner(float samplingFrequency) : 
     EffectDesigner(samplingFrequency, OCTAVER_CODE, DATA_SIZE, m_data), 
-    m_currentOctaveDownVolumeLevel(1), m_currentOctaveUpVolumeLevel(1)
+    m_currentDownOctaveVolumeLevel(1), m_currentUpOctaveVolumeLevel(1)
 {
     BiquadCoefficients filterCoefficients;
     designSecondOrderButterworthHighPassFilter(filterCoefficients, OCTAVE_UP_BAND_PASS_FC_1, samplingFrequency);
@@ -23,20 +23,20 @@ OctaverDesigner::~OctaverDesigner()
 {    
 }
     
-void OctaverDesigner::update(uint8_t octaveDownVolumeLevel, uint8_t octaveUpVolumeLevel)
+void OctaverDesigner::update(uint8_t downOctaveVolumeLevel, uint8_t upOctaveVolumeLevel)
 {
-    if (m_currentOctaveDownVolumeLevel == octaveDownVolumeLevel && m_currentOctaveUpVolumeLevel == octaveUpVolumeLevel)
+    if (m_currentDownOctaveVolumeLevel == downOctaveVolumeLevel && m_currentUpOctaveVolumeLevel == upOctaveVolumeLevel)
     {
         return;
     }
 
-    m_currentOctaveDownVolumeLevel = octaveDownVolumeLevel;
-    m_currentOctaveUpVolumeLevel = octaveUpVolumeLevel;
+    m_currentDownOctaveVolumeLevel = downOctaveVolumeLevel;
+    m_currentUpOctaveVolumeLevel = upOctaveVolumeLevel;
     setIsDirty(true);
 
-    float octaveDownVolume = map(octaveDownVolumeLevel, MIN_VOLUME, MAX_VOLUME);
-    float octaveUpVolume = map(octaveUpVolumeLevel, MIN_VOLUME, MAX_VOLUME);
+    float downOctaveVolume = map(downOctaveVolumeLevel, MIN_VOLUME, MAX_VOLUME);
+    float upOctaveVolume = map(upOctaveVolumeLevel, MIN_VOLUME, MAX_VOLUME);
 
-    memcpy(m_data + 2 * sizeof(BiquadCoefficients), &octaveDownVolume, sizeof(float));
-    memcpy(m_data + 2 * sizeof(BiquadCoefficients) + sizeof(float), &octaveUpVolume, sizeof(float));
+    memcpy(m_data + 2 * sizeof(BiquadCoefficients), &downOctaveVolume, sizeof(float));
+    memcpy(m_data + 2 * sizeof(BiquadCoefficients) + sizeof(float), &upOctaveVolume, sizeof(float));
 }

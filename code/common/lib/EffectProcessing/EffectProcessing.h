@@ -7,5 +7,7 @@
 #include "Contour.h"
 #include "Presence.h"
 #include "Eq.h"
+#include "Compressor.h"
+#include "Octaver.h"
 
 #endif

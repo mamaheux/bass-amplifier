@@ -1,7 +1,6 @@
 #ifndef EFFECT_PROCESSING_BIQUAD_IIR_H
 #define EFFECT_PROCESSING_BIQUAD_IIR_H
 
-#include "Effect.h"
 #include <EffectDesign.h>
 
 #include <arm_math.h>
@@ -30,6 +29,7 @@ BiquadIir<BLOCK_SIZE, NUM_STAGES>::BiquadIir()
     static_assert(NUM_STAGES > 0, "NUM_STAGES must be greater than 0.");
 
     memset(m_state, 0, sizeof(m_state));
+    memset(m_coefficients, 0, sizeof(m_coefficients));
 
     m_biquadInstance.numStages = NUM_STAGES;
     m_biquadInstance.pState = m_state;

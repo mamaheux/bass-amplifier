@@ -1,10 +1,10 @@
 import numpy as np
 from scipy import signal
 
-OCTAVE_DOWN_LOW_PASS_ORDER = 1
-OCTAVE_DOWN_LOW_PASS_FC = 338
-OCTAVE_UP_BAND_PASS_ORDER = 2
-OCTAVE_UP_BAND_PASS_FC = (100, 1000)
+DOWN_OCTAVE_LOW_PASS_ORDER = 1
+DOWN_OCTAVE_LOW_PASS_FC = 338
+UP_OCTAVE_BAND_PASS_ORDER = 2
+UP_OCTAVE_BAND_PASS_FC = (100, 1000)
 
 
 class OctaverModel:
@@ -13,9 +13,9 @@ class OctaverModel:
         self._down_volume = 0
         self._up_volume = 0
 
-        self._sos_octave_down_low_pass = signal.butter(OCTAVE_DOWN_LOW_PASS_ORDER, OCTAVE_DOWN_LOW_PASS_FC,
+        self._sos_down_octave_low_pass = signal.butter(DOWN_OCTAVE_LOW_PASS_ORDER, DOWN_OCTAVE_LOW_PASS_FC,
                                                        'low', output='sos', fs=configuration.fs)
-        self._sos_octave_up_band_pass = signal.butter(OCTAVE_UP_BAND_PASS_ORDER, OCTAVE_UP_BAND_PASS_FC,
+        self._sos_up_octave_band_pass = signal.butter(UP_OCTAVE_BAND_PASS_ORDER, UP_OCTAVE_BAND_PASS_FC,
                                                       'bandpass', output='sos', fs=configuration.fs)
 
     def dowm_volume_ranges(self):
@@ -55,14 +55,14 @@ class OctaverModel:
 
         down_octave = x.copy()
         down_octave[c_half == 0] = -x[c_half == 0]
-        down_octave = signal.sosfilt(self._sos_octave_down_low_pass, down_octave)
+        down_octave = signal.sosfilt(self._sos_down_octave_low_pass, down_octave)
         down_octave *= self._down_volume
 
         return down_octave
 
     def generate_up_octave(self, x):
         up_octave = np.abs(x)
-        up_octave = signal.sosfilt(self._sos_octave_up_band_pass, up_octave)
+        up_octave = signal.sosfilt(self._sos_up_octave_band_pass, up_octave)
         up_octave *= 2 * self._up_volume
 
         return up_octave

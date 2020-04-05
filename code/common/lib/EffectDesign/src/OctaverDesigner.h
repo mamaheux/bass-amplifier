@@ -14,16 +14,16 @@ class OctaverDesigner : public EffectDesigner
 
     static constexpr uint8_t DATA_SIZE = 2 *sizeof(BiquadCoefficients) + 2 * sizeof(float);
 
-    uint8_t m_data[DATA_SIZE]; // 2 x BiquadCoefficients, octaver down volume, octaver up volume
+    uint8_t m_data[DATA_SIZE]; // 2 x BiquadCoefficients, down octave volume, up octaver volume
 
-    uint8_t m_currentOctaveDownVolumeLevel;
-    uint8_t m_currentOctaveUpVolumeLevel;
+    uint8_t m_currentDownOctaveVolumeLevel;
+    uint8_t m_currentUpOctaveVolumeLevel;
 
 public:
     explicit OctaverDesigner(float samplingFrequency);
     ~OctaverDesigner() override;
     
-    void update(uint8_t octaveDownVolumeLevel, uint8_t octaveUpVolumeLevel);
+    void update(uint8_t downOctaveVolumeLevel, uint8_t upOctaveVolumeLevel);
 
     bool isActive() const override;
 };
@@ -31,7 +31,7 @@ public:
 inline bool OctaverDesigner::isActive() const
 {
     return EffectDesigner::isActive() &&
-        (m_currentOctaveDownVolumeLevel > 0 || m_currentOctaveUpVolumeLevel > 0);
+        (m_currentDownOctaveVolumeLevel > 0 || m_currentUpOctaveVolumeLevel > 0);
 }
 
 #endif

@@ -24,8 +24,8 @@ public:
 };
 
 template<uint32_t BLOCK_SIZE>
-Presence<BLOCK_SIZE>::Presence()
-{    
+Presence<BLOCK_SIZE>::Presence() : m_globalGain(0)
+{
 }
 
 template<uint32_t BLOCK_SIZE>

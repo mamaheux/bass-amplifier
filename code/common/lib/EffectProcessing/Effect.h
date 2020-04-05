@@ -16,5 +16,11 @@ Effect<BLOCK_SIZE>::Effect()
     static_assert(BLOCK_SIZE > 0, "BLOCK_SIZE must be greater than 0.");
 }
 
+#define UNLOOP_1(code) WRAP_CODE(code)
+#define UNLOOP_2(code) WRAP_CODE(code); WRAP_CODE(code)
+#define UNLOOP_4(code) UNLOOP_2(code); UNLOOP_2(code)
+#define UNLOOP_8(code) UNLOOP_4(code); UNLOOP_4(code)
+
+#define WRAP_CODE(code) do { code } while(false)
 
 #endif

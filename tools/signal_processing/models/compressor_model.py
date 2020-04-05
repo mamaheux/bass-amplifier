@@ -31,10 +31,12 @@ class CompressorModel:
     def _calculate_level(self, x):
         level = np.zeros(x.shape[0] + 1)
 
+        abs_x = np.abs(x)
+
         for i in range(x.shape[0]):
-            if x[i] > level[i]:
-                level[i + 1] = ATTACK * level[i] + (1 - ATTACK) * x[i]
+            if abs_x[i] > level[i]:
+                level[i + 1] = ATTACK * level[i] + (1 - ATTACK) * abs_x[i]
             else:
-                level[i + 1] = RELEASE * level[i] + (1 - RELEASE) * x[i]
+                level[i + 1] = RELEASE * level[i] + (1 - RELEASE) * abs_x[i]
 
         return level[1:]
