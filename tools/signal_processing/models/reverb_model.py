@@ -13,7 +13,6 @@ class ReverbModel:
         self._feedback_comb_delays = self._feedback_comb_delays.astype(int)
         self._feedback_comb_gain = 0.5
 
-        self._all_pass_gain = 0.7
         self._all_pass_delay = int(0.08 * self._configuration.fs)
 
     def volume_ranges(self):

@@ -5,8 +5,6 @@
 
 #include <string.h>
 
-#include <Arduino.h>
-
 template<uint32_t BLOCK_SIZE, uint32_t MAX_DELAY>
 class Delay : public Effect<BLOCK_SIZE>
 {
