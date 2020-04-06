@@ -59,6 +59,10 @@ float* Octaver<BLOCK_SIZE>::process(float* input, float* downOctave)
     arm_add_f32(m_output, input, m_output, BLOCK_SIZE);
     arm_scale_f32(m_output, m_scaleFactor, m_output, BLOCK_SIZE);
 
+    if (!Effect<BLOCK_SIZE>::isEnabled())
+    {
+        return input;
+    }
     return m_output;
 }
 

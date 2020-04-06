@@ -4,8 +4,6 @@
 #include "Effect.h"
 #include "BiquadIir.h"
 
-#include <EffectDesign.h>
-
 template<uint32_t BLOCK_SIZE>
 class Eq : public Effect<BLOCK_SIZE>
 {
@@ -34,7 +32,13 @@ void Eq<BLOCK_SIZE>::update(const uint8_t* data)
 template<uint32_t BLOCK_SIZE>
 float* Eq<BLOCK_SIZE>::process(float* input)
 {
-    return m_filters.process(input);
+    float* output = m_filters.process(input);
+
+    if (!Effect<BLOCK_SIZE>::isEnabled())
+    {
+        return input;
+    }
+    return output;
 }
 
 #endif

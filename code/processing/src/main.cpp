@@ -38,6 +38,7 @@ Octaver<BLOCK_SIZE> octaver;
 DMAMEM Delay<BLOCK_SIZE, MAX_DELAY> delayEffect;
 Reverb<BLOCK_SIZE> reverb;
 Overdrive<BLOCK_SIZE> overdrive;
+Mute<BLOCK_SIZE> mute;
 
 void test_biquad()
 {
@@ -272,6 +273,21 @@ void test_overdrive()
     TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 0.59020401, output[6]);
 }
 
+void test_mute()
+{
+    float input[BLOCK_SIZE] = {0.1, 0.2, 0.3, 0.4, 0.3, 0.2, 0.1};
+
+    float* output = mute.process(input);
+
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 0, output[0]);
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 0, output[1]);
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 0, output[2]);
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 0, output[3]);
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 0, output[4]);
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 0, output[5]);
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 0, output[6]);
+}
+
 void randomize(float* input, uint32_t blockSize)
 {
     for (uint32_t i = 0; i < blockSize; i++)
@@ -304,7 +320,151 @@ void test_performance()
         durationTotal += micros() - start;
     }
 
-    Serial.printf("Duration = %d us\n", durationTotal);
+    Serial.printf("Duration = %d us\n", durationTotal / ITERATION_COUNT);
+}
+
+void test_isEnabled_contour()
+{
+    float input[BLOCK_SIZE] = {0.1, 0.2, 0.3, 0.4, 0.3, 0.2, 0.1};
+
+    contour.setIsEnabled(false);
+    float* output = contour.process(input);
+
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 0.1, output[0]);
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 0.2, output[1]);
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 0.3, output[2]);
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 0.4, output[3]);
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 0.3, output[4]);
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 0.2, output[5]);
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 0.1, output[6]);
+}
+
+void test_isEnabled_presence()
+{
+    float input[BLOCK_SIZE] = {0.1, 0.2, 0.3, 0.4, 0.3, 0.2, 0.1};
+
+    presence.setIsEnabled(false);
+    float* output = presence.process(input);
+
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 0.1, output[0]);
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 0.2, output[1]);
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 0.3, output[2]);
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 0.4, output[3]);
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 0.3, output[4]);
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 0.2, output[5]);
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 0.1, output[6]);
+}
+
+void test_isEnabled_eq()
+{
+    float input[BLOCK_SIZE] = {0.1, 0.2, 0.3, 0.4, 0.3, 0.2, 0.1};
+
+    eq.setIsEnabled(false);
+    float* output = eq.process(input);
+
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 0.1, output[0]);
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 0.2, output[1]);
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 0.3, output[2]);
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 0.4, output[3]);
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 0.3, output[4]);
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 0.2, output[5]);
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 0.1, output[6]);
+}
+
+void test_isEnabled_compressor()
+{
+    float input[BLOCK_SIZE] = {0.1, 0.2, 0.3, 0.4, 0.3, 0.2, 0.1};
+
+    compressor.setIsEnabled(false);
+    float* output = compressor.process(input);
+
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 0.1, output[0]);
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 0.2, output[1]);
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 0.3, output[2]);
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 0.4, output[3]);
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 0.3, output[4]);
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 0.2, output[5]);
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 0.1, output[6]);
+}
+
+void test_isEnabled_octaver()
+{
+    float input[BLOCK_SIZE] = {0.1, 0.2, 0.3, 0.4, 0.3, 0.2, 0.1};
+
+    octaver.setIsEnabled(false);
+    float* output = octaver.process(input, input);
+
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 0.1, output[0]);
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 0.2, output[1]);
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 0.3, output[2]);
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 0.4, output[3]);
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 0.3, output[4]);
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 0.2, output[5]);
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 0.1, output[6]);
+}
+
+void test_isEnabled_delay()
+{
+    float input[BLOCK_SIZE] = {0.1, 0.2, 0.3, 0.4, 0.3, 0.2, 0.1};
+
+    delayEffect.setIsEnabled(false);
+    float* output = delayEffect.process(input);
+
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 0.1, output[0]);
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 0.2, output[1]);
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 0.3, output[2]);
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 0.4, output[3]);
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 0.3, output[4]);
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 0.2, output[5]);
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 0.1, output[6]);
+}
+
+void test_isEnabled_reverb()
+{
+    float input[BLOCK_SIZE] = {0.1, 0.2, 0.3, 0.4, 0.3, 0.2, 0.1};
+
+    reverb.setIsEnabled(false);
+    float* output = reverb.process(input);
+
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 0.05, output[0]);
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 0.1, output[1]);
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 0.15, output[2]);
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 0.2, output[3]);
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 0.15, output[4]);
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 0.1, output[5]);
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 0.05, output[6]);
+}
+
+void test_isEnabled_overdrive()
+{
+    float input[BLOCK_SIZE] = {0.1, 0.2, 0.3, 0.4, 0.3, 0.2, 0.1};
+
+    overdrive.setIsEnabled(false);
+    float* output = overdrive.process(input);
+
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 0.1, output[0]);
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 0.2, output[1]);
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 0.3, output[2]);
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 0.4, output[3]);
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 0.3, output[4]);
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 0.2, output[5]);
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 0.1, output[6]);
+}
+
+void test_isEnabled_mute()
+{
+    float input[BLOCK_SIZE] = {0.1, 0.2, 0.3, 0.4, 0.3, 0.2, 0.1};
+
+    mute.setIsEnabled(false);
+    float* output = mute.process(input);
+
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 0.1, output[0]);
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 0.2, output[1]);
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 0.3, output[2]);
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 0.4, output[3]);
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 0.3, output[4]);
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 0.2, output[5]);
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 0.1, output[6]);
 }
 
 void setup()
@@ -326,8 +486,19 @@ void setup()
     RUN_TEST(test_delay);
     RUN_TEST(test_reverb);
     RUN_TEST(test_overdrive);
+    RUN_TEST(test_mute);
 
     RUN_TEST(test_performance);
+
+    RUN_TEST(test_isEnabled_contour);
+    RUN_TEST(test_isEnabled_presence);
+    RUN_TEST(test_isEnabled_eq);
+    RUN_TEST(test_isEnabled_compressor);
+    RUN_TEST(test_isEnabled_octaver);
+    RUN_TEST(test_isEnabled_delay);
+    RUN_TEST(test_isEnabled_reverb);
+    RUN_TEST(test_isEnabled_overdrive);
+    RUN_TEST(test_isEnabled_mute);
 }
 
 void loop()

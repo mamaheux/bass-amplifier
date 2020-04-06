@@ -71,6 +71,10 @@ float* Compressor<BLOCK_SIZE>::process(float* input)
         );
     }
 
+    if (!Effect<BLOCK_SIZE>::isEnabled())
+    {
+        return input;
+    }
     return m_output;
 }
 

@@ -73,6 +73,10 @@ float* Delay<BLOCK_SIZE, MAX_DELAY>::process(float* input)
         );
     }
 
+    if (!Effect<BLOCK_SIZE>::isEnabled())
+    {
+        return input;
+    }
     return output;
 }
 

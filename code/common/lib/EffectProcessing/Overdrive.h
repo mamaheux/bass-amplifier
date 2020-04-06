@@ -63,6 +63,11 @@ float* Overdrive<BLOCK_SIZE>::process(float* input)
 
     float* filterOutput = m_lowPassFilter.process(m_expOutput);
     arm_scale_f32(filterOutput, SIGNAL_GAIN, m_output, BLOCK_SIZE);
+
+    if (!Effect<BLOCK_SIZE>::isEnabled())
+    {
+        return input;
+    }
     return m_output;
 }
 

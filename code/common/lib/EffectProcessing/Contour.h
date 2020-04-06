@@ -47,6 +47,11 @@ float* Contour<BLOCK_SIZE>::process(float* input)
 {
     float* filtersOutput = m_filters.process(input);
     arm_scale_f32(filtersOutput, m_globalGain, m_output, BLOCK_SIZE);
+
+    if (!Effect<BLOCK_SIZE>::isEnabled())
+    {
+        return input;
+    }
     return m_output;
 }
 

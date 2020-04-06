@@ -15,5 +15,6 @@
 #include "Delay.h"
 #include "Reverb.h"
 #include "Overdrive.h"
+#include "Mute.h"
 
 #endif

@@ -71,6 +71,10 @@ float* Reverb<BLOCK_SIZE>::process(float* input)
 
     arm_add_f32(m_output, m_filterSum, m_output, BLOCK_SIZE);
 
+    if (!Effect<BLOCK_SIZE>::isEnabled())
+    {
+        arm_scale_f32(input, SIGNAL_GAIN, m_output, BLOCK_SIZE);
+    }
     return m_output;
 }
 

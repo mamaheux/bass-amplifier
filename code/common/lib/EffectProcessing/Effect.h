@@ -6,14 +6,31 @@
 template<uint32_t BLOCK_SIZE>
 class Effect
 {
+    bool m_isEnabled;
+
 public:
     Effect();
+
+    bool isEnabled() const;
+    void setIsEnabled(bool isEnabled);
 };
 
 template<uint32_t BLOCK_SIZE>
-Effect<BLOCK_SIZE>::Effect()
+Effect<BLOCK_SIZE>::Effect() : m_isEnabled(true)
 {
     static_assert(BLOCK_SIZE > 0, "BLOCK_SIZE must be greater than 0.");
+}
+
+template<uint32_t BLOCK_SIZE>
+inline bool Effect<BLOCK_SIZE>::isEnabled() const
+{
+    return m_isEnabled;
+}
+
+template<uint32_t BLOCK_SIZE>
+inline void Effect<BLOCK_SIZE>::setIsEnabled(bool isEnabled)
+{
+    m_isEnabled = isEnabled;
 }
 
 #define UNROLL_1(code) WRAP_CODE(code)
