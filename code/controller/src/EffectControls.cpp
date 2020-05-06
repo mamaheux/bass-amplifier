@@ -10,7 +10,7 @@ static void delayTapInterrupt()
     }
 
     uint32_t timeUs = micros();
-    *delayUs = lastDelayTapUs - timeUs;
+    *delayUs = timeUs - lastDelayTapUs;
     lastDelayTapUs = timeUs;
 }
 
@@ -22,7 +22,7 @@ static void muteInterrupt()
         return;
     }
 
-    *muteState = !muteState;
+    *muteState = !*muteState;
 }
 
 EffectControls::EffectControls(ControlAdc& adc) : m_adc(adc), m_delayUs(0)

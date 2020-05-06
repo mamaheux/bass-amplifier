@@ -9,7 +9,7 @@ class FanController
     ControlAdc& m_adc;
     
 public:
-    FanController(ControlAdc m_adc);
+    FanController(ControlAdc& m_adc);
     void begin();
 
     void update();

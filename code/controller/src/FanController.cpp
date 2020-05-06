@@ -2,7 +2,7 @@
 
 #include <math.h>
 
-FanController::FanController(ControlAdc adc) : m_adc(adc)
+FanController::FanController(ControlAdc& adc) : m_adc(adc)
 {
 }
 

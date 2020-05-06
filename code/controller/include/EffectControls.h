@@ -103,7 +103,7 @@ inline uint8_t EffectControls::getDelayVolume()
 
 inline uint32_t EffectControls::getDelay()
 {
-    float delaySec = m_delayUs / 1.0e-6;
+    float delaySec = m_delayUs * 1.0e-6;
     return static_cast<uint32_t>(delaySec * SAMPLING_FREQUENCY);
 }
 
