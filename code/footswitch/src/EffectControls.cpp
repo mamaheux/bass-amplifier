@@ -77,8 +77,9 @@ static void delayTapInterrupt()
     }
 
     uint32_t timeUs = micros();
-    *delayUs = lastDelayTapUs - timeUs;
+    *delayUs = timeUs - lastDelayTapUs;
     lastDelayTapUs = timeUs;
+    *isDelayUsDirty = true;
 }
 
 static volatile bool* isOpt1Dirty = nullptr;
@@ -282,7 +283,7 @@ void EffectControls::toogleEffect(uint8_t effectCode)
     do
     {
         m_controllerCommunication.sendToogleEffect(effectCode);
-    } while (!m_controllerCommunication.waitAck(millis, ACK_TIMEOUT_MS));    
+    } while (!m_controllerCommunication.waitAck(millis, ACK_TIMEOUT_MS));
 }
 
 void EffectControls::setEffect(uint8_t effectCode, bool isEnabled)
@@ -290,7 +291,7 @@ void EffectControls::setEffect(uint8_t effectCode, bool isEnabled)
     do
     {
         m_controllerCommunication.sendSetEffect(effectCode, isEnabled);
-    } while (!m_controllerCommunication.waitAck(millis, ACK_TIMEOUT_MS));    
+    } while (!m_controllerCommunication.waitAck(millis, ACK_TIMEOUT_MS));
 }
 
 void EffectControls::setDelayUs(uint32_t delayUs)
@@ -298,7 +299,7 @@ void EffectControls::setDelayUs(uint32_t delayUs)
     do
     {
         m_controllerCommunication.sendDelayUs(delayUs);
-    } while (!m_controllerCommunication.waitAck(millis, ACK_TIMEOUT_MS));    
+    } while (!m_controllerCommunication.waitAck(millis, ACK_TIMEOUT_MS));
 }
 
 void EffectControls::applyOpt1()
