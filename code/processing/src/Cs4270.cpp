@@ -49,6 +49,8 @@ Cs4270::Cs4270()
 
 void Cs4270::begin()
 {
+    CCM_CCGR5 |= CCM_CCGR5_SAI1(CCM_CCGR_ON);
+
     setupCs4270();
     setupI2s();
 }
@@ -211,7 +213,7 @@ void Cs4270::setupI2sTx()
         | I2S_RCR5_W0W((32 - 1)) // Set the word 0 width to 32
         | I2S_RCR5_FBT((32 - 1)); // Set the first bit shifted to 32
         
-    CORE_PIN7_CONFIG  = 3;  // Set pin23 as TX
+    CORE_PIN7_CONFIG  = 3;  // Set pin7 as TX
 }
 
 void Cs4270::setupI2sRx()
@@ -234,7 +236,7 @@ void Cs4270::setupI2sRx()
         | I2S_RCR5_W0W((32-1)) // Set the word 0 width to 32
         | I2S_RCR5_FBT((32-1)); // Set the first bit shifted to 32
 
-    CORE_PIN8_CONFIG  = 3;  // Set pin23 as TX
+    CORE_PIN8_CONFIG  = 3;  // Set pin8 as RX
 }
 
 void Cs4270::setupInterrupt()
@@ -253,8 +255,8 @@ void Cs4270::enableI2s()
         | I2S_TCSR_FRIE; // Enable transmitter FIFO interrupt
     I2S1_RCSR = I2S_RCSR_RE // Enable the receiver
         | I2S_RCSR_BCE // Enable BCLK
-          | I2S_RCSR_FRIE // Enable receiver FIFO interrupt
-          | I2S_RCSR_FR; // Reset FIFO
+        | I2S_RCSR_FRIE // Enable receiver FIFO interrupt
+        | I2S_RCSR_FR; // Reset FIFO
 }
 
 float Cs4270::int32ToFloat(int32_t v)
