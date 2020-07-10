@@ -42,9 +42,9 @@ Cs4270::Cs4270()
 {
     static_assert(CS4270_SDIN_PIN == 7, "Invalid SDIN pin");
     static_assert(CS4270_SDOUT_PIN == 8, "Invalid SDOUT pin");
-    static_assert(CS4270_LRCLK_PIN == 20, "Invalid SDOUT pin");
-    static_assert(CS4270_SCLK_PIN == 21, "Invalid SDOUT pin");
-    static_assert(CS4270_MCLK_PIN == 23, "Invalid SDOUT pin");
+    static_assert(CS4270_LRCLK_PIN == 20, "Invalid LRCLK pin");
+    static_assert(CS4270_SCLK_PIN == 21, "Invalid SCLK pin");
+    static_assert(CS4270_MCLK_PIN == 23, "Invalid MCLK pin");
 }
 
 void Cs4270::begin()
