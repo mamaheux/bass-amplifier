@@ -3,6 +3,7 @@
 #include "EffectControls.h"
 #include "StatusLed.h"
 #include "FanController.h"
+#include "DspCommunication.h"
 
 #include <EffectDesign.h>
 #include <Communication.h>
@@ -28,6 +29,8 @@ EffectDesigner* effectDesigners[EFFECT_CODE_COUNT];
 ControllerFootswitchCommunication<HardwareSerial2> footswitchCommunication(FOOTSWITCH_SERIAL);
 uint32_t lastHeartbeatTimeMs;
 bool isHeartbeatPending;
+
+DspCommunication dspCommunication(effectDesigners);
 
 void setupEffectDesigners();
 void setupFootswitchCommunication();
@@ -65,6 +68,7 @@ void setup()
 
     setupEffectDesigners();
     setupFootswitchCommunication();
+    dspCommunication.begin();
 
     updateEffectDesignersTicker.start();
     updateStatusLedTicker.start();
@@ -122,6 +126,8 @@ void updateEffectDesigners()
     reverbDesigner.update(effectControls.getReverbVolume());
     overdriveDesigner.update(effectControls.getOverdriveGain(), effectControls.getOverdriveTone());
     muteDesigner.setIsEnabled(effectControls.getMuteState());
+
+    dspCommunication.update();
 }
 
 void updateStatusLed()
