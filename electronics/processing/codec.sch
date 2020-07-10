@@ -1013,10 +1013,10 @@ Wire Wire Line
 	7950 1900 7950 1800
 Wire Wire Line
 	7950 1000 7950 900 
-Text Notes 8200 1650 0    50   ~ 0
-47k slave mode
-Text Notes 8200 1150 0    50   ~ 0
-47k master mode
+Text Notes 8050 1900 0    50   ~ 0
+47k slave mode\n(stand-alone mode)
+Text Notes 8050 1050 0    50   ~ 0
+47k master mode\n(stand-alone mode)
 Wire Wire Line
 	7100 1400 7950 1400
 $Comp
@@ -1157,4 +1157,6 @@ Text GLabel 3700 4250 0    50   Input ~ 0
 A+15V
 Text GLabel 3700 4950 0    50   Input ~ 0
 A-15V
+Text Notes 4050 4200 0    50   ~ 0
+6x gain
 $EndSCHEMATC

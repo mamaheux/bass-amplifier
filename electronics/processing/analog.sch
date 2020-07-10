@@ -1028,8 +1028,6 @@ F 3 "~" H 4550 8500 50  0001 C CNN
 	1    4550 8500
 	0    1    1    0   
 $EndComp
-Text Notes 2500 6800 0    50   ~ 0
-x6 gain
 $Comp
 L power:GNDA #PWR040
 U 1 1 5E90376A
@@ -1531,7 +1529,7 @@ Connection ~ 10100 5000
 Wire Wire Line
 	10100 5000 10000 5000
 Text Notes 10700 5100 0    50   ~ 0
-x6 gain
+x1.5 gain
 Text HLabel 11200 5500 2    50   Output ~ 0
 power_amp_signal
 Wire Wire Line
