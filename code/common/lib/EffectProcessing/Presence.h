@@ -19,7 +19,7 @@ class Presence : public Effect<BLOCK_SIZE>
 public:
     Presence();
 
-    void update(const uint8_t* data);
+    void update(const uint8_t* data) override;
     float* process(float* input);
 };
 

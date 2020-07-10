@@ -14,7 +14,7 @@ class Eq : public Effect<BLOCK_SIZE>
 public:
     Eq();
 
-    void update(const uint8_t* data);
+    void update(const uint8_t* data) override;
     float* process(float* input);
 };
 

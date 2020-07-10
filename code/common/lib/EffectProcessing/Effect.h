@@ -13,6 +13,8 @@ public:
 
     bool isEnabled() const;
     void setIsEnabled(bool isEnabled);
+
+    virtual void update(const uint8_t* data);
 };
 
 template<uint32_t BLOCK_SIZE>
@@ -31,6 +33,11 @@ template<uint32_t BLOCK_SIZE>
 inline void Effect<BLOCK_SIZE>::setIsEnabled(bool isEnabled)
 {
     m_isEnabled = isEnabled;
+}
+
+template<uint32_t BLOCK_SIZE>
+void Effect<BLOCK_SIZE>::update(const uint8_t* data)
+{
 }
 
 #define UNROLL_1(code) WRAP_CODE(code)

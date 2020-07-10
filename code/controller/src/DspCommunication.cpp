@@ -32,8 +32,9 @@ void DspCommunication::sendData(EffectDesigner* effectDesigner)
     uint8_t dataSize = effectDesigner->dataSize();
     const uint8_t* data = effectDesigner->data();
 
-    while (DSP_SERIAL.availableForWrite() < 2);
+    while (DSP_SERIAL.availableForWrite() < 3);
     DSP_SERIAL.write(effectCode);
+    DSP_SERIAL.write(static_cast<uint8_t>(effectDesigner->isActive()));
     DSP_SERIAL.write(dataSize);
 
     for (uint8_t i = 0; i < dataSize; i++)

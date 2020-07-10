@@ -24,7 +24,7 @@ class Overdrive : public Effect<BLOCK_SIZE>
 public:
     Overdrive();
 
-    void update(const uint8_t* data);
+    void update(const uint8_t* data) override;
     float* process(float* input);
 };
 
