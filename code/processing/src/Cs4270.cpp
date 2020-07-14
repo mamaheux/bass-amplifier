@@ -11,7 +11,7 @@ static Cs4270Buffer<BLOCK_SIZE>* rightInputBuffer;
 static Cs4270Buffer<BLOCK_SIZE>* leftOutputBuffer;
 static Cs4270Buffer<BLOCK_SIZE>* rightOutputBuffer;
 
-void cs4270Interrupt()
+static void cs4270Interrupt()
 {
     if (I2S1_TCSR & I2S_TCSR_FRF)
     {

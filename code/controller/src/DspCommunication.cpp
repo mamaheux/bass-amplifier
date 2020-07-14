@@ -21,7 +21,7 @@ void DspCommunication::update()
         if (m_effectDesigners[i]->isDirty())
         {
             m_effectDesigners[i]->setIsDirty(false);
-            sendData(m_effectDesigners[i]);            
+            sendData(m_effectDesigners[i]);
         }
     }
 }

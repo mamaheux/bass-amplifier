@@ -17,16 +17,13 @@ void ControllerCommunication::begin()
 
 void ControllerCommunication::update()
 {
-    if (m_isWaitingForNewCommand)
+    if (m_isWaitingForNewCommand && CONTROLLER_SERIAL.available() >= 3)
     {
-        if (CONTROLLER_SERIAL.available() >= 3)
-        {
-            m_effectCode = CONTROLLER_SERIAL.read();
-            m_isActive = static_cast<bool>(CONTROLLER_SERIAL.read());
-            m_dataSize = CONTROLLER_SERIAL.read();
-            m_dataIndex = 0;
-            m_isWaitingForNewCommand = false;
-        }
+        m_effectCode = CONTROLLER_SERIAL.read();
+        m_isActive = static_cast<bool>(CONTROLLER_SERIAL.read());
+        m_dataSize = CONTROLLER_SERIAL.read();
+        m_dataIndex = 0;
+        m_isWaitingForNewCommand = false;
     }
 
     if (!m_isWaitingForNewCommand)
