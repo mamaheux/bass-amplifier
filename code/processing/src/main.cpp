@@ -26,6 +26,7 @@ ControllerCommunication controllerCommunication(effects);
 
 void setupEffectDesigners();
 float* processAudio(float* input, float* downOctave);
+bool isOutputClipping(float* output);
 
 void setup()
 {
@@ -60,6 +61,11 @@ void loop()
     {
         float* output = processAudio(input, downOctave);
 
+        if (isOutputClipping(output))
+        {
+            controllerCommunication.notifyClipping();
+        }
+
         while (!cs4270.write(output, output))
         {
             controllerCommunication.update();
@@ -84,6 +90,18 @@ float* processAudio(float* input, float* downOctave)
     output = mute.process(output);
 
     return output;
+}
+
+bool isOutputClipping(float* output)
+{
+    for (uint32_t i = 0; i < BLOCK_SIZE; i++)
+    {
+        if (abs(output[i]) > 1)
+        {
+            return true;
+        }
+    }
+    return false;
 }
 
 #endif

@@ -43,6 +43,8 @@ void updateFootswitchCommunicationFast();
 void updateFootswitchCommunicationSlow();
 void resetAllEffectEnabledStates();
 
+void dspClippingNotificationHandler();
+
 void footswitchHeatbeatHandler();
 void footswitchToogleEffectHandler(uint8_t effectCode);
 void footswitchDelayUsHandler(uint32_t delayUs);
@@ -68,7 +70,7 @@ void setup()
 
     setupEffectDesigners();
     setupFootswitchCommunication();
-    dspCommunication.begin();
+    dspCommunication.begin(dspClippingNotificationHandler);
 
     updateEffectDesignersTicker.start();
     updateStatusLedTicker.start();
@@ -174,6 +176,12 @@ void resetAllEffectEnabledStates()
         effectDesigners[i]->setIsEnabled(true);
     }
     muteDesigner.setIsEnabled(false);
+}
+
+void dspClippingNotificationHandler()
+{
+    statusLed.notifyClipping();
+    footswitchCommunication.sendClippingNotification();
 }
 
 void footswitchHeatbeatHandler()

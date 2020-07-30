@@ -4,13 +4,16 @@
 
 #include <Communication.h>
 
-DspCommunication::DspCommunication(EffectDesigner* effectDesigners[]) : m_effectDesigners(effectDesigners)
+DspCommunication::DspCommunication(EffectDesigner* effectDesigners[]) :
+    m_effectDesigners(effectDesigners),
+    m_clippingNotificationHandler(nullptr)
 {
 
 }
 
-void DspCommunication::begin()
+void DspCommunication::begin(ClippingNotificationHandler clippingNotificationHandler)
 {
+    m_clippingNotificationHandler = clippingNotificationHandler;
     DSP_SERIAL.begin(DSP_SERIAL_BAUD_RATE);
 }
 
@@ -24,6 +27,8 @@ void DspCommunication::update()
             sendData(m_effectDesigners[i]);
         }
     }
+
+    readNotification();
 }
 
 void DspCommunication::sendData(EffectDesigner* effectDesigner)
@@ -41,5 +46,19 @@ void DspCommunication::sendData(EffectDesigner* effectDesigner)
     {
         while (DSP_SERIAL.availableForWrite() < 1);
         DSP_SERIAL.write(data[i]);
+    }
+}
+
+void DspCommunication::readNotification()
+{
+    bool isClippingNotificationSent = false;
+    while (DSP_SERIAL.available() > 0)
+    {
+        DSP_SERIAL.read();
+        if (!isClippingNotificationSent && m_clippingNotificationHandler != nullptr)
+        {
+            m_clippingNotificationHandler();
+            isClippingNotificationSent = true;
+        }
     }
 }
