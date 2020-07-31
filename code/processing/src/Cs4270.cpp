@@ -214,8 +214,6 @@ void Cs4270::setupI2sTx()
     I2S1_TCR5 = I2S_TCR5_WNW((32 - 1)) // Set the word width to 32
         | I2S_RCR5_W0W((32 - 1)) // Set the word 0 width to 32
         | I2S_RCR5_FBT((32 - 1)); // Set the first bit shifted to 32
-
-    CORE_PIN7_CONFIG  = 3;  // Set pin7 as TX
 }
 
 void Cs4270::setupI2sRx()
@@ -237,8 +235,6 @@ void Cs4270::setupI2sRx()
     I2S1_RCR5 = I2S_RCR5_WNW((32-1)) // Set the word width to 32
         | I2S_RCR5_W0W((32-1)) // Set the word 0 width to 32
         | I2S_RCR5_FBT((32-1)); // Set the first bit shifted to 32
-
-    CORE_PIN8_CONFIG  = 3;  // Set pin8 as RX
 }
 
 void Cs4270::setupInterrupt()
@@ -255,6 +251,11 @@ void Cs4270::enableI2s()
     // Offset the output by 1 sample to prevent transmit FIFO errors
     I2S1_TDR0 = 0;
     I2S1_TDR0 = 0;
+
+    // Setup TX/RX pins
+    CORE_PIN7_CONFIG  = 3;  // Set pin7 as TX
+    CORE_PIN8_CONFIG  = 3;  // Set pin8 as RX
+    IOMUXC_SAI1_RX_DATA0_SELECT_INPUT = 2;
 
     I2S1_TCSR = I2S_TCSR_TE // Enable the transmitter
         | I2S_TCSR_BCE // Enable BCLK
