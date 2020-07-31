@@ -13,6 +13,8 @@ static Cs4270Buffer<BLOCK_SIZE>* rightOutputBuffer;
 
 static void cs4270Interrupt()
 {
+    constexpr int32_t SAMPLE_MASK = 0xFFFFFF00;
+
     if (I2S1_TCSR & I2S_TCSR_FRF)
     {
         // Write samples
@@ -20,10 +22,10 @@ static void cs4270Interrupt()
         int32_t rightSample = 0;
 
         leftOutputBuffer->read(leftSample);
-        rightOutputBuffer->read(leftSample);
+        rightOutputBuffer->read(rightSample);
 
-        I2S1_TDR0 = leftSample;
-        I2S1_TDR0 = rightSample;
+        I2S1_TDR0 = leftSample & SAMPLE_MASK;
+        I2S1_TDR0 = rightSample & SAMPLE_MASK;
     }
     
     if (I2S1_RCSR & I2S_RCSR_FRF)
@@ -32,8 +34,8 @@ static void cs4270Interrupt()
         int32_t leftSample = I2S1_RDR0;
         int32_t rightSample = I2S1_RDR0;
 
-        leftInputBuffer->write(leftSample);
-        rightInputBuffer->write(rightSample);
+        leftInputBuffer->write(leftSample & SAMPLE_MASK);
+        rightInputBuffer->write(rightSample & SAMPLE_MASK);
     }
 }
 
@@ -127,15 +129,15 @@ void Cs4270::setupI2s()
 {
     // if TX or RX are enabled
     if ((I2S1_TCSR & I2S_TCSR_TE) || (I2S1_RCSR & I2S_RCSR_RE)) return;
-    
+
     setupI2sClocks();
-    
+
     //Setup I2S (TX is sync and RX is async because TX and RX must use RX_BCLK and RX_SYNC)
     setupI2sTx();
     setupI2sRx();
-    
+
     setupInterrupt();
-    
+
     enableI2s(); 
 }
 
@@ -181,15 +183,15 @@ void Cs4270::setupPLL4(int& n1, int& n2)
 
 	CCM_ANALOG_PLL_AUDIO_NUM   = c1 & CCM_ANALOG_PLL_AUDIO_NUM_MASK;
 	CCM_ANALOG_PLL_AUDIO_DENOM = c2 & CCM_ANALOG_PLL_AUDIO_DENOM_MASK;
-	
+
 	CCM_ANALOG_PLL_AUDIO &= ~CCM_ANALOG_PLL_AUDIO_POWERDOWN;//Switch on PLL
 	while (!(CCM_ANALOG_PLL_AUDIO & CCM_ANALOG_PLL_AUDIO_LOCK)) {}; //Wait for pll-lock
-	
+
 	const int div_post_pll = 1; // other values: 2,4
 	CCM_ANALOG_MISC2 &= ~(CCM_ANALOG_MISC2_DIV_MSB | CCM_ANALOG_MISC2_DIV_LSB);
 	if(div_post_pll>1) CCM_ANALOG_MISC2 |= CCM_ANALOG_MISC2_DIV_LSB;
 	if(div_post_pll>3) CCM_ANALOG_MISC2 |= CCM_ANALOG_MISC2_DIV_MSB;
-	
+
 	CCM_ANALOG_PLL_AUDIO &= ~CCM_ANALOG_PLL_AUDIO_BYPASS;//Disable Bypass
 }
 
@@ -212,7 +214,7 @@ void Cs4270::setupI2sTx()
     I2S1_TCR5 = I2S_TCR5_WNW((32 - 1)) // Set the word width to 32
         | I2S_RCR5_W0W((32 - 1)) // Set the word 0 width to 32
         | I2S_RCR5_FBT((32 - 1)); // Set the first bit shifted to 32
-        
+
     CORE_PIN7_CONFIG  = 3;  // Set pin7 as TX
 }
 
@@ -250,9 +252,14 @@ void Cs4270::setupInterrupt()
 
 void Cs4270::enableI2s()
 {
+    // Offset the output by 1 sample to prevent transmit FIFO errors
+    I2S1_TDR0 = 0;
+    I2S1_TDR0 = 0;
+
     I2S1_TCSR = I2S_TCSR_TE // Enable the transmitter
         | I2S_TCSR_BCE // Enable BCLK
         | I2S_TCSR_FRIE; // Enable transmitter FIFO interrupt
+
     I2S1_RCSR = I2S_RCSR_RE // Enable the receiver
         | I2S_RCSR_BCE // Enable BCLK
         | I2S_RCSR_FRIE // Enable receiver FIFO interrupt

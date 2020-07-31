@@ -24,7 +24,7 @@ Mute<BLOCK_SIZE> mute;
 Effect<BLOCK_SIZE>* effects[EFFECT_CODE_COUNT];
 ControllerCommunication controllerCommunication(effects);
 
-void setupEffectDesigners();
+void setupEffects();
 float* processAudio(float* input, float* downOctave);
 bool isOutputClipping(float* output);
 
@@ -32,13 +32,13 @@ void setup()
 {
     DEBUG_SERIAL.begin(DEBUG_SERIAL_BAUD_RATE);
 
-    setupEffectDesigners();
+    setupEffects();
 
     cs4270.begin();
     controllerCommunication.begin();
 }
 
-void setupEffectDesigners()
+void setupEffects()
 {
     effects[COMPRESSOR_CODE] = &compressor;
     effects[PRESENCE_CODE] = &presence;
