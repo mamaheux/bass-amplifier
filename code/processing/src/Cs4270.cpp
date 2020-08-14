@@ -167,32 +167,32 @@ void Cs4270::setupPLL4(int& n1, int& n2)
 {
     int fs = SAMPLING_FREQUENCY;
     n1 = 4; 
-	n2 = 1 + (24000000 * 27) / (fs * 256 * n1);
+    n2 = 1 + (24000000 * 27) / (fs * 256 * n1);
 
-	double C = ((double)fs * 256 * n1 * n2) / 24000000;
-	int c0 = C;
-	uint32_t c2 = 10000;
-	int32_t c1 = C * c2 - (c0 * c2);
+    double C = ((double)fs * 256 * n1 * n2) / 24000000;
+    int c0 = C;
+    uint32_t c2 = 10000;
+    int32_t c1 = C * c2 - (c0 * c2);
 
     // From :https://github.com/PaulStoffregen/Audio/blob/master/utility/imxrt_hw.cpp
     if (CCM_ANALOG_PLL_AUDIO & CCM_ANALOG_PLL_AUDIO_ENABLE) return;
 
-	CCM_ANALOG_PLL_AUDIO = CCM_ANALOG_PLL_AUDIO_BYPASS | CCM_ANALOG_PLL_AUDIO_ENABLE
-			     | CCM_ANALOG_PLL_AUDIO_POST_DIV_SELECT(2) // 2: 1/4; 1: 1/2; 0: 1/1
-			     | CCM_ANALOG_PLL_AUDIO_DIV_SELECT(c0);
+    CCM_ANALOG_PLL_AUDIO = CCM_ANALOG_PLL_AUDIO_BYPASS | CCM_ANALOG_PLL_AUDIO_ENABLE
+                 | CCM_ANALOG_PLL_AUDIO_POST_DIV_SELECT(2) // 2: 1/4; 1: 1/2; 0: 1/1
+                 | CCM_ANALOG_PLL_AUDIO_DIV_SELECT(c0);
 
-	CCM_ANALOG_PLL_AUDIO_NUM   = c1 & CCM_ANALOG_PLL_AUDIO_NUM_MASK;
-	CCM_ANALOG_PLL_AUDIO_DENOM = c2 & CCM_ANALOG_PLL_AUDIO_DENOM_MASK;
+    CCM_ANALOG_PLL_AUDIO_NUM   = c1 & CCM_ANALOG_PLL_AUDIO_NUM_MASK;
+    CCM_ANALOG_PLL_AUDIO_DENOM = c2 & CCM_ANALOG_PLL_AUDIO_DENOM_MASK;
 
-	CCM_ANALOG_PLL_AUDIO &= ~CCM_ANALOG_PLL_AUDIO_POWERDOWN;//Switch on PLL
-	while (!(CCM_ANALOG_PLL_AUDIO & CCM_ANALOG_PLL_AUDIO_LOCK)) {}; //Wait for pll-lock
+    CCM_ANALOG_PLL_AUDIO &= ~CCM_ANALOG_PLL_AUDIO_POWERDOWN;//Switch on PLL
+    while (!(CCM_ANALOG_PLL_AUDIO & CCM_ANALOG_PLL_AUDIO_LOCK)) {}; //Wait for pll-lock
 
-	const int div_post_pll = 1; // other values: 2,4
-	CCM_ANALOG_MISC2 &= ~(CCM_ANALOG_MISC2_DIV_MSB | CCM_ANALOG_MISC2_DIV_LSB);
-	if(div_post_pll>1) CCM_ANALOG_MISC2 |= CCM_ANALOG_MISC2_DIV_LSB;
-	if(div_post_pll>3) CCM_ANALOG_MISC2 |= CCM_ANALOG_MISC2_DIV_MSB;
+    const int div_post_pll = 1; // other values: 2,4
+    CCM_ANALOG_MISC2 &= ~(CCM_ANALOG_MISC2_DIV_MSB | CCM_ANALOG_MISC2_DIV_LSB);
+    if(div_post_pll>1) CCM_ANALOG_MISC2 |= CCM_ANALOG_MISC2_DIV_LSB;
+    if(div_post_pll>3) CCM_ANALOG_MISC2 |= CCM_ANALOG_MISC2_DIV_MSB;
 
-	CCM_ANALOG_PLL_AUDIO &= ~CCM_ANALOG_PLL_AUDIO_BYPASS;//Disable Bypass
+    CCM_ANALOG_PLL_AUDIO &= ~CCM_ANALOG_PLL_AUDIO_BYPASS;//Disable Bypass
 }
 
 void Cs4270::setupI2sTx()
