@@ -283,5 +283,5 @@ int32_t Cs4270::floatToInt32(float v)
         v = INT32_MAX * CLIPPING_VALUE;
     }
 
-    return static_cast<int32_t>(v * static_cast<float>(INT32_MIN));
+    return static_cast<int32_t>(-v * static_cast<float>(INT32_MIN));
 }
