@@ -10,6 +10,7 @@
 constexpr float SAMPLING_FREQUENCY = 48000;
 constexpr uint32_t BLOCK_SIZE = 32;
 constexpr uint32_t MAX_DELAY = 96000;
+constexpr float CLIPPING_VALUE = 0.99;
 
 // IO
 #define DEBUG_SERIAL Serial

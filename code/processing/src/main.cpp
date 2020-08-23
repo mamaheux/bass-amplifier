@@ -96,7 +96,7 @@ bool isOutputClipping(float* output)
 {
     for (uint32_t i = 0; i < BLOCK_SIZE; i++)
     {
-        if (abs(output[i]) > 1)
+        if (abs(output[i]) > CLIPPING_VALUE)
         {
             return true;
         }

@@ -274,14 +274,14 @@ float Cs4270::int32ToFloat(int32_t v)
 
 int32_t Cs4270::floatToInt32(float v)
 {    
-    if (v < INT32_MIN)
+    if (v < -CLIPPING_VALUE)
     {
-        v = INT32_MIN;
+        v = INT32_MIN * CLIPPING_VALUE;
     }
-    if (v > INT32_MAX)
+    if (v > CLIPPING_VALUE)
     {
-        v = INT32_MAX;
+        v = INT32_MAX * CLIPPING_VALUE;
     }
 
-    return static_cast<int32_t>(v);
+    return static_cast<int32_t>(v * static_cast<float>(INT32_MIN));
 }
