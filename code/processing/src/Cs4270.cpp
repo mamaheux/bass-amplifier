@@ -208,8 +208,7 @@ void Cs4270::setupI2sTx()
     I2S1_TCR4 = I2S_TCR4_FRSZ((2 - 1)) // Set 2 words per frame
         | I2S_TCR4_SYWD((32 - 1)) // Set SYNC width to 32;
         | I2S_TCR4_MF // Set MSB first
-        | I2S_TCR4_FSD // Set SYNC as an output 
-        | I2S_TCR4_FSE // Set SYNC to assert one bit before the first bit of the frame
+        | I2S_TCR4_FSD // Set SYNC as an output
         | I2S_TCR4_FSP; // Set SYNC active low
     I2S1_TCR5 = I2S_TCR5_WNW((32 - 1)) // Set the word width to 32
         | I2S_RCR5_W0W((32 - 1)) // Set the word 0 width to 32
@@ -229,8 +228,7 @@ void Cs4270::setupI2sRx()
     I2S1_RCR4 = I2S_RCR4_FRSZ((2 - 1)) // Set 2 words per frame
         | I2S_RCR4_SYWD((32 - 1)) // Set SYNC width to 32;
         | I2S_RCR4_MF // Set MSB first
-        | I2S_RCR4_FSD // Set SYNC as an output 
-        | I2S_RCR4_FSE // Set SYNC to assert one bit before the first bit of the frame
+        | I2S_RCR4_FSD // Set SYNC as an output
         | I2S_RCR4_FSP; // Set SYNC active low
     I2S1_RCR5 = I2S_RCR5_WNW((32-1)) // Set the word width to 32
         | I2S_RCR5_W0W((32-1)) // Set the word 0 width to 32
