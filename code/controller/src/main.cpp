@@ -61,6 +61,8 @@ Ticker updateFootswitchCommunicationSlowTicker(updateFootswitchCommunicationSlow
 
 void setup()
 {
+    delay(STARTUP_DELAY_MS);
+
     DEBUG_SERIAL.begin(DEBUG_SERIAL_BAUD_RATE);
 
     adc.begin();

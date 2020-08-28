@@ -43,15 +43,22 @@ void ControllerCommunication::update()
 
 void ControllerCommunication::updateEffectIfReady()
 {
-    if (m_dataIndex == m_dataSize && m_effectCode < EFFECT_CODE_COUNT)
+    if (m_dataIndex >= m_dataSize)
     {
         m_isWaitingForNewCommand = true;
-        m_effects[m_effectCode]->setIsEnabled(m_isActive);
-        m_effects[m_effectCode]->update(m_data);
+
+        if (m_effectCode < EFFECT_CODE_COUNT)
+        {
+            m_effects[m_effectCode]->setIsEnabled(m_isActive);
+            m_effects[m_effectCode]->update(m_data);
+        }
     }
 }
 
 void ControllerCommunication::notifyClipping()
 {
-    CONTROLLER_SERIAL.write(0);
+    if (CONTROLLER_SERIAL.availableForWrite() > 0)
+    {
+        CONTROLLER_SERIAL.write(0);
+    }
 }

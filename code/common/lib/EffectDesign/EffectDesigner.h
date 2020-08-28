@@ -69,6 +69,10 @@ inline bool EffectDesigner::isEnabled() const
 
 inline void EffectDesigner::setIsEnabled(bool isEnabled)
 {
+    if (m_isEnabled != isEnabled)
+    {
+        setIsDirty(true);
+    }
     m_isEnabled = isEnabled;
 }
 

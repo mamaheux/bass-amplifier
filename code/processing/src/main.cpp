@@ -24,6 +24,7 @@ Mute<BLOCK_SIZE> mute;
 Effect<BLOCK_SIZE>* effects[EFFECT_CODE_COUNT];
 ControllerCommunication controllerCommunication(effects);
 
+
 void setupEffects();
 float* processAudio(float* input, float* downOctave);
 bool isOutputClipping(float* output);
@@ -57,7 +58,7 @@ void loop()
 
     float input[BLOCK_SIZE];
     float downOctave[BLOCK_SIZE];
-    if (cs4270.read(input, downOctave))
+    if (cs4270.read(downOctave, input))
     {
         float* output = processAudio(input, downOctave);
 

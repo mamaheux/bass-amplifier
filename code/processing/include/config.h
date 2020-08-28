@@ -17,7 +17,7 @@ constexpr float CLIPPING_VALUE = 0.99;
 constexpr uint32_t DEBUG_SERIAL_BAUD_RATE = 9600;
 
 #define CONTROLLER_SERIAL Serial4
-constexpr uint32_t CONTROLLER_SERIAL_BAUD_RATE = 115200;
+constexpr uint32_t CONTROLLER_SERIAL_BAUD_RATE = 38400;
 
 #define CS4270_I2C Wire
 

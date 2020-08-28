@@ -4,6 +4,8 @@
 #include <Arduino.h>
 #include <SPI.h>
 
+constexpr uint32_t STARTUP_DELAY_MS = 500;
+
 // Update interval
 constexpr uint32_t EFFECT_DESIGNER_UPDATE_INTERVAL_US = 2500;
 constexpr uint32_t STATUS_LED_UPDATE_INTERVAL_US = 20000;
@@ -23,7 +25,7 @@ constexpr uint32_t DEBUG_SERIAL_BAUD_RATE = 9600;
 constexpr uint32_t FOOTSWITCH_SERIAL_BAUD_RATE = 115200;
 
 #define DSP_SERIAL Serial1
-constexpr uint32_t DSP_SERIAL_BAUD_RATE = 115200;
+constexpr uint32_t DSP_SERIAL_BAUD_RATE = 38400;
 
 constexpr uint8_t ADC_RESOLUTION = 12;
 constexpr uint16_t ADC_MAX_VALUE = 4095;
