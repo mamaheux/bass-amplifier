@@ -202,13 +202,11 @@ void footswitchToogleEffectHandler(uint8_t effectCode)
     {
         effectControls.setMuteState(!effectControls.getMuteState());
     }
-    footswitchCommunication.sendAck();
 }
 
 void footswitchDelayUsHandler(uint32_t delayUs)
 {
     effectControls.setDelayUs(delayUs);
-    footswitchCommunication.sendAck();
 }
 
 void footswitchSetEffectHandler(uint8_t effectCode, bool isEnabled)
@@ -221,5 +219,4 @@ void footswitchSetEffectHandler(uint8_t effectCode, bool isEnabled)
     {
         effectControls.setMuteState(isEnabled);
     }
-    footswitchCommunication.sendAck();
 }

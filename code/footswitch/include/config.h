@@ -19,7 +19,7 @@ constexpr uint32_t MAX_DELAY = 96000;
 constexpr uint32_t DEBUG_SERIAL_BAUD_RATE = 9600;
 
 #define CONTROLLER_SERIAL Serial1
-constexpr uint32_t CONTROLLER_SERIAL_BAUD_RATE = 115200;
+constexpr uint32_t CONTROLLER_SERIAL_BAUD_RATE = 38400;
 
 
 constexpr uint8_t COMPRESSOR_PIN = 3;
@@ -47,6 +47,5 @@ constexpr uint8_t CLIPPING_LED_PIN = 19;
 
 // Other
 constexpr uint32_t CLIPPING_LED_ON_DURATION_MS = 500;
-constexpr uint32_t ACK_TIMEOUT_MS = 20;
 
 #endif
