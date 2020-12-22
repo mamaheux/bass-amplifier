@@ -22,7 +22,7 @@ constexpr uint32_t MAX_DELAY = 96000;
 constexpr uint32_t DEBUG_SERIAL_BAUD_RATE = 9600;
 
 #define FOOTSWITCH_SERIAL Serial2
-constexpr uint32_t FOOTSWITCH_SERIAL_BAUD_RATE = 115200;
+constexpr uint32_t FOOTSWITCH_SERIAL_BAUD_RATE = 38400;
 
 #define DSP_SERIAL Serial1
 constexpr uint32_t DSP_SERIAL_BAUD_RATE = 38400;

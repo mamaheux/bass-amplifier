@@ -216,38 +216,38 @@ void EffectControls::update()
 {
     if (m_isCompressorDirty)
     {
-        toogleEffect(COMPRESSOR_CODE);
+        m_controllerCommunication.sendToogleEffect(COMPRESSOR_CODE);
         m_isCompressorDirty = false;
     }
     if (m_isOctaverDirty)
     {
-        toogleEffect(OCTAVER_CODE);
+        m_controllerCommunication.sendToogleEffect(OCTAVER_CODE);
         m_isOctaverDirty = false;
     }
     if (m_isDelayDirty)
     {
-        toogleEffect(DELAY_CODE);
+        m_controllerCommunication.sendToogleEffect(DELAY_CODE);
         m_isDelayDirty = false;
     }
     if (m_isReverbDirty)
     {
-        toogleEffect(REVERB_CODE);
+        m_controllerCommunication.sendToogleEffect(REVERB_CODE);
         m_isReverbDirty = false;
     }
     if (m_isOverdriveDirty)
     {
-        toogleEffect(OVERDRIVE_CODE);
+        m_controllerCommunication.sendToogleEffect(OVERDRIVE_CODE);
         m_isOverdriveDirty = false;
     }
     if (m_isMuteDirty)
     {
-        toogleEffect(MUTE_CODE);
+        m_controllerCommunication.sendToogleEffect(MUTE_CODE);
         m_isMuteDirty = false;
     }
 
     if (m_isDelayUsDirty)
     {
-        setDelayUs(m_delayUs);
+        m_controllerCommunication.sendDelayUs(m_delayUs);
         m_isDelayUsDirty = false;
     }
 
@@ -278,37 +278,13 @@ void EffectControls::update()
     }
 }
 
-void EffectControls::toogleEffect(uint8_t effectCode)
-{
-    do
-    {
-        m_controllerCommunication.sendToogleEffect(effectCode);
-    } while (!m_controllerCommunication.waitAck(millis, ACK_TIMEOUT_MS));
-}
-
-void EffectControls::setEffect(uint8_t effectCode, bool isEnabled)
-{
-    do
-    {
-        m_controllerCommunication.sendSetEffect(effectCode, isEnabled);
-    } while (!m_controllerCommunication.waitAck(millis, ACK_TIMEOUT_MS));
-}
-
-void EffectControls::setDelayUs(uint32_t delayUs)
-{
-    do
-    {
-        m_controllerCommunication.sendDelayUs(delayUs);
-    } while (!m_controllerCommunication.waitAck(millis, ACK_TIMEOUT_MS));
-}
-
 void EffectControls::applyOpt1()
 {
-    setEffect(COMPRESSOR_CODE, false);
-    setEffect(OCTAVER_CODE, false);
-    setEffect(DELAY_CODE, false);
-    setEffect(REVERB_CODE, false);
-    setEffect(OVERDRIVE_CODE, false);
+    m_controllerCommunication.sendSetEffect(COMPRESSOR_CODE, false);
+    m_controllerCommunication.sendSetEffect(OCTAVER_CODE, false);
+    m_controllerCommunication.sendSetEffect(DELAY_CODE, false);
+    m_controllerCommunication.sendSetEffect(REVERB_CODE, false);
+    m_controllerCommunication.sendSetEffect(OVERDRIVE_CODE, false);
 }
 
 void EffectControls::applyOpt2()

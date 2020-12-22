@@ -33,10 +33,6 @@ public:
     void update();
 
 private:
-    void toogleEffect(uint8_t effectCode);
-    void setEffect(uint8_t effectCode, bool isEnabled);
-    void setDelayUs(uint32_t delayUs);
-
     void applyOpt1();
     void applyOpt2();
     void applyOpt3();

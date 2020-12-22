@@ -27,7 +27,6 @@ public:
     static constexpr uint8_t EFFECT_ACTIVE_STATES_MESSAGE_CODE = 75;
     static constexpr uint8_t DELAY_US_MESSAGE_CODE = 100;
     static constexpr uint8_t SET_EFFECT_MESSAGE_CODE = 125;
-    static constexpr uint8_t ACK_MESSAGE_CODE = 150;
 
     static constexpr uint8_t HEARTBEAT_DATA_SIZE = 3;
     static constexpr uint8_t TOOGLE_EFFECT_DATA_SIZE = 4;
@@ -35,7 +34,6 @@ public:
     static constexpr uint8_t EFFECT_ACTIVE_STATES_DATA_SIZE = 9;
     static constexpr uint8_t DELAY_US_DATA_SIZE = 7;
     static constexpr uint8_t SET_EFFECT_DATA_SIZE = 5;
-    static constexpr uint8_t ACK_DATA_SIZE = 3;
 
 private:
     TSerial& m_serial;
@@ -69,12 +67,8 @@ public:
         bool muteActiveState);
     void sendDelayUs(uint32_t delayUs);
     void sendSetEffect(uint8_t effectCode, bool isEnabled);
-    void sendAck();
 
     bool receive(uint8_t* receivedMessageCode = nullptr);
-
-    template <class FMillis>
-    bool waitAck(FMillis millis, uint32_t timeoutMs);
 
 private:
     void handleMessage(uint8_t* data, uint8_t dataSize);
@@ -170,7 +164,7 @@ void ControllerFootswitchCommunication<TSerial>::sendEffectActiveStates(bool com
     bool muteActiveState)
 {
     uint8_t checksum =  UINT8_MAX - (EFFECT_ACTIVE_STATES_DATA_SIZE + 
-        EFFECT_ACTIVE_STATES_MESSAGE_CODE + compressorActiveState + 
+        EFFECT_ACTIVE_STATES_MESSAGE_CODE + compressorActiveState + octaverActiveState +
         delayActiveState + reverbActiveState + overrideActiveState + muteActiveState) + 1;
 
     uint8_t data[EFFECT_ACTIVE_STATES_DATA_SIZE] = 
@@ -214,15 +208,6 @@ void ControllerFootswitchCommunication<TSerial>::sendSetEffect(uint8_t effectCod
 }
 
 template <class TSerial>
-void ControllerFootswitchCommunication<TSerial>::sendAck()
-{
-    constexpr uint8_t checksum = UINT8_MAX - (ACK_DATA_SIZE + ACK_MESSAGE_CODE) + 1;
-    uint8_t data[ACK_DATA_SIZE] = {ACK_DATA_SIZE, ACK_MESSAGE_CODE, checksum};
-
-    m_serial.write(reinterpret_cast<char*>(data), ACK_DATA_SIZE);
-}
-
-template <class TSerial>
 bool ControllerFootswitchCommunication<TSerial>::receive(uint8_t* receivedMessageCode)
 {
     if (m_serial.available() == 0)
@@ -255,20 +240,6 @@ bool ControllerFootswitchCommunication<TSerial>::receive(uint8_t* receivedMessag
     }
 
     return true;
-}
-
-template <class TSerial>
-template <class FMillis>
-bool ControllerFootswitchCommunication<TSerial>::waitAck(FMillis millis, uint32_t timeoutMs)
-{
-    uint32_t startTimeMs = millis();
-    uint8_t receivedMessageCode = UINT8_MAX;
-    while (receivedMessageCode != ACK_MESSAGE_CODE && (millis() - startTimeMs) < timeoutMs)
-    {
-        receive(&receivedMessageCode);
-    }
-
-    return receivedMessageCode == ACK_MESSAGE_CODE;
 }
 
 template <class TSerial>
