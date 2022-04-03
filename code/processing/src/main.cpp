@@ -26,7 +26,7 @@ ControllerCommunication controllerCommunication(effects);
 
 
 void setupEffects();
-float* processAudio(float* input, float* downOctave);
+float* processAudio(float* input);
 bool isOutputClipping(float* output);
 
 void setup()
@@ -57,10 +57,10 @@ void loop()
     controllerCommunication.update();
 
     float input[BLOCK_SIZE];
-    float downOctave[BLOCK_SIZE];
-    if (cs4270.read(downOctave, input))
+    float _downOctave[BLOCK_SIZE]; // Too much noise
+    if (cs4270.read(_downOctave, input))
     {
-        float* output = processAudio(input, downOctave);
+        float* output = processAudio(input);
 
         if (isOutputClipping(output))
         {
@@ -74,7 +74,7 @@ void loop()
     }
 }
 
-float* processAudio(float* input, float* downOctave)
+float* processAudio(float* input)
 {
     float* output = compressor.process(input);
 
@@ -83,7 +83,7 @@ float* processAudio(float* input, float* downOctave)
     output = eq.process(output);
 
     output = overdrive.process(output);
-    output = octaver.process(output, downOctave);
+    output = octaver.process(output);
 
     output = delayEffect.process(output);
     output = reverb.process(output);

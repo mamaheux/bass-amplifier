@@ -38,7 +38,7 @@ template<uint32_t BLOCK_SIZE>
 void Overdrive<BLOCK_SIZE>::update(const uint8_t* data)
 {
     memcpy(&m_gain, data, sizeof(float));
-    m_lowPassFilter.update(reinterpret_cast<const float*>(data + sizeof(float)));    
+    m_lowPassFilter.update(reinterpret_cast<const float*>(data + sizeof(float)));
 }
 
 template<uint32_t BLOCK_SIZE>
