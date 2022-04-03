@@ -12,7 +12,7 @@ static void test_OctaverDesigner_getters()
 
     TEST_ASSERT_EQUAL(SAMPLING_FREQUENCY, designer.samplingFrequency());
     TEST_ASSERT_EQUAL(4, designer.effectCode());
-    TEST_ASSERT_EQUAL(48, designer.dataSize());
+    TEST_ASSERT_EQUAL(68, designer.dataSize());
     TEST_ASSERT_EQUAL(true, designer.isDirty());
 
 
@@ -47,23 +47,30 @@ static void test_OctaverDesigner_update()
 
     const float* data = reinterpret_cast<const float*>(designer.data());
 
-    // High pass filter
-    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 0.9907867, data[0]);
-    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, -1.981573, data[1]);
-    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 0.9907867, data[2]);
-    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 1.981489, data[3]);
-    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, -0.9816583, data[4]);
+    // Down octave low pass filter
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 0.0004744678, data[0]);
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 0.0009489357, data[1]);
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 0.0004744678, data[2]);
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 1.937449, data[3]);
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, -0.9393467, data[4]);
 
-    // Low pass filter
-    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 0.003916144, data[5]);
-    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 0.007832288, data[6]);
-    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 0.003916144, data[7]);
-    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 1.815341, data[8]);
-    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, -0.8310056, data[9]);
+    // Up octave high pass filter
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 0.9907867, data[5]);
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, -1.981573, data[6]);
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 0.9907867, data[7]);
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 1.981489, data[8]);
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, -0.9816583, data[9]);
 
-    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 0.5019, data[10]); // Octave down volume
-    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 1, data[11]); // Octave up volume
-    
+    // Up octave low pass filter
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 0.003916144, data[10]);
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 0.007832288, data[11]);
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 0.003916144, data[12]);
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 1.815341, data[13]);
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, -0.8310056, data[14]);
+
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 0.5019, data[15]); // Octave down volume
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 1, data[16]); // Octave up volume
+
 
     designer.setIsDirty(false);
     designer.update(OCTAVE_DOWN_VOLUME, OCTAVE_UP_VOLUME);

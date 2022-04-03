@@ -31,26 +31,26 @@ constexpr float MAX_ABS_ERROR = 0.00001;
     } while(false);
 
 
-constexpr uint32_t BLOCK_SIZE = 32;
-constexpr uint32_t MAX_DELAY = 96;
+constexpr uint32_t TEST_BLOCK_SIZE = 32;
+constexpr uint32_t TEST_MAX_DELAY = 96;
 
-Eq<BLOCK_SIZE> eq;
-Presence<BLOCK_SIZE> presence;
-Contour<BLOCK_SIZE> contour;
-Compressor<BLOCK_SIZE> compressor;
-Octaver<BLOCK_SIZE> octaver;
-DMAMEM Delay<BLOCK_SIZE, MAX_DELAY> delayEffect;
-Reverb<BLOCK_SIZE> reverb;
-Overdrive<BLOCK_SIZE> overdrive;
-Mute<BLOCK_SIZE> mute;
+Eq<TEST_BLOCK_SIZE> eq;
+Presence<TEST_BLOCK_SIZE> presence;
+Contour<TEST_BLOCK_SIZE> contour;
+Compressor<TEST_BLOCK_SIZE> compressor;
+Octaver<TEST_BLOCK_SIZE> octaver;
+DMAMEM Delay<TEST_BLOCK_SIZE, TEST_MAX_DELAY> delayEffect;
+Reverb<TEST_BLOCK_SIZE> reverb;
+Overdrive<TEST_BLOCK_SIZE> overdrive;
+Mute<TEST_BLOCK_SIZE> mute;
 
 void test_biquad()
 {
     constexpr uint32_t NUM_STAGES = 1;
     const float COEFFICIENTS[] = {0.00554272, 0.01108543, 0.00554272, 1.77863178, -0.80080265};
-    float input[BLOCK_SIZE] = {1, 0, 0, 0, 0, 0, 0, 0};
-    
-    BiquadIir<BLOCK_SIZE, NUM_STAGES> biquadIir;
+    float input[TEST_BLOCK_SIZE] = {1, 0, 0, 0, 0, 0, 0, 0};
+
+    BiquadIir<TEST_BLOCK_SIZE, NUM_STAGES> biquadIir;
     biquadIir.update(COEFFICIENTS);
 
     float* output = biquadIir.process(input);
@@ -69,9 +69,9 @@ void test_feedbackComb()
 {
     constexpr uint32_t DELAY = 2;
     const float GAIN = 0.9;
-    float input[2 * BLOCK_SIZE] = {0.1, 0.2, 0.3, 0.4, 0.3, 0.2, 0.1, 0};
+    float input[2 * TEST_BLOCK_SIZE] = {0.1, 0.2, 0.3, 0.4, 0.3, 0.2, 0.1, 0};
 
-    FeedbackComb<BLOCK_SIZE, DELAY> feedbackComb;
+    FeedbackComb<TEST_BLOCK_SIZE, DELAY> feedbackComb;
     feedbackComb.update(GAIN);
 
     float* output = feedbackComb.process(input);
@@ -84,7 +84,7 @@ void test_feedbackComb()
     TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 0.651, output[6]);
     TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 0.722, output[7]);
 
-    output = feedbackComb.process(input + BLOCK_SIZE);
+    output = feedbackComb.process(input + TEST_BLOCK_SIZE);
     TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 0.19371842, output[0]);
     TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 0.18352271, output[1]);
     TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 0.17434658, output[2]);
@@ -99,9 +99,9 @@ void test_allPassComb()
 {
     constexpr uint32_t DELAY = 2;
     const float GAIN = 0.9;
-    float input[2 * BLOCK_SIZE] = {10, 20, 30, 40, 30, 20, 10, 0};
+    float input[2 * TEST_BLOCK_SIZE] = {10, 20, 30, 40, 30, 20, 10, 0};
 
-    AllPassComb<BLOCK_SIZE, DELAY> allPassComb;
+    AllPassComb<TEST_BLOCK_SIZE, DELAY> allPassComb;
     allPassComb.update(GAIN);
 
     float* output = allPassComb.process(input);
@@ -114,7 +114,7 @@ void test_allPassComb()
     TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 11.103766, output[6]);
     TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 0.033028, output[7]);
 
-    output = allPassComb.process(input + BLOCK_SIZE);
+    output = allPassComb.process(input + TEST_BLOCK_SIZE);
     TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 0.001867, output[0]);
     TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, -0.008395, output[1]);
     TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, -0.001680, output[2]);
@@ -128,7 +128,7 @@ void test_allPassComb()
 void test_contour()
 {
     const float COEFFICIENTS[] = {2, 0, 0, 0, 0, 0.5, 0, 0, 0, 0, 0.5};
-    float input[BLOCK_SIZE] = {1, 0, 0, 0, 0, 0, 0, 0};
+    float input[TEST_BLOCK_SIZE] = {1, 0, 0, 0, 0, 0, 0, 0};
 
     contour.update(reinterpret_cast<const uint8_t*>(COEFFICIENTS));
 
@@ -147,7 +147,7 @@ void test_contour()
 void test_presence()
 {
     const float COEFFICIENTS[] = {2, 0, 0, 0, 0, 0.5};
-    float input[BLOCK_SIZE] = {1, 0, 0, 0, 0, 0, 0, 0};
+    float input[TEST_BLOCK_SIZE] = {1, 0, 0, 0, 0, 0, 0, 0};
 
     presence.update(reinterpret_cast<const uint8_t*>(COEFFICIENTS));
 
@@ -166,7 +166,7 @@ void test_presence()
 void test_eq()
 {
     const float COEFFICIENTS[] = {2, 0, 0, 0, 0, 0.5, 0, 0, 0, 0, 0.25, 0, 0, 0, 0, 4, 0, 0, 0, 0, 8, 0, 0, 0, 0, 0.125, 0, 0, 0, 0, 5, 0, 0, 0, 0, 0.2, 0, 0, 0, 0};
-    float input[BLOCK_SIZE] = {1, 0, 0, 0, 0, 0, 0, 0};
+    float input[TEST_BLOCK_SIZE] = {1, 0, 0, 0, 0, 0, 0, 0};
 
     eq.update(reinterpret_cast<const uint8_t*>(COEFFICIENTS));
 
@@ -185,7 +185,7 @@ void test_eq()
 void test_compressor()
 {
     const float COEFFICIENTS[] = {0.15, 0.5, 0.5, 0.75};
-    float input[BLOCK_SIZE] = {0.1, 0.2, 0.3, 0.4, 0.3, 0.2, 0.1, 0};
+    float input[TEST_BLOCK_SIZE] = {0.1, 0.2, 0.3, 0.4, 0.3, 0.2, 0.1, 0};
 
     compressor.update(reinterpret_cast<const uint8_t*>(COEFFICIENTS));
 
@@ -203,18 +203,17 @@ void test_compressor()
 
 void test_octaver()
 {
-    const float COEFFICIENTS[] = {4, 0, 0, 0, 0, 0.5, 0, 0, 0, 0, 0.25, 0.75};
-    float input[BLOCK_SIZE] = {1, 2, -1, -2};
-    float downOctave[BLOCK_SIZE] = {2, 2, 2, 2};
+    const float COEFFICIENTS[] = {2, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0.5, 0, 0, 0, 0, 0.25, 0.75};
+    float input[TEST_BLOCK_SIZE] = {1, 2, -1, -2};
 
     octaver.update(reinterpret_cast<const uint8_t*>(COEFFICIENTS));
 
-    float* output = octaver.process(input, downOctave);
+    float* output = octaver.process(input);
 
-    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 1.5, output[0]);
-    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 2.75, output[1]);
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 1.0, output[0]);
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 2.0, output[1]);
     TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 0.5, output[2]);
-    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 0.75, output[3]);
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 1.0, output[3]);
 }
 
 void test_delay()
@@ -225,7 +224,7 @@ void test_delay()
     memcpy(data, &volume, sizeof(float));
     memcpy(data + sizeof(float), &delayValue, sizeof(uint32_t));
 
-    float input[BLOCK_SIZE] = {1, 0, 0, 0};
+    float input[TEST_BLOCK_SIZE] = {1, 0, 0, 0};
 
     delayEffect.update(data);
 
@@ -251,7 +250,7 @@ void test_reverb()
 {
     float volume = 0.95;
 
-    float input[BLOCK_SIZE] = {1, 0, 0, 0};
+    float input[TEST_BLOCK_SIZE] = {1, 0, 0, 0};
 
     reverb.update(reinterpret_cast<uint8_t*>(&volume));
 
@@ -261,8 +260,8 @@ void test_reverb()
 
 void test_overdrive()
 {
-    const float COEFFICIENTS[] = {2, 0, 0, 0, 0, 4};
-    float input[BLOCK_SIZE] = {0.1, 0.2, 0.3, 0.4, 0.3, 0.2, 0.1};
+    const float COEFFICIENTS[] = {4, 2, 0, 0, 0, 0};
+    float input[TEST_BLOCK_SIZE] = {0.1, 0.2, 0.3, 0.4, 0.3, 0.2, 0.1};
 
     overdrive.update(reinterpret_cast<const uint8_t*>(COEFFICIENTS));
 
@@ -279,7 +278,7 @@ void test_overdrive()
 
 void test_mute()
 {
-    float input[BLOCK_SIZE] = {0.1, 0.2, 0.3, 0.4, 0.3, 0.2, 0.1};
+    float input[TEST_BLOCK_SIZE] = {0.1, 0.2, 0.3, 0.4, 0.3, 0.2, 0.1};
 
     float* output = mute.process(input);
 
@@ -303,13 +302,13 @@ void randomize(float* input, uint32_t blockSize)
 void test_performance()
 {
     constexpr uint32_t ITERATION_COUNT = 1500;
-    float input[BLOCK_SIZE];
+    float input[TEST_BLOCK_SIZE];
 
     uint32_t durationTotal = 0;
 
     for (uint32_t i = 0; i < ITERATION_COUNT; i++)
     {
-        randomize(input, BLOCK_SIZE);
+        randomize(input, TEST_BLOCK_SIZE);
 
         uint32_t start = micros();
         float* output = contour.process(input);
@@ -317,7 +316,7 @@ void test_performance()
         output = eq.process(output);
 
         output = compressor.process(output);
-        output = octaver.process(output, input);
+        output = octaver.process(output);
         output = delayEffect.process(output);
         output = reverb.process(output);
         output = overdrive.process(output);
@@ -329,7 +328,7 @@ void test_performance()
 
 void test_isEnabled_contour()
 {
-    float input[BLOCK_SIZE] = {0.1, 0.2, 0.3, 0.4, 0.3, 0.2, 0.1};
+    float input[TEST_BLOCK_SIZE] = {0.1, 0.2, 0.3, 0.4, 0.3, 0.2, 0.1};
 
     contour.setIsEnabled(false);
     float* output = contour.process(input);
@@ -345,7 +344,7 @@ void test_isEnabled_contour()
 
 void test_isEnabled_presence()
 {
-    float input[BLOCK_SIZE] = {0.1, 0.2, 0.3, 0.4, 0.3, 0.2, 0.1};
+    float input[TEST_BLOCK_SIZE] = {0.1, 0.2, 0.3, 0.4, 0.3, 0.2, 0.1};
 
     presence.setIsEnabled(false);
     float* output = presence.process(input);
@@ -361,7 +360,7 @@ void test_isEnabled_presence()
 
 void test_isEnabled_eq()
 {
-    float input[BLOCK_SIZE] = {0.1, 0.2, 0.3, 0.4, 0.3, 0.2, 0.1};
+    float input[TEST_BLOCK_SIZE] = {0.1, 0.2, 0.3, 0.4, 0.3, 0.2, 0.1};
 
     eq.setIsEnabled(false);
     float* output = eq.process(input);
@@ -377,7 +376,7 @@ void test_isEnabled_eq()
 
 void test_isEnabled_compressor()
 {
-    float input[BLOCK_SIZE] = {0.1, 0.2, 0.3, 0.4, 0.3, 0.2, 0.1};
+    float input[TEST_BLOCK_SIZE] = {0.1, 0.2, 0.3, 0.4, 0.3, 0.2, 0.1};
 
     compressor.setIsEnabled(false);
     float* output = compressor.process(input);
@@ -393,10 +392,10 @@ void test_isEnabled_compressor()
 
 void test_isEnabled_octaver()
 {
-    float input[BLOCK_SIZE] = {0.1, 0.2, 0.3, 0.4, 0.3, 0.2, 0.1};
+    float input[TEST_BLOCK_SIZE] = {0.1, 0.2, 0.3, 0.4, 0.3, 0.2, 0.1};
 
     octaver.setIsEnabled(false);
-    float* output = octaver.process(input, input);
+    float* output = octaver.process(input);
 
     TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 0.1, output[0]);
     TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 0.2, output[1]);
@@ -409,7 +408,7 @@ void test_isEnabled_octaver()
 
 void test_isEnabled_delay()
 {
-    float input[BLOCK_SIZE] = {0.1, 0.2, 0.3, 0.4, 0.3, 0.2, 0.1};
+    float input[TEST_BLOCK_SIZE] = {0.1, 0.2, 0.3, 0.4, 0.3, 0.2, 0.1};
 
     delayEffect.setIsEnabled(false);
     float* output = delayEffect.process(input);
@@ -425,7 +424,7 @@ void test_isEnabled_delay()
 
 void test_isEnabled_reverb()
 {
-    float input[BLOCK_SIZE] = {0.1, 0.2, 0.3, 0.4, 0.3, 0.2, 0.1};
+    float input[TEST_BLOCK_SIZE] = {0.1, 0.2, 0.3, 0.4, 0.3, 0.2, 0.1};
 
     reverb.setIsEnabled(false);
     float* output = reverb.process(input);
@@ -441,7 +440,7 @@ void test_isEnabled_reverb()
 
 void test_isEnabled_overdrive()
 {
-    float input[BLOCK_SIZE] = {0.1, 0.2, 0.3, 0.4, 0.3, 0.2, 0.1};
+    float input[TEST_BLOCK_SIZE] = {0.1, 0.2, 0.3, 0.4, 0.3, 0.2, 0.1};
 
     overdrive.setIsEnabled(false);
     float* output = overdrive.process(input);
@@ -457,7 +456,7 @@ void test_isEnabled_overdrive()
 
 void test_isEnabled_mute()
 {
-    float input[BLOCK_SIZE] = {0.1, 0.2, 0.3, 0.4, 0.3, 0.2, 0.1};
+    float input[TEST_BLOCK_SIZE] = {0.1, 0.2, 0.3, 0.4, 0.3, 0.2, 0.1};
 
     mute.setIsEnabled(false);
     float* output = mute.process(input);
