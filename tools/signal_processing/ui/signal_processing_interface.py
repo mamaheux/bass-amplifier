@@ -4,6 +4,7 @@ import sounddevice as sd
 
 from PySide2.QtCore import Slot
 from PySide2.QtWidgets import QWidget, QTabWidget, QHBoxLayout, QVBoxLayout, QLabel, QLineEdit, QPushButton, QFileDialog
+from PySide2.QtWidgets import QMessageBox
 
 
 class SignalProcessingInterface(QWidget):
@@ -48,6 +49,12 @@ class SignalProcessingInterface(QWidget):
     def _on_wav_play_button_clicked(self):
         fs, x = scipy.io.wavfile.read(self._wav_line_edit.text())
         x = x.astype(float)
+        if len(x.shape) == 2:
+            x = (x[:, 0] + x[:, 1]) / 2
+        elif len(x.shape) != 1:
+            QMessageBox.critical(self, 'Invalid audio file', 'Invalid audio file')
+            return
+
         x /= np.abs(x).max()
 
         model = self._tabWidgets[self._tabWidget.currentIndex()].model()

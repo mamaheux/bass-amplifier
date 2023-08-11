@@ -9,6 +9,7 @@ from models.delay_model import DelayModel
 from models.eq_model import EqModel
 from models.octaver_model import OctaverModel
 from models.overdrive_model import OverdriveModel
+from models.pitch_shift_model import PitchShiftModel
 from models.presence_model import PresenceModel
 from models.reverb_model import ReverbModel
 from ui.effects.compressor_widget import CompressorWidget
@@ -17,6 +18,7 @@ from ui.effects.delay_widget import DelayWidget
 from ui.effects.eq_widget import EqWidget
 from ui.effects.octaver_widget import OctaverWidget
 from ui.effects.overdrive_widget import OverdriveWidget
+from ui.effects.pitch_shift_widget import PitchShiftWidget
 from ui.effects.presence_widget import PresenceWidget
 from ui.effects.reverb_widget import ReverbWidget
 from ui.signal_processing_interface import SignalProcessingInterface
@@ -34,7 +36,8 @@ def main():
             'Octaver': OctaverWidget(configuration, OctaverModel(configuration)),
             'Delay': DelayWidget(configuration, DelayModel(configuration)),
             'Reverb': ReverbWidget(configuration, ReverbModel(configuration)),
-            'Overdrive': OverdriveWidget(configuration, OverdriveModel(configuration))}
+            'Overdrive': OverdriveWidget(configuration, OverdriveModel(configuration)),
+            'Pitch Shift': PitchShiftWidget(configuration, PitchShiftModel(configuration))}
 
     interface = SignalProcessingInterface(tabs)
     interface.show()
