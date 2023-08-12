@@ -4,7 +4,7 @@
 #include <Arduino.h>
 #include <SPI.h>
 
-constexpr uint32_t STARTUP_DELAY_MS = 500;
+constexpr uint32_t STARTUP_DELAY_MS = 1000;
 
 // Update interval
 constexpr uint32_t EFFECT_DESIGNER_UPDATE_INTERVAL_US = 2500;

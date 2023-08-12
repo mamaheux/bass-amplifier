@@ -19,8 +19,13 @@ void ControllerCommunication::begin()
 
 void ControllerCommunication::update()
 {
-    if (m_isWaitingForNewCommand && CONTROLLER_SERIAL.available() >= 3)
+    if (m_isWaitingForNewCommand && CONTROLLER_SERIAL.available() >= 5)
     {
+        if (CONTROLLER_SERIAL.read() != DSP_PREAMBLE || CONTROLLER_SERIAL.read() != DSP_PREAMBLE)
+        {
+            return;
+        }
+
         m_effectCode = CONTROLLER_SERIAL.read();
         m_isActive = static_cast<bool>(CONTROLLER_SERIAL.read());
         m_dataSize = CONTROLLER_SERIAL.read();
@@ -30,13 +35,13 @@ void ControllerCommunication::update()
 
     if (!m_isWaitingForNewCommand)
     {
-        updateEffectIfReady();        
+        updateEffectIfReady();
 
         while (CONTROLLER_SERIAL.available() > 0 && !m_isWaitingForNewCommand)
         {
             m_data[m_dataIndex] = CONTROLLER_SERIAL.read();
             m_dataIndex++;
-            updateEffectIfReady();        
+            updateEffectIfReady();
         }
     }
 }
