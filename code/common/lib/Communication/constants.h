@@ -3,6 +3,8 @@
 
 #include <stdint.h>
 
+constexpr uint8_t DSP_PREAMBLE = 170;
+
 constexpr uint8_t CONTOUR_CODE = 0;
 constexpr uint8_t PRESENCE_CODE = 1;
 constexpr uint8_t EQ_CODE = 2;
