@@ -13,5 +13,6 @@
 #include "ReverbDesigner.h"
 #include "OverdriveDesigner.h"
 #include "MuteDesigner.h"
+#include "PitchShifterDesigner.h"
 
 #endif

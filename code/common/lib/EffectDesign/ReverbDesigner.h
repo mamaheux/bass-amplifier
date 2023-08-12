@@ -18,7 +18,7 @@ class ReverbDesigner : public EffectDesigner
 public:
     explicit ReverbDesigner(float samplingFrequency);
     ~ReverbDesigner() override;
-    
+
     void update(uint8_t volumeLevel);
 
     bool isActive() const override;

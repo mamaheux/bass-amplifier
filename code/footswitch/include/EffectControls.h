@@ -22,9 +22,9 @@ class EffectControls
 
     volatile bool m_isOpt1Dirty;
     volatile bool m_isOpt2Dirty;
-    volatile bool m_isOpt3Dirty;
-    volatile bool m_isOpt4Dirty;
-    volatile bool m_isOpt5Dirty;
+    volatile bool m_isIncreasePitchShifterDirty;
+    volatile bool m_isDecreasePitchShifterDirty;
+    volatile bool m_isResetPitchShifterDirty;
 
 public:
     EffectControls(ControllerFootswitchCommunication<decltype(CONTROLLER_SERIAL)>& controllerCommunication);
@@ -35,9 +35,6 @@ public:
 private:
     void applyOpt1();
     void applyOpt2();
-    void applyOpt3();
-    void applyOpt4();
-    void applyOpt5();
 };
 
 #endif

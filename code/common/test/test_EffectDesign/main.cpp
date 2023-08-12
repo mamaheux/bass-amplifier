@@ -13,6 +13,7 @@
 #include "ReverbDesignerTests.h"
 #include "OverdriveDesignerTests.h"
 #include "MuteDesignerTests.h"
+#include "PitchShifterDesignerTests.h"
 
 int main()
 {
@@ -29,6 +30,7 @@ int main()
     runReverbDesignerTests();
     runOverdriveDesignerTests();
     runMuteDesignerTests();
+    runPitchShifterDesignerTests();
 
     UNITY_END();
 }

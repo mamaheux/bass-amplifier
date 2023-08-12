@@ -12,7 +12,8 @@ constexpr uint8_t DELAY_CODE = 5;
 constexpr uint8_t REVERB_CODE = 6;
 constexpr uint8_t OVERDRIVE_CODE = 7;
 constexpr uint8_t MUTE_CODE = 8;
+constexpr uint8_t PITCH_SHIFTER_CODE = 9;
 
-constexpr uint8_t EFFECT_CODE_COUNT = 9;
+constexpr uint8_t EFFECT_CODE_COUNT = 10;
 
 #endif

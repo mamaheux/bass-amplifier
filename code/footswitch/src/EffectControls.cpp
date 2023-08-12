@@ -18,7 +18,7 @@ static void octaverInterrupt()
     {
         return;
     }
-    
+
     *isOctaverDirty = true;
 }
 
@@ -29,7 +29,7 @@ static void delayInterrupt()
     {
         return;
     }
-    
+
     *isDelayDirty = true;
 }
 
@@ -40,7 +40,7 @@ static void reverbInterrupt()
     {
         return;
     }
-    
+
     *isReverbDirty = true;
 }
 
@@ -51,7 +51,7 @@ static void overdriveInterrupt()
     {
         return;
     }
-    
+
     *isOverdriveDirty = true;
 }
 
@@ -62,7 +62,7 @@ static void muteInterrupt()
     {
         return;
     }
-    
+
     *isMuteDirty = true;
 }
 
@@ -89,7 +89,7 @@ static void opt1Interrupt()
     {
         return;
     }
-    
+
     *isOpt1Dirty = true;
 }
 
@@ -100,41 +100,41 @@ static void opt2Interrupt()
     {
         return;
     }
-    
+
     *isOpt2Dirty = true;
 }
 
-static volatile bool* isOpt3Dirty = nullptr;
-static void opt3Interrupt()
+static volatile bool* isIncreasePitchShifterDirty = nullptr;
+static void increasePitchShifterInterrupt()
 {
-    if (isOpt3Dirty == nullptr)
+    if (isIncreasePitchShifterDirty == nullptr)
     {
         return;
     }
-    
-    *isOpt3Dirty = true;
+
+    *isIncreasePitchShifterDirty = true;
 }
 
-static volatile bool* isOpt4Dirty = nullptr;
-static void opt4Interrupt()
+static volatile bool* isDecreasePitchShifterDirty = nullptr;
+static void decreasePitchShifterInterrupt()
 {
-    if (isOpt4Dirty == nullptr)
+    if (isDecreasePitchShifterDirty == nullptr)
     {
         return;
     }
-    
-    *isOpt4Dirty = true;
+
+    *isDecreasePitchShifterDirty = true;
 }
 
-static volatile bool* isOpt5Dirty = nullptr;
-static void opt5Interrupt()
+static volatile bool* isResetPitchShifterDirty = nullptr;
+static void resetPitchShifterInterrupt()
 {
-    if (isOpt5Dirty == nullptr)
+    if (isResetPitchShifterDirty == nullptr)
     {
         return;
     }
-    
-    *isOpt5Dirty = true;
+
+    *isResetPitchShifterDirty = true;
 }
 
 EffectControls::EffectControls(ControllerFootswitchCommunication<decltype(CONTROLLER_SERIAL)>& controllerCommunication) :
@@ -152,9 +152,9 @@ EffectControls::EffectControls(ControllerFootswitchCommunication<decltype(CONTRO
 
     m_isOpt1Dirty(false),
     m_isOpt2Dirty(false),
-    m_isOpt3Dirty(false),
-    m_isOpt4Dirty(false),
-    m_isOpt5Dirty(false)
+    m_isIncreasePitchShifterDirty(false),
+    m_isDecreasePitchShifterDirty(false),
+    m_isResetPitchShifterDirty(false)
 {
 }
 
@@ -199,17 +199,18 @@ void EffectControls::begin()
     pinMode(OPT_2_PIN, INPUT);
     attachInterrupt(digitalPinToInterrupt(OPT_2_PIN), opt2Interrupt, RISING);
 
-    isOpt3Dirty = &m_isOpt3Dirty;
-    pinMode(OPT_3_PIN, INPUT);
-    attachInterrupt(digitalPinToInterrupt(OPT_3_PIN), opt3Interrupt, RISING);
 
-    isOpt4Dirty = &m_isOpt4Dirty;
-    pinMode(OPT_4_PIN, INPUT);
-    attachInterrupt(digitalPinToInterrupt(OPT_4_PIN), opt4Interrupt, RISING);
+    isIncreasePitchShifterDirty = &m_isIncreasePitchShifterDirty;
+    pinMode(INCREASE_PITCH_SHIFTER_PIN, INPUT);
+    attachInterrupt(digitalPinToInterrupt(INCREASE_PITCH_SHIFTER_PIN), increasePitchShifterInterrupt, RISING);
 
-    isOpt5Dirty = &m_isOpt5Dirty;
-    pinMode(OPT_5_PIN, INPUT);
-    attachInterrupt(digitalPinToInterrupt(OPT_5_PIN), opt5Interrupt, RISING);
+    isDecreasePitchShifterDirty = &m_isDecreasePitchShifterDirty;
+    pinMode(DECREASE_PITCH_SHIFTER_PIN, INPUT);
+    attachInterrupt(digitalPinToInterrupt(DECREASE_PITCH_SHIFTER_PIN), decreasePitchShifterInterrupt, RISING);
+
+    isResetPitchShifterDirty = &m_isResetPitchShifterDirty;
+    pinMode(RESET_PITCH_SHIFTER_PIN, INPUT);
+    attachInterrupt(digitalPinToInterrupt(RESET_PITCH_SHIFTER_PIN), resetPitchShifterInterrupt, RISING);
 }
 
 void EffectControls::update()
@@ -261,20 +262,20 @@ void EffectControls::update()
         applyOpt2();
         m_isOpt2Dirty = false;
     }
-    if (m_isOpt3Dirty)
+    if (m_isIncreasePitchShifterDirty)
     {
-        applyOpt3();
-        m_isOpt3Dirty = false;
+        m_controllerCommunication.sendUpdatePitchShifter(PitchShifterUpdateCommand::INCREASE);
+        m_isIncreasePitchShifterDirty = false;
     }
-    if (m_isOpt4Dirty)
+    if (m_isDecreasePitchShifterDirty)
     {
-        applyOpt4();
-        m_isOpt4Dirty = false;
+        m_controllerCommunication.sendUpdatePitchShifter(PitchShifterUpdateCommand::DECREASE);
+        m_isDecreasePitchShifterDirty = false;
     }
-    if (m_isOpt5Dirty)
+    if (m_isResetPitchShifterDirty)
     {
-        applyOpt5();
-        m_isOpt5Dirty = false;
+        m_controllerCommunication.sendUpdatePitchShifter(PitchShifterUpdateCommand::RESET);
+        m_isResetPitchShifterDirty = false;
     }
 }
 
@@ -288,17 +289,5 @@ void EffectControls::applyOpt1()
 }
 
 void EffectControls::applyOpt2()
-{
-}
-
-void EffectControls::applyOpt3()
-{
-}
-
-void EffectControls::applyOpt4()
-{
-}
-
-void EffectControls::applyOpt5()
 {
 }

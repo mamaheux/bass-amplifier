@@ -12,7 +12,7 @@ constexpr uint32_t HEARTBEAT_INTERVAL_US = 100000;
 
 // Effects
 constexpr float SAMPLING_FREQUENCY = 48000;
-constexpr uint32_t MAX_DELAY = 96000;
+constexpr uint32_t MAX_DELAY = 96256;
 
 // IO
 #define DEBUG_SERIAL Serial
@@ -31,9 +31,9 @@ constexpr uint8_t OVERDRIVE_PIN = 2;
 constexpr uint8_t MUTE_PIN = 4;
 constexpr uint8_t OPT_1_PIN = 9;
 constexpr uint8_t OPT_2_PIN = 8;
-constexpr uint8_t OPT_3_PIN = 13;
-constexpr uint8_t OPT_4_PIN = 12;
-constexpr uint8_t OPT_5_PIN = 11;
+constexpr uint8_t INCREASE_PITCH_SHIFTER_PIN = 13;
+constexpr uint8_t DECREASE_PITCH_SHIFTER_PIN = 12;
+constexpr uint8_t RESET_PITCH_SHIFTER_PIN = 11;
 
 
 constexpr uint8_t COMPRESSOR_LED_PIN = 18;

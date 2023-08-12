@@ -11,7 +11,16 @@
 
 constexpr float MAX_ABS_ERROR = 0.00001;
 
-#define TEST_ASSERT_FLOAT_WITHIN(t, e, v) if (abs(e - v) > t) \
+#define TEST_ASSERT_EQUAL(e, v) if (e != v) \
+    { \
+        char buffer [50]; \
+        sprintf(buffer, "%f", (double)e); \
+        Serial.printf("Line %d | %s != ", __LINE__, buffer); \
+        sprintf(buffer, "%f", (double)v); \
+        Serial.printf("%s\n", buffer); \
+    }
+
+#define TEST_ASSERT_FLOAT_WITHIN(t, e, v) if (fabs(e - v) > t) \
     { \
         char buffer [50]; \
         sprintf(buffer, "%f", (double)e); \
@@ -43,6 +52,7 @@ DMAMEM Delay<TEST_BLOCK_SIZE, TEST_MAX_DELAY> delayEffect;
 Reverb<TEST_BLOCK_SIZE> reverb;
 Overdrive<TEST_BLOCK_SIZE> overdrive;
 Mute<TEST_BLOCK_SIZE> mute;
+
 
 void test_biquad()
 {
@@ -153,7 +163,7 @@ void test_presence()
 
     float* output = presence.process(input);
 
-    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 2, output[0]);
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 2.0, output[0]);
     TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 0, output[1]);
     TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 0, output[2]);
     TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 0, output[3]);
@@ -193,11 +203,11 @@ void test_compressor()
 
     TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 0.1, output[0]);
     TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 0.2, output[1]);
-    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 0.25588235, output[2]);
-    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 0.29795918, output[3]);
-    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 0.22384615, output[4]);
-    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 0.15385694, output[5]);
-    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 0.08206681, output[6]);
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 0.255882, output[2]);
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 0.297959, output[3]);
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 0.223846, output[4]);
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 0.153857, output[5]);
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 0.082067, output[6]);
     TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 0, output[7]);
 }
 
@@ -291,6 +301,196 @@ void test_mute()
     TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 0, output[6]);
 }
 
+void test_pitchShifter_hann()
+{
+    const uint32_t SIZE = 8;
+    float output[SIZE] = {0};
+    hann(output, SIZE);
+
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 0, output[0]);
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 0.1882551, output[1]);
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 0.61126047, output[2]);
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 0.95048443, output[3]);
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 0.95048443, output[4]);
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 0.61126047, output[5]);
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 0.1882551, output[6]);
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 0, output[7]);
+}
+
+void test_pitchShifter_freqRamp()
+{
+    const uint32_t SIZE = 8;
+    float output[SIZE] = {0};
+    freqRamp(output, SIZE);
+
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 0, output[0]);
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 0.392699, output[1]);
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 0.785398, output[2]);
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 1.178097, output[3]);
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 1.570796, output[4]);
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 1.963495, output[5]);
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 2.356194, output[6]);
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 2.748894, output[7]);
+}
+
+void test_pitchShifter_complexPhase()
+{
+    const uint32_t SIZE = 4;
+    float input[SIZE * 2] = {1, 2, -3, 4, -5, -6, 7, -8};
+    float output[SIZE] = {0};
+    complexPhase(input, output, SIZE);
+
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 1.1071487177940904, output[0]);
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 2.214297435588181, output[1]);
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, -2.2655346029916, output[2]);
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, -0.8519663271732721, output[3]);
+}
+
+void test_pitchShifter_constraintAngle()
+{
+    const uint32_t SIZE = 8;
+    float input[SIZE] = {-9, -6, -3, 0, 3, 6, 9, 12};
+    float output[SIZE] = {0};
+
+    constraintAngle(input, output, SIZE);
+
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, -2.71681469, output[0]);
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 0.28318531, output[1]);
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, -3, output[2]);
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 0, output[3]);
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 3, output[4]);
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, -0.28318531, output[5]);
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 2.71681469, output[6]);
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, -0.56637061, output[7]);
+}
+
+void test_pitchShifter_complexPolar()
+{
+    const uint32_t SIZE = 4;
+    float magnitude[SIZE] = {1, 2, 3, 4};
+    float phase[SIZE] = {-4, -2, 0, 2};
+    float output[SIZE * 2] = {0};
+
+    complexPolar(magnitude, phase, output, SIZE);
+
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, -0.65364362, output[0]);
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 0.7568025, output[1]);
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, -0.83229367, output[2]);
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, -1.81859485, output[3]);
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 3, output[4]);
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 0, output[5]);
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, -1.66458735, output[6]);
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 3.63718971, output[7]);
+}
+
+void test_pitchShifter_0()
+{
+    constexpr int8_t PITCH_STEP = 0;
+    constexpr float GAIN = 1.3333333333332817;
+    uint8_t data[5];
+    data[0] = static_cast<uint8_t>(PITCH_STEP);
+    memcpy(data + 1, &GAIN, sizeof(float));
+
+    PitchShifter<TEST_BLOCK_SIZE> pitchShifter;
+    pitchShifter.update(data);
+
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 1, pitchShifter.alpha());
+    TEST_ASSERT_EQUAL(8, pitchShifter.outputHopSize());
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, GAIN, pitchShifter.gain());
+
+
+    float input[TEST_BLOCK_SIZE] = {0};
+    for (uint32_t i = 0; i < TEST_BLOCK_SIZE; i++)
+    {
+        input[i] = i;
+    }
+
+    pitchShifter.process(input);
+    float* output = pitchShifter.process(input);
+
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 7.737812, output[0]);
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 8.713712, output[1]);
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 9.693796, output[2]);
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 10.671672, output[3]);
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 11.641825, output[4]);
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 12.601958, output[5]);
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 13.554690, output[6]);
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 14.508450, output[7]);
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 15.475661, output[8]);
+}
+
+void test_pitchShifter_6()
+{
+    constexpr int8_t PITCH_STEP = 6;
+    constexpr float GAIN = 1.9106411955407752;
+    uint8_t data[5];
+    data[0] = static_cast<uint8_t>(PITCH_STEP);
+    memcpy(data + 1, &GAIN, sizeof(float));
+
+    PitchShifter<TEST_BLOCK_SIZE> pitchShifter;
+    pitchShifter.update(data);
+
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 1.4142135623730951, pitchShifter.alpha());
+    TEST_ASSERT_EQUAL(11, pitchShifter.outputHopSize());
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, GAIN, pitchShifter.gain());
+
+
+    float input[TEST_BLOCK_SIZE] = {0};
+    for (uint32_t i = 0; i < TEST_BLOCK_SIZE; i++)
+    {
+        input[i] = i;
+    }
+
+    pitchShifter.process(input);
+    float* output = pitchShifter.process(input);
+
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 16.808216, output[0]);
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 18.373808, output[1]);
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 19.303288, output[2]);
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 19.698181, output[3]);
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 20.954554, output[4]);
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 20.983122, output[5]);
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 23.602072, output[6]);
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 21.279915, output[7]);
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 26.826633, output[8]);
+}
+
+void test_pitchShifter_m6()
+{
+    constexpr int8_t PITCH_STEP = -6;
+    constexpr float GAIN = 1.2415331892552723;
+    uint8_t data[5];
+    data[0] = static_cast<uint8_t>(PITCH_STEP);
+    memcpy(data + 1, &GAIN, sizeof(float));
+
+    PitchShifter<TEST_BLOCK_SIZE> pitchShifter;
+    pitchShifter.update(data);
+
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 0.7071067811865476, pitchShifter.alpha());
+    TEST_ASSERT_EQUAL(6, pitchShifter.outputHopSize());
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, GAIN, pitchShifter.gain());
+
+
+    float input[TEST_BLOCK_SIZE] = {0};
+    for (uint32_t i = 0; i < TEST_BLOCK_SIZE; i++)
+    {
+        input[i] = i;
+    }
+
+    pitchShifter.process(input);
+    float* output = pitchShifter.process(input);
+
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 0.396561, output[0]);
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 0.716322, output[1]);
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 1.158321, output[2]);
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 1.790879, output[3]);
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 2.926187, output[4]);
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 3.761713, output[5]);
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 4.628284, output[6]);
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 5.738132, output[7]);
+    TEST_ASSERT_FLOAT_WITHIN(MAX_ABS_ERROR, 6.765344, output[8]);
+}
+
 void randomize(float* input, uint32_t blockSize)
 {
     for (uint32_t i = 0; i < blockSize; i++)
@@ -303,6 +503,8 @@ void test_performance()
 {
     constexpr uint32_t ITERATION_COUNT = 1500;
     float input[TEST_BLOCK_SIZE];
+
+    PitchShifter<TEST_BLOCK_SIZE> pitchShifter;
 
     uint32_t durationTotal = 0;
 
@@ -320,6 +522,7 @@ void test_performance()
         output = delayEffect.process(output);
         output = reverb.process(output);
         output = overdrive.process(output);
+        output = pitchShifter.process(output);
         durationTotal += micros() - start;
     }
 
@@ -476,7 +679,9 @@ void setup()
 
     delay(5000);
 
-    Serial.printf("Processing tests:\n");
+    Serial.println("****** Processing tests ******");
+    Serial.println();
+
     RUN_TEST(test_biquad);
     RUN_TEST(test_feedbackComb);
     RUN_TEST(test_allPassComb);
@@ -490,6 +695,14 @@ void setup()
     RUN_TEST(test_reverb);
     RUN_TEST(test_overdrive);
     RUN_TEST(test_mute);
+    RUN_TEST(test_pitchShifter_hann);
+    RUN_TEST(test_pitchShifter_freqRamp);
+    RUN_TEST(test_pitchShifter_complexPhase);
+    RUN_TEST(test_pitchShifter_constraintAngle);
+    RUN_TEST(test_pitchShifter_complexPolar);
+    RUN_TEST(test_pitchShifter_0);
+    RUN_TEST(test_pitchShifter_6);
+    RUN_TEST(test_pitchShifter_m6);
 
     RUN_TEST(test_performance);
 
@@ -502,6 +715,10 @@ void setup()
     RUN_TEST(test_isEnabled_reverb);
     RUN_TEST(test_isEnabled_overdrive);
     RUN_TEST(test_isEnabled_mute);
+
+    Serial.println();
+    Serial.println();
+    Serial.println();
 }
 
 void loop()

@@ -23,6 +23,7 @@ DelayDesigner delayDesigner(SAMPLING_FREQUENCY, MAX_DELAY);
 ReverbDesigner reverbDesigner(SAMPLING_FREQUENCY);
 OverdriveDesigner overdriveDesigner(SAMPLING_FREQUENCY);
 MuteDesigner muteDesigner(SAMPLING_FREQUENCY);
+PitchShifterDesigner pitchShifterDesigner(SAMPLING_FREQUENCY);
 
 EffectDesigner* effectDesigners[EFFECT_CODE_COUNT];
 
@@ -49,6 +50,7 @@ void footswitchHeatbeatHandler();
 void footswitchToogleEffectHandler(uint8_t effectCode);
 void footswitchDelayUsHandler(uint32_t delayUs);
 void footswitchSetEffectHandler(uint8_t effectCode, bool isEnabled);
+void footswitchUpdatePitchShifterHandler(PitchShifterUpdateCommand command);
 
 Ticker updateEffectDesignersTicker(updateEffectDesigners, EFFECT_DESIGNER_UPDATE_INTERVAL_US, 0, MICROS_MICROS);
 Ticker updateStatusLedTicker(updateStatusLed, STATUS_LED_UPDATE_INTERVAL_US, 0, MICROS_MICROS);
@@ -92,15 +94,17 @@ void setupEffectDesigners()
     effectDesigners[reverbDesigner.effectCode()] = &reverbDesigner;
     effectDesigners[overdriveDesigner.effectCode()] = &overdriveDesigner;
     effectDesigners[muteDesigner.effectCode()] = &muteDesigner;
+    effectDesigners[pitchShifterDesigner.effectCode()] = &pitchShifterDesigner;
 }
 
 void setupFootswitchCommunication()
 {
     footswitchCommunication.begin(FOOTSWITCH_SERIAL_BAUD_RATE);
-    footswitchCommunication.registerHeatbeatHandler(footswitchHeatbeatHandler);
+    footswitchCommunication.registerHeartbeatHandler(footswitchHeatbeatHandler);
     footswitchCommunication.registerToogleEffectHandler(footswitchToogleEffectHandler);
     footswitchCommunication.registerDelayUsHandler(footswitchDelayUsHandler);
     footswitchCommunication.registerSetEffectHandler(footswitchSetEffectHandler);
+    footswitchCommunication.registerUpdatePitchShifterHandler(footswitchUpdatePitchShifterHandler);
 
     lastHeartbeatTimeMs = millis();
     isHeartbeatPending = true;
@@ -178,6 +182,8 @@ void resetAllEffectEnabledStates()
         effectDesigners[i]->setIsEnabled(true);
     }
     muteDesigner.setIsEnabled(false);
+
+    pitchShifterDesigner.reset();
 }
 
 void dspClippingNotificationHandler()
@@ -218,5 +224,23 @@ void footswitchSetEffectHandler(uint8_t effectCode, bool isEnabled)
     else if (effectCode == MUTE_CODE)
     {
         effectControls.setMuteState(isEnabled);
+    }
+}
+
+void footswitchUpdatePitchShifterHandler(PitchShifterUpdateCommand command)
+{
+    switch (command)
+    {
+    case PitchShifterUpdateCommand::RESET:
+        pitchShifterDesigner.reset();
+        break;
+
+    case PitchShifterUpdateCommand::INCREASE:
+        pitchShifterDesigner.increasePitch();
+        break;
+
+    case PitchShifterUpdateCommand::DECREASE:
+        pitchShifterDesigner.decreasePitch();
+        break;
     }
 }

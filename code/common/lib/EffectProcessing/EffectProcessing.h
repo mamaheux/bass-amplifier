@@ -16,5 +16,6 @@
 #include "Reverb.h"
 #include "Overdrive.h"
 #include "Mute.h"
+#include "PitchShifter.h"
 
 #endif

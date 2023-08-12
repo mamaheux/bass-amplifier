@@ -20,6 +20,7 @@ Octaver<BLOCK_SIZE> octaver;
 DMAMEM Delay<BLOCK_SIZE, MAX_DELAY> delayEffect;
 Reverb<BLOCK_SIZE> reverb;
 Mute<BLOCK_SIZE> mute;
+PitchShifter<BLOCK_SIZE> pitchShifter;
 
 Effect<BLOCK_SIZE>* effects[EFFECT_CODE_COUNT];
 ControllerCommunication controllerCommunication(effects);
@@ -50,12 +51,11 @@ void setupEffects()
     effects[DELAY_CODE] = &delayEffect;
     effects[REVERB_CODE] = &reverb;
     effects[MUTE_CODE] = &mute;
+    effects[PITCH_SHIFTER_CODE] = &pitchShifter;
 }
 
 void loop()
 {
-    controllerCommunication.update();
-
     float input[BLOCK_SIZE];
     float _downOctave[BLOCK_SIZE]; // Too much noise
     if (cs4270.read(_downOctave, input))
@@ -72,11 +72,16 @@ void loop()
             controllerCommunication.update();
         }
     }
+    else
+    {
+        controllerCommunication.update();
+    }
 }
 
 float* processAudio(float* input)
 {
-    float* output = compressor.process(input);
+    float* output = pitchShifter.process(input);
+    output = compressor.process(output);
 
     output = presence.process(output);
     output = contour.process(output);
@@ -97,7 +102,7 @@ bool isOutputClipping(float* output)
 {
     for (uint32_t i = 0; i < BLOCK_SIZE; i++)
     {
-        if (abs(output[i]) > CLIPPING_VALUE)
+        if (fabs(output[i]) > CLIPPING_VALUE)
         {
             return true;
         }

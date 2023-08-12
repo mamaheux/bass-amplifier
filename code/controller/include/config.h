@@ -15,7 +15,7 @@ constexpr uint32_t FOOTSWITCH_COMMUNICATION_SLOW_UPDATE_INTERVAL_US = 50000;
 
 // Effects
 constexpr float SAMPLING_FREQUENCY = 48000;
-constexpr uint32_t MAX_DELAY = 96000;
+constexpr uint32_t MAX_DELAY = 96256;
 
 // IO
 #define DEBUG_SERIAL Serial
