@@ -8,7 +8,7 @@
 
 // Effects
 constexpr float SAMPLING_FREQUENCY = 48000;
-constexpr uint32_t BLOCK_SIZE = 32;
+constexpr uint32_t BLOCK_SIZE = 1024;
 constexpr uint32_t MAX_DELAY = 96256;
 constexpr float CLIPPING_VALUE = 0.99;
 

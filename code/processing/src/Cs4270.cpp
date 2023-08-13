@@ -5,6 +5,9 @@
 static constexpr uint32_t I2S_TCSR_FRF = 0x00010000;
 static constexpr uint32_t I2S_RCSR_FRF = 0x00010000;
 
+static constexpr uint32_t TX_FIFO_WATERMARK = 28;
+static constexpr uint32_t RX_FIFO_WATERMARK = 1;
+
 
 static Cs4270Buffer<BLOCK_SIZE>* leftInputBuffer;
 static Cs4270Buffer<BLOCK_SIZE>* rightInputBuffer;
@@ -27,7 +30,7 @@ static void cs4270Interrupt()
         I2S1_TDR0 = leftSample & SAMPLE_MASK;
         I2S1_TDR0 = rightSample & SAMPLE_MASK;
     }
-    
+
     if (I2S1_RCSR & I2S_RCSR_FRF)
     {
         // Read samples
@@ -64,6 +67,7 @@ bool Cs4270::read(float* leftBlock, float* rightBlock)
     {
         return false;
     }
+
 
     for (uint32_t i = 0; i < BLOCK_SIZE; i++)
     {
@@ -138,7 +142,7 @@ void Cs4270::setupI2s()
 
     setupInterrupt();
 
-    enableI2s(); 
+    enableI2s();
 }
 
 void Cs4270::setupI2sClocks()
@@ -146,27 +150,27 @@ void Cs4270::setupI2sClocks()
     int n1;
     int n2;
     setupPLL4(n1, n2);
-    // Setup SAI1_CLK 
+    // Setup SAI1_CLK
     CCM_CSCMR1 = (CCM_CSCMR1 & ~(CCM_CSCMR1_SAI1_CLK_SEL_MASK)) | CCM_CSCMR1_SAI1_CLK_SEL(2); // Set PLL4 clock source
     CCM_CS1CDR = (CCM_CS1CDR & ~(CCM_CS1CDR_SAI1_CLK_PRED_MASK | CCM_CS1CDR_SAI1_CLK_PODF_MASK))
            | CCM_CS1CDR_SAI1_CLK_PRED(n1 - 1) // Set clock pred to n1 (1 <= n1 <= 8)
            | CCM_CS1CDR_SAI1_CLK_PODF(n2 - 1); // Set clock prodf to n1 (1 <= n1 <= 2^6)
-           
+
     // Setup MCLK1
     IOMUXC_GPR_GPR1 = (IOMUXC_GPR_GPR1 & ~(IOMUXC_GPR_GPR1_SAI1_MCLK1_SEL_MASK))
         | IOMUXC_GPR_GPR1_SAI1_MCLK_DIR // Set MCLK as an output
         | IOMUXC_GPR_GPR1_SAI1_MCLK1_SEL(0); // Set MCLK source to ccm.ssi1_clk_root
-        
+
     // Setup clock pins
     CORE_PIN23_CONFIG = 3;  // Set pin23 as MCLK
     CORE_PIN21_CONFIG = 3;  // Set pin21 as RX_BCLK
     CORE_PIN20_CONFIG = 3;  // Set pin20 as RX_SYNC
 }
-    
+
 void Cs4270::setupPLL4(int& n1, int& n2)
 {
     int fs = SAMPLING_FREQUENCY;
-    n1 = 4; 
+    n1 = 4;
     n2 = 1 + (24000000 * 27) / (fs * 256 * n1);
 
     double C = ((double)fs * 256 * n1 * n2) / 24000000;
@@ -198,7 +202,7 @@ void Cs4270::setupPLL4(int& n1, int& n2)
 void Cs4270::setupI2sTx()
 {
     I2S1_TMR = 0; // Set the transmit mask to 0
-    I2S1_TCR1 = I2S_TCR1_RFW(1); // Set the FIFO watermark to 1
+    I2S1_TCR1 = I2S_TCR1_RFW(TX_FIFO_WATERMARK); // Set the FIFO watermark
     I2S1_TCR2 = I2S_TCR2_SYNC(1) // Set TX mode to sync
         | I2S_TCR2_BCP // Set BCLK active low
         | I2S_TCR2_BCD // Set BCLK as an output
@@ -218,7 +222,7 @@ void Cs4270::setupI2sTx()
 void Cs4270::setupI2sRx()
 {
     I2S1_RMR = 0; // Set the receive mask to 0
-    I2S1_RCR1 = I2S_RCR1_RFW(1); // Set the FIFO watermark to 1
+    I2S1_RCR1 = I2S_RCR1_RFW(RX_FIFO_WATERMARK); // Set the FIFO watermark
     I2S1_RCR2 = I2S_RCR2_SYNC(0) // Set RX mode to async
         | I2S_RCR2_BCP // Set BCLK active low
         | I2S_RCR2_BCD // Set BCLK as an output
@@ -271,7 +275,7 @@ float Cs4270::int32ToFloat(int32_t v)
 }
 
 int32_t Cs4270::floatToInt32(float v)
-{    
+{
     if (v < -CLIPPING_VALUE)
     {
         v = INT32_MIN * CLIPPING_VALUE;

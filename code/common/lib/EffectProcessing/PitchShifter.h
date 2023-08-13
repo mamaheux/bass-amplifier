@@ -109,7 +109,7 @@ private:
 };
 
 template<uint32_t BLOCK_SIZE>
-PitchShifter<BLOCK_SIZE>::PitchShifter() : m_alpha(1.f), m_outputHopSize(INPUT_HOP_SIZE)
+PitchShifter<BLOCK_SIZE>::PitchShifter() : m_alpha(1.f), m_outputHopSize(INPUT_HOP_SIZE), m_gain(1.f)
 {
     static_assert(BLOCK_SIZE == 32 ||
         BLOCK_SIZE == 64 ||
@@ -173,14 +173,6 @@ float* PitchShifter<BLOCK_SIZE>::process(float* input)
 {
     memcpy(m_inputProcessingBuffer + 3 * INPUT_HOP_SIZE, input, BLOCK_SIZE * sizeof(float));
 
-    /*DEBUG_SERIAL.println("begin m_inputProcessingBuffer=");
-    for (uint32_t i = 0; i < BLOCK_SIZE * 7 / 4; i++)
-    {
-        DEBUG_SERIAL.print("\t");
-        DEBUG_SERIAL.println(m_inputProcessingBuffer[i]);
-    }
-    DEBUG_SERIAL.println();*/
-
     processBlock(m_inputProcessingBuffer, m_outputProcessingBuffer);
     processBlock(m_inputProcessingBuffer + INPUT_HOP_SIZE, m_outputProcessingBuffer + m_outputHopSize);
     processBlock(m_inputProcessingBuffer + 2 * INPUT_HOP_SIZE, m_outputProcessingBuffer + 2 * m_outputHopSize);
@@ -197,15 +189,6 @@ float* PitchShifter<BLOCK_SIZE>::process(float* input)
     uint32_t offset = 4 * m_outputHopSize;
     memmove(m_outputProcessingBuffer, m_outputProcessingBuffer + offset, (3 * m_outputHopSize + BLOCK_SIZE) * sizeof(float) - offset);
     memset(m_outputProcessingBuffer + offset, 0, (BLOCK_SIZE * 4 - offset) * sizeof(float));
-
-
-    /*DEBUG_SERIAL.println("m_outputProcessingBuffer=");
-    for (uint32_t i = 0; i < 3 * m_outputHopSize + BLOCK_SIZE; i++)
-    {
-        DEBUG_SERIAL.print("\t");
-        DEBUG_SERIAL.println(m_outputProcessingBuffer[i]);
-    }
-    DEBUG_SERIAL.println();*/
 
     return m_output;
 }

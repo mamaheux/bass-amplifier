@@ -10,7 +10,7 @@ class Cs4270Buffer
     static constexpr uint32_t BUFFER_SIZE = 2 * BLOCK_SIZE;
 
     int32_t m_buffer[BUFFER_SIZE];
-    
+
     volatile uint32_t m_readIndex;
     volatile uint32_t m_writeIndex;
 
@@ -19,7 +19,7 @@ class Cs4270Buffer
 
 public:
     Cs4270Buffer();
-    
+
     bool read(int32_t& v);
     bool write(int32_t v);
 
@@ -37,7 +37,7 @@ Cs4270Buffer<BLOCK_SIZE>::Cs4270Buffer()
     m_readAvailable = 0;
     m_writeAvailable = BUFFER_SIZE;
 }
-    
+
 template<uint32_t BLOCK_SIZE>
 bool Cs4270Buffer<BLOCK_SIZE>::read(int32_t& v)
 {
@@ -49,7 +49,7 @@ bool Cs4270Buffer<BLOCK_SIZE>::read(int32_t& v)
 
     m_readAvailable -= 1;
     m_writeAvailable += 1;
-    
+
     m_readIndex++;
     if (m_readIndex >= BUFFER_SIZE)
     {
@@ -70,7 +70,7 @@ bool Cs4270Buffer<BLOCK_SIZE>::write(int32_t v)
 
     m_readAvailable += 1;
     m_writeAvailable -= 1;
-    
+
     m_writeIndex++;
     if (m_writeIndex >= BUFFER_SIZE)
     {
