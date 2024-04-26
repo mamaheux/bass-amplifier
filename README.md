@@ -13,7 +13,7 @@ Bass-Amplifier is a project to create our own bass guitar amplifier. The amplifi
  - Delay effect
  - Reverb effect
 
-## Folder descriptions
+## Folder Descriptions
 ### cases
 This folder contains the CAD files to create the cases.
 ![Image of bass amplifier](https://github.com/mamaheux/bass-amplifier/raw/main/images/bass_amplifier_0.jpg)
